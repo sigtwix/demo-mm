@@ -5,21 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Digital Wave • mmWave Digital Twin</title>
   
-  <!-- Tailwind CSS (JIT enabled) -->
-  <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+  <!-- 1. Tailwind CDN FIRST -->
+  <script src="https://cdn.tailwindcss.com"></script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
+  <!-- 2. Config AFTER CDN -->
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
             display: ['Space Grotesk', 'sans-serif']
           }
         }
@@ -28,12 +29,10 @@
   </script>
 
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
     .display-font { font-family: 'Space Grotesk', sans-serif; }
 
-    .hero-glow {
-      text-shadow: 0 0 40px rgb(0 245 255 / 0.5);
-    }
+    .hero-glow { text-shadow: 0 0 40px rgb(0 245 255 / 0.5); }
 
     .neon-border {
       position: relative;
@@ -46,7 +45,7 @@
       background-size: 300%;
       z-index: -1;
       filter: blur(12px);
-      opacity: 0.6;
+      opacity: 0.65;
       border-radius: inherit;
       animation: neon-pulse 4s linear infinite;
     }
@@ -69,12 +68,12 @@
     .glass {
       background: rgba(255, 255, 255, 0.07);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
     }
 
     .dark .glass {
-      background: rgba(15, 23, 42, 0.7);
-      border: 1px solid rgba(148, 163, 184, 0.1);
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.12);
     }
 
     .result-placeholder {
@@ -83,34 +82,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 2px dashed rgba(148, 163, 184, 0.4);
+      border: 2px dashed rgba(148, 163, 184, 0.5);
       border-radius: 1rem;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .result-placeholder:hover {
       border-color: #00f5ff;
-      box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
-    }
-
-    .scanline {
-      position: relative;
-      overflow: hidden;
-    }
-    .scanline::after {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(transparent, rgba(0, 245, 255, 0.15), transparent);
-      animation: scan 4s linear infinite;
-    }
-
-    @keyframes scan {
-      0% { top: -100%; }
-      100% { top: 100%; }
+      box-shadow: 0 0 35px rgba(0, 245, 255, 0.25);
     }
 
     .toggle-btn {
@@ -143,9 +122,9 @@
     }
   </style>
 </head>
-<body class="theme-transition bg-zinc-950 text-zinc-200 overflow-x-hidden">
+<body class="bg-zinc-950 text-zinc-200 overflow-x-hidden">
 
-  <!-- Futuristic Toggle -->
+  <!-- Theme Toggle -->
   <button
     type="button"
     id="themeToggle"
@@ -159,7 +138,6 @@
   </button>
 
   <main class="container mx-auto max-w-6xl px-6 py-12">
-    
     <!-- Hero -->
     <header class="text-center mb-16 pt-8">
       <div class="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-700 rounded-full px-5 py-1.5 text-sm mb-6">
@@ -180,20 +158,14 @@
       </p>
 
       <div class="flex flex-wrap justify-center gap-4 mt-10">
-        <a href="#" class="neon-border group px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">
-          <i class="fas fa-file-pdf"></i> Read the Paper
-        </a>
-        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">
-          <i class="fab fa-github"></i> View Code
-        </a>
-        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">
-          <i class="fas fa-database"></i> Dataset
-        </a>
+        <a href="#" class="neon-border px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">Read the Paper</a>
+        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">View Code</a>
+        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">Dataset</a>
       </div>
     </header>
 
     <!-- Teaser -->
-    <section class="my-20 scanline">
+    <section class="my-20">
       <div class="result-placeholder w-full max-w-4xl mx-auto neon-border bg-zinc-900 border-cyan-500/30 cursor-zoom-in">
         <div class="text-center">
           <i class="fas fa-cube text-6xl mb-6 text-cyan-400"></i>
@@ -212,7 +184,8 @@
           Yet at millimeter-wave frequencies, even minor environmental changes can cause sudden QoE degradation.
         </p>
         <p class="mt-6">
-          <span class="text-cyan-400 font-semibold">Digital Wave</span> builds a vision-driven wireless digital twin using only commodity cameras enabling real-time diagnosis and mitigation of indoor mmWave impairments without new hardware.
+          <span class="text-cyan-400 font-semibold">Digital Wave</span> creates a vision-driven wireless digital twin using commodity cameras — 
+          enabling real-time diagnosis and mitigation without new hardware.
         </p>
       </div>
     </section>
@@ -223,7 +196,7 @@
       <div class="w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden border border-cyan-500/20 bg-zinc-900 flex items-center justify-center">
         <div class="text-center">
           <i class="fas fa-play-circle text-7xl text-cyan-400 mb-4"></i>
-          <p class="text-zinc-400">Demo Video – Real-time 3D Reconstruction + mmWave Prediction</p>
+          <p class="text-zinc-400">Demo Video – Real-time 3D Reconstruction & mmWave Prediction</p>
         </div>
       </div>
     </section>
@@ -236,49 +209,39 @@
           <div class="result-placeholder mb-6 bg-zinc-900 border-cyan-400/30">
             <i class="fas fa-broadcast-tower text-5xl text-cyan-400"></i>
           </div>
-          <p class="text-center text-zinc-400">Real-time blockage prediction and coverage heatmap</p>
+          <p class="text-center text-zinc-400">Real-time signal coverage with dynamic obstacle prediction</p>
         </div>
         <div class="glass p-8 rounded-3xl">
           <div class="result-placeholder mb-6 bg-zinc-900 border-emerald-400/30">
             <i class="fas fa-chart-line text-5xl text-emerald-400"></i>
           </div>
-          <p class="text-center text-zinc-400">Significant QoE improvement over traditional static planning</p>
+          <p class="text-center text-zinc-400">Significant QoE improvement over static planning</p>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="mt-24 pt-12 border-t border-zinc-800 text-center text-zinc-500 text-sm">
       <p>Digital Wave — Vision-Driven Indoor mmWave Digital Twin</p>
       <p class="mt-1">Research Project • 2026</p>
     </footer>
   </main>
 
-  <!-- Safe Dark Mode Script (Fixed for sandboxed environments) -->
+  <!-- Dark Mode Toggle Script -->
   <script>
     (() => {
       const html = document.documentElement;
       const btn = document.getElementById('themeToggle');
 
-      // Safe localStorage wrapper
-      function safeLocalStorageGet(key) {
-        try {
-          return localStorage.getItem(key);
-        } catch (e) {
-          return null;
-        }
+      function safeGet(key) {
+        try { return localStorage.getItem(key); } catch(e) { return null; }
       }
 
-      function safeLocalStorageSet(key, value) {
-        try {
-          localStorage.setItem(key, value);
-        } catch (e) {
-          // Silently fail in sandboxed environments
-        }
+      function safeSet(key, value) {
+        try { localStorage.setItem(key, value); } catch(e) {}
       }
 
-      function getPreferredTheme() {
-        const saved = safeLocalStorageGet('theme');
+      function getPreferred() {
+        const saved = safeGet('theme');
         if (saved) return saved;
         return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
@@ -291,22 +254,22 @@
           html.classList.remove('dark');
           btn.classList.remove('dark-active');
         }
-        safeLocalStorageSet('theme', theme);
+        safeSet('theme', theme);
       }
 
-      // Apply initial theme
-      applyTheme(getPreferredTheme());
+      // Initial theme
+      applyTheme(getPreferred());
 
-      // Toggle button
+      // Click handler
       btn.addEventListener('click', () => {
         const isDark = html.classList.contains('dark');
         applyTheme(isDark ? 'light' : 'dark');
       });
 
-      // Listen to system preference changes (only if no manual preference saved)
+      // System preference listener
       if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          if (!safeLocalStorageGet('theme')) {
+          if (!safeGet('theme')) {
             applyTheme(e.matches ? 'dark' : 'light');
           }
         });
