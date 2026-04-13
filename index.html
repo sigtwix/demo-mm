@@ -3,19 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Research Demo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Digital Wave • mmWave Digital Twin</title>
+  
+  <!-- Tailwind CSS (JIT enabled) -->
+  <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif']
+          }
         }
       }
     }
@@ -23,45 +29,103 @@
 
   <style>
     body { font-family: 'Inter', sans-serif; }
-    .section-title {
-      text-align: center;
-      font-weight: 800;
-      font-size: 2rem;
-      margin-bottom: 2.25rem;
-    }
-    @media (min-width: 768px) {
-      .section-title { font-size: 2.25rem; }
-    }
-    .focus-ring:focus { outline: 2px solid #93c5fd; outline-offset: 2px; }
+    .display-font { font-family: 'Space Grotesk', sans-serif; }
 
-    .theme-transition {
-      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    .hero-glow {
+      text-shadow: 0 0 40px rgb(0 245 255 / 0.5);
+    }
+
+    .neon-border {
+      position: relative;
+    }
+    .neon-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, #00f5ff, #a855f7, #ec4899, #00f5ff);
+      background-size: 300%;
+      z-index: -1;
+      filter: blur(12px);
+      opacity: 0.6;
+      border-radius: inherit;
+      animation: neon-pulse 4s linear infinite;
+    }
+
+    @keyframes neon-pulse {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 2.75rem;
+      letter-spacing: -0.04em;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .dark .glass {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.1);
     }
 
     .result-placeholder {
-      min-height: 280px;
+      min-height: 320px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 2px dashed;
-      border-radius: 0.75rem;
+      border: 2px dashed rgba(148, 163, 184, 0.4);
+      border-radius: 1rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .result-placeholder:hover {
+      border-color: #00f5ff;
+      box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
     }
 
-    /* Toggle switch - pure CSS, no nested click issues */
+    .scanline {
+      position: relative;
+      overflow: hidden;
+    }
+    .scanline::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(transparent, rgba(0, 245, 255, 0.15), transparent);
+      animation: scan 4s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
     .toggle-btn {
       width: 56px;
       height: 30px;
-      border-radius: 15px;
+      border-radius: 9999px;
       position: relative;
       cursor: pointer;
-      border: none;
-      padding: 0;
-      transition: background-color 0.3s ease;
-      background-color: #d1d5db;
+      border: 2px solid #64748b;
+      background-color: #1e2937;
+      transition: all 0.3s ease;
     }
     .toggle-btn.dark-active {
-      background-color: #4f46e5;
+      background-color: #22d3ee;
+      border-color: #67e8f9;
     }
     .toggle-btn .knob {
       width: 24px;
@@ -69,213 +133,157 @@
       border-radius: 50%;
       background: white;
       position: absolute;
-      top: 3px;
-      left: 3px;
+      top: 1px;
+      left: 1px;
       transition: transform 0.3s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     .toggle-btn.dark-active .knob {
       transform: translateX(26px);
     }
-    .toggle-btn .knob i {
-      font-size: 12px;
-      line-height: 1;
-    }
-
-    /* Hide/show icons */
-    .icon-sun { display: block; color: #f59e0b; }
-    .icon-moon { display: none; color: #818cf8; }
-    .toggle-btn.dark-active .icon-sun { display: none; }
-    .toggle-btn.dark-active .icon-moon { display: block; }
   </style>
 </head>
-<body class="theme-transition bg-gray-50 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
+<body class="theme-transition bg-zinc-950 text-zinc-200 overflow-x-hidden">
 
-  <!-- Dark Mode Toggle -->
+  <!-- Futuristic Toggle -->
   <button
     type="button"
     id="themeToggle"
-    class="toggle-btn fixed top-4 right-4 z-50 focus-ring"
+    class="toggle-btn fixed top-6 right-6 z-50 focus:outline-none focus:ring-2 focus:ring-cyan-400"
     aria-label="Toggle dark mode"
-    title="Toggle dark/light mode"
   >
-    <span class="knob">
-      <i class="fas fa-sun icon-sun"></i>
-      <i class="fas fa-moon icon-moon"></i>
+    <span class="knob flex items-center justify-center">
+      <i class="fas fa-sun text-amber-400 text-xs"></i>
+      <i class="fas fa-moon text-slate-900 text-xs"></i>
     </span>
   </button>
 
-  <main class="container mx-auto max-w-5xl px-4 sm:px-6 py-8">
-
-    <!-- Header -->
-    <header class="text-center mb-10">
-      <h1 class="text-3xl sm:text-5xl font-extrabold theme-transition text-gray-900 dark:text-white mb-4">Digital Wave</h1>
-      <p class="text-xl sm:text-3xl theme-transition text-gray-700 dark:text-gray-300 mb-4">Coming soon</p>
-      <p class="text-base sm:text-xl theme-transition text-gray-500 dark:text-gray-400 mb-4">
-        <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Author Name<br>Lab Name, Institution</a>
+  <main class="container mx-auto max-w-6xl px-6 py-12">
+    
+    <!-- Hero -->
+    <header class="text-center mb-16 pt-8">
+      <div class="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-700 rounded-full px-5 py-1.5 text-sm mb-6">
+        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+        <span class="text-emerald-400 font-medium">Research Preview 2026</span>
+      </div>
+      
+      <h1 class="display-font text-6xl sm:text-7xl font-bold tracking-tighter hero-glow mb-4">
+        Digital<span class="text-cyan-400">Wave</span>
+      </h1>
+      
+      <p class="text-2xl sm:text-3xl text-zinc-400 mb-8 max-w-2xl mx-auto">
+        Vision-Powered mmWave Digital Twin
       </p>
+
+      <p class="max-w-lg mx-auto text-lg text-zinc-500">
+        Reliable indoor millimeter-wave connectivity for cloud gaming, immersive AR/VR, and real-time communication
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-10">
+        <a href="#" class="neon-border group px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">
+          <i class="fas fa-file-pdf"></i> Read the Paper
+        </a>
+        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">
+          <i class="fab fa-github"></i> View Code
+        </a>
+        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">
+          <i class="fas fa-database"></i> Dataset
+        </a>
+      </div>
     </header>
 
-    <!-- Navigation Buttons -->
-    <nav class="flex flex-wrap justify-center items-center gap-3 sm:gap-4 mb-8">
-      <a href="#"
-         class="theme-transition bg-gray-800 dark:bg-white dark:text-gray-900 text-white px-5 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition-transform transform hover:scale-105 shadow-md">
-        <i class="fas fa-file-pdf mr-2"></i> Paper
-      </a>
-      <a href="#"
-         class="theme-transition bg-gray-800 dark:bg-white dark:text-gray-900 text-white px-5 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition-transform transform hover:scale-105 shadow-md">
-        <i class="fab fa-github mr-2"></i> Code
-      </a>
-      <a href="#"
-         class="theme-transition bg-gray-800 dark:bg-white dark:text-gray-900 text-white px-5 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition-transform transform hover:scale-105 shadow-md">
-        <i class="fas fa-database mr-2"></i> Dataset
-      </a>
-    </nav>
-
-    <!-- Teaser Figure -->
-    <section class="content-section flex flex-col items-center my-10">
-      <div class="result-placeholder w-full max-w-2xl theme-transition border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 cursor-zoom-in" tabindex="0" aria-label="Teaser figure placeholder">
-        <i class="fas fa-image text-4xl mb-3 theme-transition text-gray-300 dark:text-gray-600"></i>
-        <span class="text-sm font-medium theme-transition text-gray-400 dark:text-gray-500">Teaser Figure</span>
+    <!-- Teaser -->
+    <section class="my-20 scanline">
+      <div class="result-placeholder w-full max-w-4xl mx-auto neon-border bg-zinc-900 border-cyan-500/30 cursor-zoom-in">
+        <div class="text-center">
+          <i class="fas fa-cube text-6xl mb-6 text-cyan-400"></i>
+          <p class="text-cyan-400 font-medium tracking-widest text-sm mb-1">LIVE DIGITAL TWIN</p>
+          <span class="text-2xl font-semibold text-white">3D Environment + Real-time mmWave Propagation</span>
+        </div>
       </div>
     </section>
 
     <!-- Abstract -->
-    <section class="content-section my-10">
-      <h2 class="section-title theme-transition text-gray-900 dark:text-white">Abstract</h2>
-      <div class="max-w-4xl mx-auto theme-transition bg-white dark:bg-gray-800 p-5 sm:p-8 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-        <p class="text-base sm:text-lg leading-relaxed theme-transition text-gray-500 dark:text-gray-400 italic text-center">
-          Coming soon
+    <section class="my-20">
+      <h2 class="section-title text-white">The Challenge</h2>
+      <div class="glass max-w-4xl mx-auto p-10 rounded-3xl text-lg leading-relaxed text-zinc-300">
+        <p>
+          Reliable wireless connectivity is essential for cloud gaming, immersive AR/VR, and real-time video communication. 
+          Yet at millimeter-wave frequencies, even minor environmental changes can cause sudden QoE degradation.
+        </p>
+        <p class="mt-6">
+          <span class="text-cyan-400 font-semibold">Digital Wave</span> builds a vision-driven wireless digital twin using only commodity cameras enabling real-time diagnosis and mitigation of indoor mmWave impairments without new hardware.
         </p>
       </div>
     </section>
 
-    <!-- Video Demonstration -->
-    <section class="content-section my-10">
-      <h2 class="section-title theme-transition text-gray-900 dark:text-white">Video Demonstration</h2>
-      <div class="flex justify-center w-full">
-        <div class="w-full max-w-2xl aspect-video rounded-xl overflow-hidden shadow-lg border-4 theme-transition border-white dark:border-gray-700 bg-white dark:bg-gray-800 flex items-center justify-center">
-          <div class="text-center">
-            <i class="fas fa-play-circle text-5xl mb-3 theme-transition text-gray-300 dark:text-gray-600"></i>
-            <p class="text-sm theme-transition text-gray-400 dark:text-gray-500">Video will be added here</p>
-          </div>
+    <!-- Video -->
+    <section class="my-20">
+      <h2 class="section-title text-white">Watch It In Action</h2>
+      <div class="w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden border border-cyan-500/20 bg-zinc-900 flex items-center justify-center">
+        <div class="text-center">
+          <i class="fas fa-play-circle text-7xl text-cyan-400 mb-4"></i>
+          <p class="text-zinc-400">Demo Video – Real-time 3D Reconstruction + mmWave Prediction</p>
         </div>
-      </div>
-    </section>
-
-    <!-- Method Overview -->
-    <section class="content-section my-10">
-      <h2 class="section-title theme-transition text-gray-900 dark:text-white">Method Overview</h2>
-      <div class="max-w-4xl mx-auto theme-transition bg-white dark:bg-gray-800 p-5 sm:p-8 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-        <p class="text-base sm:text-lg leading-relaxed theme-transition text-gray-500 dark:text-gray-400 italic text-center">
-          Coming soon
-        </p>
       </div>
     </section>
 
     <!-- Results -->
-    <section class="content-section my-10">
-      <h2 class="section-title theme-transition text-gray-900 dark:text-white">Results</h2>
-      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-
-        <div class="theme-transition bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 flex flex-col">
-          <div class="result-placeholder flex-1 w-full mb-4 theme-transition border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50">
-            <i class="fas fa-chart-bar text-3xl mb-2 theme-transition text-gray-300 dark:text-gray-600"></i>
-            <span class="text-xs font-medium theme-transition text-gray-400 dark:text-gray-500">Result Figure 1</span>
+    <section class="my-20">
+      <h2 class="section-title text-white">Results</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="glass p-8 rounded-3xl">
+          <div class="result-placeholder mb-6 bg-zinc-900 border-cyan-400/30">
+            <i class="fas fa-broadcast-tower text-5xl text-cyan-400"></i>
           </div>
-          <p class="text-sm theme-transition text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg leading-relaxed text-center italic">
-            Caption will be added here.
-          </p>
+          <p class="text-center text-zinc-400">Real-time blockage prediction and coverage heatmap</p>
         </div>
-
-        <div class="theme-transition bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 flex flex-col">
-          <div class="result-placeholder flex-1 w-full mb-4 theme-transition border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50">
-            <i class="fas fa-chart-line text-3xl mb-2 theme-transition text-gray-300 dark:text-gray-600"></i>
-            <span class="text-xs font-medium theme-transition text-gray-400 dark:text-gray-500">Result Figure 2</span>
+        <div class="glass p-8 rounded-3xl">
+          <div class="result-placeholder mb-6 bg-zinc-900 border-emerald-400/30">
+            <i class="fas fa-chart-line text-5xl text-emerald-400"></i>
           </div>
-          <p class="text-sm theme-transition text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg leading-relaxed text-center italic">
-            Caption will be added here.
-          </p>
+          <p class="text-center text-zinc-400">Significant QoE improvement over traditional static planning</p>
         </div>
-
-        <div class="theme-transition bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 flex flex-col">
-          <div class="result-placeholder flex-1 w-full mb-4 theme-transition border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50">
-            <i class="fas fa-chart-area text-3xl mb-2 theme-transition text-gray-300 dark:text-gray-600"></i>
-            <span class="text-xs font-medium theme-transition text-gray-400 dark:text-gray-500">Result Figure 3</span>
-          </div>
-          <p class="text-sm theme-transition text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg leading-relaxed text-center italic">
-            Caption will be added here.
-          </p>
-        </div>
-
-        <div class="theme-transition bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 flex flex-col">
-          <div class="result-placeholder flex-1 w-full mb-4 theme-transition border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50">
-            <i class="fas fa-table text-3xl mb-2 theme-transition text-gray-300 dark:text-gray-600"></i>
-            <span class="text-xs font-medium theme-transition text-gray-400 dark:text-gray-500">Result Figure 4</span>
-          </div>
-          <p class="text-sm theme-transition text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg leading-relaxed text-center italic">
-            Caption will be added here.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Comparisons -->
-    <section class="content-section my-10">
-      <h2 class="section-title theme-transition text-gray-900 dark:text-white">Comparisons</h2>
-      <div class="max-w-4xl mx-auto theme-transition bg-white dark:bg-gray-800 p-5 sm:p-8 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-        <p class="text-base sm:text-lg leading-relaxed theme-transition text-gray-500 dark:text-gray-400 italic text-center">
-          Coming soon
-        </p>
-      </div>
-    </section>
-
-    <!-- BibTeX -->
-    <section class="content-section my-10">
-      <h2 class="section-title theme-transition text-gray-900 dark:text-white">BibTeX</h2>
-      <div class="max-w-3xl mx-auto theme-transition bg-gray-100 dark:bg-gray-800 p-5 rounded-lg shadow-inner border border-gray-200 dark:border-gray-700 text-xs sm:text-sm">
-        <pre class="whitespace-pre-wrap break-all font-mono theme-transition text-gray-600 dark:text-gray-400"><code>@article{mmwave2026,
-  title     = {mmWave},
-  author    = {Author Name},
-  journal   = {Conference Name},
-  year      = {2026}
-}</code></pre>
-      </div>
-    </section>
-
-    <!-- Acknowledgements -->
-    <section class="content-section my-10">
-      <h2 class="section-title theme-transition text-gray-900 dark:text-white">Acknowledgements</h2>
-      <div class="max-w-4xl mx-auto theme-transition bg-white dark:bg-gray-800 p-5 sm:p-8 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-        <p class="text-base sm:text-lg leading-relaxed theme-transition text-gray-500 dark:text-gray-400 italic text-center">
-          Coming soon
-        </p>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="mt-12 pt-8 border-t theme-transition border-gray-200 dark:border-gray-700 text-center theme-transition text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
-      <p class="mt-2">Website template inspired by nerfies.github.io</p>
+    <footer class="mt-24 pt-12 border-t border-zinc-800 text-center text-zinc-500 text-sm">
+      <p>Digital Wave — Vision-Driven Indoor mmWave Digital Twin</p>
+      <p class="mt-1">Research Project • 2026</p>
     </footer>
   </main>
 
+  <!-- Safe Dark Mode Script (Fixed for sandboxed environments) -->
   <script>
     (() => {
       const html = document.documentElement;
       const btn = document.getElementById('themeToggle');
 
-      function getPreferred() {
-        const saved = localStorage.getItem('theme');
-        if (saved) return saved;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // Safe localStorage wrapper
+      function safeLocalStorageGet(key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          return null;
+        }
       }
 
-      function apply(theme) {
+      function safeLocalStorageSet(key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch (e) {
+          // Silently fail in sandboxed environments
+        }
+      }
+
+      function getPreferredTheme() {
+        const saved = safeLocalStorageGet('theme');
+        if (saved) return saved;
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function applyTheme(theme) {
         if (theme === 'dark') {
           html.classList.add('dark');
           btn.classList.add('dark-active');
@@ -283,24 +291,26 @@
           html.classList.remove('dark');
           btn.classList.remove('dark-active');
         }
-        localStorage.setItem('theme', theme);
+        safeLocalStorageSet('theme', theme);
       }
 
-      // Set initial state
-      apply(getPreferred());
+      // Apply initial theme
+      applyTheme(getPreferredTheme());
 
-      // Single click handler on the button itself
-      btn.addEventListener('click', function () {
+      // Toggle button
+      btn.addEventListener('click', () => {
         const isDark = html.classList.contains('dark');
-        apply(isDark ? 'light' : 'dark');
+        applyTheme(isDark ? 'light' : 'dark');
       });
 
-      // System preference change (only if user hasn't set a manual preference)
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-        if (!localStorage.getItem('theme')) {
-          apply(e.matches ? 'dark' : 'light');
-        }
-      });
+      // Listen to system preference changes (only if no manual preference saved)
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!safeLocalStorageGet('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      }
     })();
   </script>
 </body>
