@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Digital Wave • mmWave Digital Twin</title>
-  
-  <!-- 1. Tailwind CDN FIRST -->
+
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-  <!-- 2. Config AFTER CDN -->
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
@@ -32,11 +29,87 @@
     body { font-family: 'Inter', system-ui, sans-serif; }
     .display-font { font-family: 'Space Grotesk', sans-serif; }
 
-    .hero-glow { text-shadow: 0 0 40px rgb(0 245 255 / 0.5); }
-
-    .neon-border {
-      position: relative;
+    /* ===== DARK (default) ===== */
+    :root {
+      --body-bg: #09090b;
+      --body-text: #e4e4e7;
+      --badge-bg: #18181b;
+      --badge-border: #3f3f46;
+      --badge-text: #34d399;
+      --hero-sub: #a1a1aa;
+      --hero-desc: #71717a;
+      --glass-bg: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.1);
+      --glass-text: #d4d4d8;
+      --glass-accent: #22d3ee;
+      --card-bg: #18181b;
+      --card-border: rgba(255,255,255,0.08);
+      --placeholder-bg: #18181b;
+      --placeholder-border: rgba(148,163,184,0.3);
+      --placeholder-icon: #22d3ee;
+      --placeholder-icon2: #34d399;
+      --caption-text: #a1a1aa;
+      --footer-border: #27272a;
+      --footer-text: #71717a;
+      --section-title: #ffffff;
+      --btn-outline-border: #3f3f46;
+      --btn-outline-hover: #22d3ee;
+      --video-border: rgba(34,211,238,0.15);
+      --video-bg: #18181b;
+      --video-text: #a1a1aa;
+      --glow-color: rgba(0,245,255,0.5);
+      --neon-opacity: 0.65;
+      --toggle-track: #27272a;
+      --toggle-border: #52525b;
+      --toggle-active-track: #22d3ee;
+      --toggle-active-border: #67e8f9;
     }
+
+    /* ===== LIGHT ===== */
+    .light-mode {
+      --body-bg: #ffffff;
+      --body-text: #27272a;
+      --badge-bg: #f0fdf4;
+      --badge-border: #bbf7d0;
+      --badge-text: #059669;
+      --hero-sub: #52525b;
+      --hero-desc: #71717a;
+      --glass-bg: #ffffff;
+      --glass-border: #e4e4e7;
+      --glass-text: #3f3f46;
+      --glass-accent: #0891b2;
+      --card-bg: #ffffff;
+      --card-border: #e4e4e7;
+      --placeholder-bg: #f4f4f5;
+      --placeholder-border: #d4d4d8;
+      --placeholder-icon: #0891b2;
+      --placeholder-icon2: #059669;
+      --caption-text: #71717a;
+      --footer-border: #e4e4e7;
+      --footer-text: #a1a1aa;
+      --section-title: #09090b;
+      --btn-outline-border: #d4d4d8;
+      --btn-outline-hover: #0891b2;
+      --video-border: rgba(8,145,178,0.2);
+      --video-bg: #f4f4f5;
+      --video-text: #71717a;
+      --glow-color: rgba(8,145,178,0.15);
+      --neon-opacity: 0.35;
+      --toggle-track: #e4e4e7;
+      --toggle-border: #d4d4d8;
+      --toggle-active-track: #0891b2;
+      --toggle-active-border: #22d3ee;
+    }
+
+    body {
+      background-color: var(--body-bg);
+      color: var(--body-text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .hero-glow { text-shadow: 0 0 40px var(--glow-color); transition: text-shadow 0.4s ease; }
+
+    .neon-border { position: relative; }
     .neon-border::before {
       content: '';
       position: absolute;
@@ -45,9 +118,10 @@
       background-size: 300%;
       z-index: -1;
       filter: blur(12px);
-      opacity: 0.65;
+      opacity: var(--neon-opacity);
       border-radius: inherit;
       animation: neon-pulse 4s linear infinite;
+      transition: opacity 0.4s ease;
     }
 
     @keyframes neon-pulse {
@@ -63,17 +137,16 @@
       letter-spacing: -0.04em;
       text-align: center;
       margin-bottom: 2.5rem;
+      color: var(--section-title);
+      transition: color 0.4s ease;
     }
 
     .glass {
-      background: rgba(255, 255, 255, 0.07);
+      background: var(--glass-bg);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .dark .glass {
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(148, 163, 184, 0.12);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      transition: background 0.4s ease, border-color 0.4s ease;
     }
 
     .result-placeholder {
@@ -82,109 +155,120 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 2px dashed rgba(148, 163, 184, 0.5);
+      border: 2px dashed var(--placeholder-border);
       border-radius: 1rem;
+      background-color: var(--placeholder-bg);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
     .result-placeholder:hover {
-      border-color: #00f5ff;
-      box-shadow: 0 0 35px rgba(0, 245, 255, 0.25);
+      border-color: var(--placeholder-icon);
+      box-shadow: 0 0 35px rgba(0, 245, 255, 0.2);
     }
 
+    /* Toggle */
     .toggle-btn {
       width: 56px;
       height: 30px;
       border-radius: 9999px;
       position: relative;
       cursor: pointer;
-      border: 2px solid #64748b;
-      background-color: #1e2937;
+      border: 2px solid var(--toggle-border);
+      background-color: var(--toggle-track);
       transition: all 0.3s ease;
     }
-    .toggle-btn.dark-active {
-      background-color: #22d3ee;
-      border-color: #67e8f9;
+    .toggle-btn.active {
+      background-color: var(--toggle-active-track);
+      border-color: var(--toggle-active-border);
     }
     .toggle-btn .knob {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       background: white;
       position: absolute;
-      top: 1px;
-      left: 1px;
+      top: 2px;
+      left: 2px;
       transition: transform 0.3s ease;
       box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
     }
-    .toggle-btn.dark-active .knob {
+    .toggle-btn.active .knob {
       transform: translateX(26px);
     }
+    .toggle-btn .knob i { font-size: 11px; line-height: 1; }
+    .icon-moon { color: #334155; display: block; }
+    .icon-sun { color: #f59e0b; display: none; }
+    .toggle-btn.active .icon-moon { display: none; }
+    .toggle-btn.active .icon-sun { display: block; }
   </style>
 </head>
-<body class="bg-zinc-950 text-zinc-200 overflow-x-hidden">
+<body class="overflow-x-hidden">
 
-  <!-- Theme Toggle -->
+  <!-- Theme Toggle — starts as dark (no .active), light mode adds .active -->
   <button
     type="button"
     id="themeToggle"
     class="toggle-btn fixed top-6 right-6 z-50 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-    aria-label="Toggle dark mode"
+    aria-label="Toggle light mode"
   >
-    <span class="knob flex items-center justify-center">
-      <i class="fas fa-sun text-amber-400 text-xs"></i>
-      <i class="fas fa-moon text-slate-900 text-xs"></i>
+    <span class="knob">
+      <i class="fas fa-moon icon-moon"></i>
+      <i class="fas fa-sun icon-sun"></i>
     </span>
   </button>
 
   <main class="container mx-auto max-w-6xl px-6 py-12">
+
     <!-- Hero -->
     <header class="text-center mb-16 pt-8">
-      <div class="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-700 rounded-full px-5 py-1.5 text-sm mb-6">
-        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-        <span class="text-emerald-400 font-medium">Research Preview 2026</span>
+      <div style="background:var(--badge-bg);border:1px solid var(--badge-border);" class="inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-sm mb-6">
+        <div class="w-2 h-2 rounded-full animate-pulse" style="background:var(--badge-text);"></div>
+        <span style="color:var(--badge-text);" class="font-medium">Research Preview 2026</span>
       </div>
-      
-      <h1 class="display-font text-6xl sm:text-7xl font-bold tracking-tighter hero-glow mb-4">
+
+      <h1 class="display-font text-6xl sm:text-7xl font-bold tracking-tighter hero-glow mb-4" style="color:var(--section-title);">
         Digital<span class="text-cyan-400">Wave</span>
       </h1>
-      
-      <p class="text-2xl sm:text-3xl text-zinc-400 mb-8 max-w-2xl mx-auto">
+
+      <p class="text-2xl sm:text-3xl mb-8 max-w-2xl mx-auto" style="color:var(--hero-sub);">
         Vision-Powered mmWave Digital Twin
       </p>
 
-      <p class="max-w-lg mx-auto text-lg text-zinc-500">
+      <p class="max-w-lg mx-auto text-lg" style="color:var(--hero-desc);">
         Reliable indoor millimeter-wave connectivity for cloud gaming, immersive AR/VR, and real-time communication
       </p>
 
       <div class="flex flex-wrap justify-center gap-4 mt-10">
         <a href="#" class="neon-border px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">Read the Paper</a>
-        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">View Code</a>
-        <a href="#" class="px-8 py-4 border border-zinc-700 hover:border-cyan-400 font-semibold rounded-2xl flex items-center gap-3 transition-all">Dataset</a>
+        <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">View Code</a>
+        <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">Dataset</a>
       </div>
     </header>
 
     <!-- Teaser -->
     <section class="my-20">
-      <div class="result-placeholder w-full max-w-4xl mx-auto neon-border bg-zinc-900 border-cyan-500/30 cursor-zoom-in">
+      <div class="result-placeholder w-full max-w-4xl mx-auto neon-border cursor-zoom-in">
         <div class="text-center">
-          <i class="fas fa-cube text-6xl mb-6 text-cyan-400"></i>
-          <p class="text-cyan-400 font-medium tracking-widest text-sm mb-1">LIVE DIGITAL TWIN</p>
-          <span class="text-2xl font-semibold text-white">3D Environment + Real-time mmWave Propagation</span>
+          <i class="fas fa-cube text-6xl mb-6" style="color:var(--placeholder-icon);"></i>
+          <p class="font-medium tracking-widest text-sm mb-1" style="color:var(--placeholder-icon);">LIVE DIGITAL TWIN</p>
+          <span class="text-2xl font-semibold" style="color:var(--section-title);">3D Environment + Real-time mmWave Propagation</span>
         </div>
       </div>
     </section>
 
     <!-- Abstract -->
     <section class="my-20">
-      <h2 class="section-title text-white">The Challenge</h2>
-      <div class="glass max-w-4xl mx-auto p-10 rounded-3xl text-lg leading-relaxed text-zinc-300">
+      <h2 class="section-title">The Challenge</h2>
+      <div class="glass max-w-4xl mx-auto p-10 rounded-3xl text-lg leading-relaxed" style="color:var(--glass-text);">
         <p>
-          Reliable wireless connectivity is essential for cloud gaming, immersive AR/VR, and real-time video communication. 
+          Reliable wireless connectivity is essential for cloud gaming, immersive AR/VR, and real-time video communication.
           Yet at millimeter-wave frequencies, even minor environmental changes can cause sudden QoE degradation.
         </p>
         <p class="mt-6">
-          <span class="text-cyan-400 font-semibold">Digital Wave</span> creates a vision-driven wireless digital twin using commodity cameras — 
+          <span style="color:var(--glass-accent);" class="font-semibold">Digital Wave</span> creates a vision-driven wireless digital twin using commodity cameras —
           enabling real-time diagnosis and mitigation without new hardware.
         </p>
       </div>
@@ -192,86 +276,84 @@
 
     <!-- Video -->
     <section class="my-20">
-      <h2 class="section-title text-white">Watch It In Action</h2>
-      <div class="w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden border border-cyan-500/20 bg-zinc-900 flex items-center justify-center">
+      <h2 class="section-title">Watch It In Action</h2>
+      <div class="w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden flex items-center justify-center" style="border:1px solid var(--video-border);background:var(--video-bg);">
         <div class="text-center">
-          <i class="fas fa-play-circle text-7xl text-cyan-400 mb-4"></i>
-          <p class="text-zinc-400">Demo Video – Real-time 3D Reconstruction & mmWave Prediction</p>
+          <i class="fas fa-play-circle text-7xl mb-4" style="color:var(--placeholder-icon);"></i>
+          <p style="color:var(--video-text);">Demo Video – Real-time 3D Reconstruction & mmWave Prediction</p>
         </div>
       </div>
     </section>
 
     <!-- Results -->
     <section class="my-20">
-      <h2 class="section-title text-white">Results</h2>
+      <h2 class="section-title">Results</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="glass p-8 rounded-3xl">
-          <div class="result-placeholder mb-6 bg-zinc-900 border-cyan-400/30">
-            <i class="fas fa-broadcast-tower text-5xl text-cyan-400"></i>
+          <div class="result-placeholder mb-6">
+            <i class="fas fa-broadcast-tower text-5xl" style="color:var(--placeholder-icon);"></i>
           </div>
-          <p class="text-center text-zinc-400">Real-time signal coverage with dynamic obstacle prediction</p>
+          <p class="text-center" style="color:var(--caption-text);">Real-time signal coverage with dynamic obstacle prediction</p>
         </div>
         <div class="glass p-8 rounded-3xl">
-          <div class="result-placeholder mb-6 bg-zinc-900 border-emerald-400/30">
-            <i class="fas fa-chart-line text-5xl text-emerald-400"></i>
+          <div class="result-placeholder mb-6">
+            <i class="fas fa-chart-line text-5xl" style="color:var(--placeholder-icon2);"></i>
           </div>
-          <p class="text-center text-zinc-400">Significant QoE improvement over static planning</p>
+          <p class="text-center" style="color:var(--caption-text);">Significant QoE improvement over static planning</p>
         </div>
       </div>
     </section>
 
-    <footer class="mt-24 pt-12 border-t border-zinc-800 text-center text-zinc-500 text-sm">
+    <footer class="mt-24 pt-12 text-center text-sm" style="border-top:1px solid var(--footer-border);color:var(--footer-text);">
       <p>Digital Wave — Vision-Driven Indoor mmWave Digital Twin</p>
       <p class="mt-1">Research Project • 2026</p>
     </footer>
   </main>
 
-  <!-- Dark Mode Toggle Script -->
   <script>
-    (() => {
-      const html = document.documentElement;
-      const btn = document.getElementById('themeToggle');
+    (function() {
+      var root = document.getElementById('root');
+      var btn = document.getElementById('themeToggle');
 
-      function safeGet(key) {
-        try { return localStorage.getItem(key); } catch(e) { return null; }
+      function isLight() {
+        return root.classList.contains('light-mode');
       }
 
-      function safeSet(key, value) {
-        try { localStorage.setItem(key, value); } catch(e) {}
-      }
-
-      function getPreferred() {
-        const saved = safeGet('theme');
-        if (saved) return saved;
-        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-
-      function applyTheme(theme) {
-        if (theme === 'dark') {
-          html.classList.add('dark');
-          btn.classList.add('dark-active');
+      function setLight(on) {
+        if (on) {
+          root.classList.add('light-mode');
+          btn.classList.add('active');
+          btn.setAttribute('aria-label', 'Toggle dark mode');
         } else {
-          html.classList.remove('dark');
-          btn.classList.remove('dark-active');
+          root.classList.remove('light-mode');
+          btn.classList.remove('active');
+          btn.setAttribute('aria-label', 'Toggle light mode');
         }
-        safeSet('theme', theme);
+        try { localStorage.setItem('dw-theme', on ? 'light' : 'dark'); } catch(e) {}
       }
 
-      // Initial theme
-      applyTheme(getPreferred());
+      // Init
+      (function() {
+        var saved = null;
+        try { saved = localStorage.getItem('dw-theme'); } catch(e) {}
+        if (saved === 'light') {
+          setLight(true);
+        } else if (saved === 'dark') {
+          setLight(false);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          setLight(true);
+        } else {
+          setLight(false);
+        }
+      })();
 
-      // Click handler
-      btn.addEventListener('click', () => {
-        const isDark = html.classList.contains('dark');
-        applyTheme(isDark ? 'light' : 'dark');
-      });
+      btn.onclick = function() {
+        setLight(!isLight());
+      };
 
-      // System preference listener
       if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          if (!safeGet('theme')) {
-            applyTheme(e.matches ? 'dark' : 'light');
-          }
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
+          try { if (!localStorage.getItem('dw-theme')) setLight(e.matches); } catch(err) {}
         });
       }
     })();
