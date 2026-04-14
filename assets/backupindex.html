@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en" id="root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Wave • mmWave Digital Twin</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"],
+            display: ["Space Grotesk", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { font-family: "Inter", system-ui, sans-serif; }
+    .display-font { font-family: "Space Grotesk", sans-serif; }
+
+    :root {
+      --body-bg: #09090b;
+      --body-text: #e4e4e7;
+      --badge-bg: #18181b;
+      --badge-border: #3f3f46;
+      --badge-text: #34d399;
+      --hero-sub: #a1a1aa;
+      --hero-desc: #71717a;
+      --glass-bg: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.10);
+      --glass-text: #d4d4d8;
+      --glass-accent: #22d3ee;
+      --card-bg: #18181b;
+      --card-border: rgba(255,255,255,0.08);
+      --placeholder-bg: #18181b;
+      --placeholder-border: rgba(148,163,184,0.30);
+      --placeholder-icon: #22d3ee;
+      --placeholder-icon2: #34d399;
+      --caption-text: #a1a1aa;
+      --footer-border: #27272a;
+      --footer-text: #71717a;
+      --section-title: #ffffff;
+      --btn-outline-border: #3f3f46;
+      --btn-outline-hover: #22d3ee;
+      --video-border: rgba(34,211,238,0.15);
+      --video-bg: #18181b;
+      --video-text: #a1a1aa;
+      --glow-color: rgba(0,245,255,0.50);
+      --neon-opacity: 0.65;
+      --toggle-track: #27272a;
+      --toggle-border: #52525b;
+      --toggle-active-track: #22d3ee;
+      --toggle-active-border: #67e8f9;
+      --panel-soft: rgba(6, 12, 24, 0.80);
+      --panel-deep: rgba(8, 16, 32, 0.92);
+      --panel-line: rgba(148, 163, 184, 0.22);
+      --pill-bg: rgba(15, 23, 42, 0.80);
+      --pill-text: #dbeafe;
+      --pill-border: rgba(125, 211, 252, 0.24);
+      --muted: #94a3b8;
+      --strong: #f8fafc;
+      --scene-grad: radial-gradient(circle at top, rgba(56, 189, 248, 0.14), transparent 46%), linear-gradient(180deg, rgba(2, 6, 23, 0.98), rgba(2, 8, 23, 0.86));
+      --map-bg: #050816;
+      --map-outline: rgba(255,255,255,0.10);
+      --warn: #fbbf24;
+      --success: #34d399;
+      --danger: #fb7185;
+      --control-shadow: 0 24px 60px rgba(2, 8, 23, 0.36);
+    }
+
+    .light-mode {
+      --body-bg: #ffffff;
+      --body-text: #27272a;
+      --badge-bg: #f0fdf4;
+      --badge-border: #bbf7d0;
+      --badge-text: #059669;
+      --hero-sub: #52525b;
+      --hero-desc: #71717a;
+      --glass-bg: rgba(255,255,255,0.92);
+      --glass-border: #e4e4e7;
+      --glass-text: #3f3f46;
+      --glass-accent: #0891b2;
+      --card-bg: #ffffff;
+      --card-border: #e4e4e7;
+      --placeholder-bg: #f4f4f5;
+      --placeholder-border: #d4d4d8;
+      --placeholder-icon: #0891b2;
+      --placeholder-icon2: #059669;
+      --caption-text: #71717a;
+      --footer-border: #e4e4e7;
+      --footer-text: #a1a1aa;
+      --section-title: #09090b;
+      --btn-outline-border: #d4d4d8;
+      --btn-outline-hover: #0891b2;
+      --video-border: rgba(8,145,178,0.20);
+      --video-bg: #f4f4f5;
+      --video-text: #71717a;
+      --glow-color: rgba(8,145,178,0.15);
+      --neon-opacity: 0.35;
+      --toggle-track: #e4e4e7;
+      --toggle-border: #d4d4d8;
+      --toggle-active-track: #0891b2;
+      --toggle-active-border: #22d3ee;
+      --panel-soft: rgba(255, 255, 255, 0.88);
+      --panel-deep: rgba(248, 250, 252, 0.96);
+      --panel-line: rgba(148, 163, 184, 0.30);
+      --pill-bg: rgba(241, 245, 249, 0.92);
+      --pill-text: #0f172a;
+      --pill-border: rgba(14, 165, 233, 0.20);
+      --muted: #64748b;
+      --strong: #020617;
+      --scene-grad: radial-gradient(circle at top, rgba(14, 165, 233, 0.10), transparent 46%), linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(241, 245, 249, 0.94));
+      --map-bg: #e2e8f0;
+      --map-outline: rgba(15,23,42,0.10);
+      --warn: #d97706;
+      --success: #059669;
+      --danger: #e11d48;
+      --control-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+    }
+
+    body {
+      background-color: var(--body-bg);
+      color: var(--body-text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .hero-glow {
+      text-shadow: 0 0 40px var(--glow-color);
+      transition: text-shadow 0.4s ease;
+    }
+
+    .neon-border {
+      position: relative;
+    }
+
+    .neon-border::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, #00f5ff, #a855f7, #ec4899, #00f5ff);
+      background-size: 300%;
+      z-index: -1;
+      filter: blur(12px);
+      opacity: var(--neon-opacity);
+      border-radius: inherit;
+      animation: neon-pulse 4s linear infinite;
+      transition: opacity 0.4s ease;
+    }
+
+    @keyframes neon-pulse {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 2.75rem;
+      letter-spacing: -0.04em;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: var(--section-title);
+      transition: color 0.4s ease;
+    }
+
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .result-placeholder {
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed var(--placeholder-border);
+      border-radius: 1rem;
+      background-color: var(--placeholder-bg);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .result-placeholder:hover {
+      border-color: var(--placeholder-icon);
+      box-shadow: 0 0 35px rgba(0, 245, 255, 0.2);
+    }
+
+    .toggle-btn {
+      width: 56px;
+      height: 30px;
+      border-radius: 9999px;
+      position: relative;
+      cursor: pointer;
+      border: 2px solid var(--toggle-border);
+      background-color: var(--toggle-track);
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn.active {
+      background-color: var(--toggle-active-track);
+      border-color: var(--toggle-active-border);
+    }
+
+    .toggle-btn .knob {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .toggle-btn.active .knob {
+      transform: translateX(26px);
+    }
+
+    .toggle-btn .knob i {
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .icon-moon { color: #334155; display: block; }
+    .icon-sun { color: #f59e0b; display: none; }
+    .toggle-btn.active .icon-moon { display: none; }
+    .toggle-btn.active .icon-sun { display: block; }
+
+    .twin-shell {
+      padding: 1.25rem;
+      border-radius: 2rem;
+      background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.10), transparent 26%),
+        var(--panel-deep);
+      border: 1px solid var(--panel-line);
+      box-shadow: var(--control-shadow);
+    }
+
+    .twin-lead {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .twin-kickers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.9rem;
+    }
+
+    .twin-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      color: var(--pill-text);
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      white-space: nowrap;
+    }
+
+    .twin-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.92fr);
+      gap: 1rem;
+    }
+
+    .panel-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.6rem;
+      border: 1px solid var(--panel-line);
+      background: var(--panel-soft);
+      padding: 1rem;
+      min-width: 0;
+    }
+
+    .panel-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 24%);
+      pointer-events: none;
+    }
+
+    .scene-panel {
+      min-height: 36rem;
+    }
+
+    .control-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      min-height: 36rem;
+    }
+
+    .radio-panel {
+      grid-column: 1 / -1;
+      padding-bottom: 1.2rem;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.9rem;
+      margin-bottom: 0.85rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-head h3 {
+      margin: 0;
+      color: var(--strong);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-head p {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .scene-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.70);
+      color: #bfdbfe;
+      font-size: 0.76rem;
+      border: 1px solid rgba(96, 165, 250, 0.26);
+      white-space: nowrap;
+    }
+
+    .scene-viewport {
+      position: relative;
+      min-height: 28rem;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 1px solid var(--panel-line);
+      background: var(--scene-grad);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .scene-overlay {
+      position: absolute;
+      left: 0.85rem;
+      right: 0.85rem;
+      bottom: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .overlay-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 1rem;
+      background: rgba(2, 6, 23, 0.74);
+      border: 1px solid rgba(148,163,184,0.20);
+      color: #e2e8f0;
+      font-size: 0.82rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .light-mode .overlay-chip {
+      background: rgba(255,255,255,0.84);
+      color: #0f172a;
+    }
+
+    .scene-actions {
+      display: flex;
+      gap: 0.65rem;
+      margin-top: 0.9rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .control-label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .control-hint {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .control-select,
+    .control-button,
+    .mode-button,
+    .ghost-button {
+      border-radius: 0.95rem;
+      border: 1px solid var(--panel-line);
+      padding: 0.8rem 0.95rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .control-select {
+      background: rgba(2, 6, 23, 0.48);
+      color: var(--strong);
+      outline: none;
+    }
+
+    .light-mode .control-select {
+      background: rgba(255,255,255,0.84);
+    }
+
+    .control-button,
+    .mode-button,
+    .ghost-button {
+      background: rgba(15, 23, 42, 0.62);
+      color: #e2e8f0;
+      cursor: pointer;
+    }
+
+    .light-mode .control-button,
+    .light-mode .mode-button,
+    .light-mode .ghost-button {
+      background: rgba(255,255,255,0.88);
+      color: #0f172a;
+    }
+
+    .control-button:hover,
+    .mode-button:hover,
+    .ghost-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(34,211,238,0.55);
+    }
+
+    .control-button:disabled,
+    .mode-button:disabled,
+    .ghost-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.52;
+      transform: none;
+    }
+
+    .mode-button.active {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.26), rgba(59, 130, 246, 0.22));
+      border-color: rgba(103, 232, 249, 0.65);
+      color: #ecfeff;
+    }
+
+    .light-mode .mode-button.active {
+      color: #083344;
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(14, 165, 233, 0.14));
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    .metric-card {
+      border-radius: 1.1rem;
+      padding: 0.85rem 0.9rem;
+      border: 1px solid var(--panel-line);
+      background: rgba(2, 6, 23, 0.42);
+    }
+
+    .light-mode .metric-card {
+      background: rgba(255,255,255,0.76);
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .metric-value {
+      display: block;
+      margin-top: 0.28rem;
+      color: var(--strong);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .metric-sub {
+      display: block;
+      margin-top: 0.18rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .dpad {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.55rem;
+      max-width: 14rem;
+    }
+
+    .dpad button {
+      aspect-ratio: 1 / 1;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .dpad .blank {
+      visibility: hidden;
+    }
+
+    .key-hints {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .key-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .keycap {
+      min-width: 1.95rem;
+      padding: 0.25rem 0.45rem;
+      border-radius: 0.55rem;
+      border: 1px solid var(--panel-line);
+      background: rgba(255,255,255,0.06);
+      color: var(--strong);
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      box-shadow: inset 0 -2px 0 rgba(255,255,255,0.04);
+    }
+
+    .radio-stage {
+      border-radius: 1.2rem;
+      border: 1px solid var(--map-outline);
+      overflow: hidden;
+      background: var(--map-bg);
+      aspect-ratio: 377 / 208;
+      position: relative;
+    }
+
+    .radio-stage canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+      cursor: crosshair;
+    }
+
+    .radio-stage[data-mode="none"] canvas {
+      cursor: default;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-top: 0.95rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-gradient {
+      flex: 1 1 14rem;
+      min-width: 14rem;
+      height: 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid var(--panel-line);
+      background: linear-gradient(90deg, #440154, #46327e, #365c8d, #277f8e, #1fa187, #4ac16d, #a0da39, #fde725);
+    }
+
+    .legend-caption {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .status-line {
+      margin-top: 1rem;
+      border-radius: 1rem;
+      border: 1px solid var(--panel-line);
+      padding: 0.9rem 1rem;
+      background: rgba(15, 23, 42, 0.42);
+      color: #dbeafe;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .light-mode .status-line {
+      background: rgba(255,255,255,0.84);
+      color: #0f172a;
+    }
+
+    .status-line[data-tone="warn"] {
+      color: var(--warn);
+    }
+
+    .status-line[data-tone="error"] {
+      color: var(--danger);
+    }
+
+    .status-line[data-tone="success"] {
+      color: var(--success);
+    }
+
+    .fine-print {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.36rem 0.62rem;
+      border-radius: 9999px;
+      font-size: 0.76rem;
+      border: 1px solid var(--panel-line);
+      background: rgba(255,255,255,0.05);
+      color: var(--strong);
+    }
+
+    .status-chip.locked {
+      color: #fde68a;
+      border-color: rgba(251, 191, 36, 0.32);
+    }
+
+    .status-chip.movable {
+      color: #a7f3d0;
+      border-color: rgba(16, 185, 129, 0.28);
+    }
+
+    @media (max-width: 1024px) {
+      .twin-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .scene-panel,
+      .control-panel {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .scene-viewport {
+        min-height: 22rem;
+      }
+
+      .metrics-grid,
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+  <button
+    type="button"
+    id="themeToggle"
+    class="toggle-btn fixed top-6 right-6 z-50 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+    aria-label="Toggle light mode"
+  >
+    <span class="knob">
+      <i class="fas fa-moon icon-moon"></i>
+      <i class="fas fa-sun icon-sun"></i>
+    </span>
+  </button>
+
+  <main class="container mx-auto max-w-6xl px-6 py-12">
+    <header class="text-center mb-16 pt-8">
+      <div style="background:var(--badge-bg);border:1px solid var(--badge-border);" class="inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-sm mb-6">
+        <div class="w-2 h-2 rounded-full animate-pulse" style="background:var(--badge-text);"></div>
+        <span style="color:var(--badge-text);" class="font-medium">Research Preview 2026</span>
+      </div>
+
+      <h1 class="display-font text-6xl sm:text-7xl font-bold tracking-tighter hero-glow mb-4" style="color:var(--section-title);">
+        Digital<span class="text-cyan-400">Wave</span>
+      </h1>
+
+      <p class="text-2xl sm:text-3xl mb-8 max-w-2xl mx-auto" style="color:var(--hero-sub);">
+        Vision-Powered mmWave Digital Twin
+      </p>
+
+      <p class="max-w-lg mx-auto text-lg" style="color:var(--hero-desc);">
+        Reliable indoor millimeter-wave connectivity for cloud gaming, immersive AR/VR, and real-time communication
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-10">
+        <a href="#" class="neon-border px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">Read the Paper</a>
+        <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">View Code</a>
+        <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">Dataset</a>
+      </div>
+    </header>
+
+    <section class="my-20">
+      <div class="twin-shell neon-border">
+        <div class="twin-lead">
+          <div class="max-w-2xl">
+            <p class="font-medium tracking-[0.28em] text-sm mb-2" style="color:var(--placeholder-icon);">LIVE DIGITAL TWIN</p>
+            <h2 class="display-font text-3xl sm:text-4xl font-bold tracking-tight" style="color:var(--section-title);">
+              3D Voxel Motion + Browser REM 
+            </h2>
+            <p class="mt-4 text-base sm:text-lg" style="color:var(--glass-text);">
+              This block loads our real <code>3D VOXELISED MAP</code>, you can select a mesh, 
+              move it one voxel at a time with the arrow keys, 
+              and recomputes a radio environment map below.
+            </p>
+            <div class="twin-kickers">
+              <span class="twin-pill"><i class="fas fa-cubes"></i> Real Digital Twin tensor</span>
+              <span class="twin-pill"><i class="fas fa-arrows-left-right-to-line"></i> Voxel mesh motion</span>
+              <span class="twin-pill"><i class="fas fa-tower-broadcast"></i> User Interactive</span>
+            </div>
+          </div>
+
+          <div class="space-y-2 text-right">
+            <div class="twin-pill"><i class="fas fa-circle-nodes"></i> Play with 3d Environment</div>
+            <div class="twin-pill"><i class="fas fa-folder-open"></i> Using original assets</code> assets directly</div>
+          </div>
+        </div>
+
+        <div class="twin-grid">
+          <section class="panel-card scene-panel">
+            <div class="panel-head">
+              <div>
+                <h3>Voxel Tensor Scene</h3>
+                <p>Select a cluster from the scene or dropdown, then move it exactly one voxel per tap with the arrow keys or the D-pad.</p>
+              </div>
+              <span class="scene-badge" id="sceneDataBadge"><i class="fas fa-spinner fa-spin"></i> Loading tensor</span>
+            </div>
+
+            <div id="sceneViewport" class="scene-viewport">
+              <div class="scene-overlay">
+                <span class="overlay-chip" id="sceneSelectionChip"><i class="fas fa-crosshairs"></i> Waiting for scene</span>
+                <span class="overlay-chip" id="sceneMotionChip"><i class="fas fa-gamepad"></i> Arrow keys move by 1 voxel</span>
+              </div>
+            </div>
+
+            <div class="scene-actions">
+              <button class="control-button" id="fitSceneBtn" type="button"><i class="fas fa-expand"></i> Recenter View</button>
+              <button class="ghost-button" id="resetLayoutBtn" type="button"><i class="fas fa-rotate-left"></i> Reset Layout</button>
+            </div>
+          </section>
+
+          <aside class="panel-card control-panel">
+            <div class="control-group">
+              <span class="control-label">Mesh Selection</span>
+              <select id="objectSelect" class="control-select">
+                <option>Loading objects…</option>
+              </select>
+              <div class="key-hints">
+                <span class="key-hint"><span class="keycap">Click</span> pick from 3D scene</span>
+                <span class="key-hint"><span class="keycap">Map</span> pick from REM canvas</span>
+              </div>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-label">Selected Mesh</span>
+                <span class="metric-value" id="metricSelected">—</span>
+                <span class="metric-sub" id="metricVoxelCount">Voxel stats pending</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Mobility</span>
+                <span class="metric-value" id="metricMobility">—</span>
+                <span class="metric-sub" id="metricOffset">Offset Δ(0, 0)</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">TX Position</span>
+                <span class="metric-value" id="metricTx">—</span>
+                <span class="metric-sub">Click “Place TX”, then click the map.</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">RX Zone</span>
+                <span class="metric-value" id="metricRx">—</span>
+                <span class="metric-sub" id="metricRem">RX summary loading</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <span class="control-label">Move Mesh</span>
+              <div class="dpad">
+                <span class="blank"></span>
+                <button type="button" class="control-button move-btn" data-dx="0" data-dy="-1"><i class="fas fa-arrow-up"></i></button>
+                <span class="blank"></span>
+                <button type="button" class="control-button move-btn" data-dx="-1" data-dy="0"><i class="fas fa-arrow-left"></i></button>
+                <span class="blank"></span>
+                <button type="button" class="control-button move-btn" data-dx="1" data-dy="0"><i class="fas fa-arrow-right"></i></button>
+                <span class="blank"></span>
+                <button type="button" class="control-button move-btn" data-dx="0" data-dy="1"><i class="fas fa-arrow-down"></i></button>
+                <span class="blank"></span>
+              </div>
+              <div class="key-hints">
+                <span class="key-hint"><span class="keycap">←</span> left</span>
+                <span class="key-hint"><span class="keycap">→</span> right</span>
+                <span class="key-hint"><span class="keycap">↑</span> up</span>
+                <span class="key-hint"><span class="keycap">↓</span> down</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <span class="control-label">Radio Map Tools</span>
+              <div class="button-grid">
+                <button class="mode-button" id="txModeBtn" type="button"><i class="fas fa-tower-cell"></i> Place TX</button>
+                <button class="mode-button" id="rxAddModeBtn" type="button"><i class="fas fa-pen"></i> Paint RX</button>
+                <button class="mode-button" id="rxEraseModeBtn" type="button"><i class="fas fa-eraser"></i> Erase RX</button>
+                <button class="ghost-button" id="clearRxBtn" type="button"><i class="fas fa-trash"></i> Clear RX</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <span class="control-label">Reset Demo State</span>
+              <div class="button-grid">
+                <button class="ghost-button" id="restoreMarkersBtn" type="button"><i class="fas fa-location-crosshairs"></i> Restore TX/RX</button>
+                <button class="ghost-button" id="clearModeBtn" type="button"><i class="fas fa-pointer"></i> Neutral Cursor</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <!-- <span class="control-label">What This Is</span>
+              <p class="fine-print">
+                The voxel motion is real browser-side manipulation of your Morpheus tensor. The radiomap is an intentionally lightweight mimic: log-distance loss, deterministic shadow fading, and blockage penalties sampled from the current voxel layout.
+              </p> -->
+              <div class="key-hints">
+                <span class="status-chip movable"><i class="fas fa-lock-open"></i> Movable cluster</span>
+                <!-- <span class="status-chip locked"><i class="fas fa-lock"></i> Quasi-static cluster</span> -->
+                 <span class="status-chip locked"><i class="fas fa-lock"></i> Static cluster</span>
+              </div>
+            </div>
+          </aside>
+
+          <section class="panel-card radio-panel">
+            <div class="panel-head">
+              <div>
+                <h3>SINR Map</h3>
+                <!-- <p>The map below is recomputed from the live voxel layout using a JavaScript path-loss model. Obstacles darken the map and increase shadow penalty.</p> -->
+                  
+              </div>
+              <span class="scene-badge" id="remBadge"><i class="fas fa-wave-square"></i> Awaiting layout</span>
+            </div>
+
+            <div class="radio-stage" id="radioStage" data-mode="none">
+              <canvas id="radioMapCanvas" width="377" height="208" aria-label="Interactive radio map"></canvas>
+            </div>
+
+            <div class="legend-row">
+              <span class="legend-caption">Weaker pseudo-SINR</span>
+              <div class="legend-gradient"></div>
+              <span class="legend-caption">Stronger pseudo-SINR</span>
+            </div>
+          </section>
+        </div>
+
+        <div id="twinStatus" class="status-line" data-tone="info">
+          Initializing static browser demo…
+        </div>
+      </div>
+    </section>
+
+    <section class="my-20">
+      <h2 class="section-title">The Challenge</h2>
+      <div class="glass max-w-4xl mx-auto p-10 rounded-3xl text-lg leading-relaxed" style="color:var(--glass-text);">
+        <p>
+          Reliable wireless connectivity is essential for cloud gaming, immersive AR/VR, and real-time video communication.
+          Yet at millimeter-wave frequencies, even minor environmental changes can cause sudden QoE degradation.
+        </p>
+        <p class="mt-6">
+          <span style="color:var(--glass-accent);" class="font-semibold">Digital Wave</span> creates a vision-driven wireless digital twin using commodity cameras,
+          enabling real-time diagnosis and mitigation without new hardware.
+        </p>
+      </div>
+    </section>
+
+    <section class="my-20">
+      <h2 class="section-title">Watch It In Action</h2>
+      <div class="w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden flex items-center justify-center" style="border:1px solid var(--video-border);background:var(--video-bg);">
+        <div class="text-center">
+          <i class="fas fa-play-circle text-7xl mb-4" style="color:var(--placeholder-icon);"></i>
+          <p style="color:var(--video-text);">Demo Video</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="my-20">
+      <h2 class="section-title">Results</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="glass p-8 rounded-3xl">
+          <div class="result-placeholder mb-6">
+            <i class="fas fa-broadcast-tower text-5xl" style="color:var(--placeholder-icon);"></i>
+          </div>
+          <p class="text-center" style="color:var(--caption-text);">Real-time signal coverage with dynamic obstacle prediction</p>
+        </div>
+        <div class="glass p-8 rounded-3xl">
+          <div class="result-placeholder mb-6">
+            <i class="fas fa-chart-line text-5xl" style="color:var(--placeholder-icon2);"></i>
+          </div>
+          <p class="text-center" style="color:var(--caption-text);">Significant SNR improvement over static planning</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-24 pt-12 text-center text-sm" style="border-top:1px solid var(--footer-border);color:var(--footer-text);">
+      <p>Digital Wave — Vision-Driven Indoor mmWave Digital Twin</p>
+      <p class="mt-1">Research Project • 2026</p>
+    </footer>
+  </main>
+
+  <script>
+    (function() {
+      var root = document.getElementById("root");
+      var btn = document.getElementById("themeToggle");
+
+      function isLight() {
+        return root.classList.contains("light-mode");
+      }
+
+      function setLight(on) {
+        if (on) {
+          root.classList.add("light-mode");
+          btn.classList.add("active");
+          btn.setAttribute("aria-label", "Toggle dark mode");
+        } else {
+          root.classList.remove("light-mode");
+          btn.classList.remove("active");
+          btn.setAttribute("aria-label", "Toggle light mode");
+        }
+        try { localStorage.setItem("dw-theme", on ? "light" : "dark"); } catch (e) {}
+      }
+
+      (function() {
+        var saved = null;
+        try { saved = localStorage.getItem("dw-theme"); } catch (e) {}
+        if (saved === "light") {
+          setLight(true);
+        } else if (saved === "dark") {
+          setLight(false);
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+          setLight(true);
+        } else {
+          setLight(false);
+        }
+      })();
+
+      btn.onclick = function() {
+        setLight(!isLight());
+      };
+
+      if (window.matchMedia) {
+        window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function(e) {
+          try {
+            if (!localStorage.getItem("dw-theme")) {
+              setLight(e.matches);
+            }
+          } catch (err) {}
+        });
+      }
+    })();
+  </script>
+
+  <script>
+    window.__digitalTwinBooted = false;
+    window.addEventListener("DOMContentLoaded", function() {
+      window.setTimeout(function() {
+        if (window.__digitalTwinBooted) return;
+        var status = document.getElementById("twinStatus");
+        var badge = document.getElementById("sceneDataBadge");
+        var rem = document.getElementById("remBadge");
+        if (status) {
+          status.textContent = "The interactive twin did not boot. If a CDN is blocked or you are offline, the Three.js viewer cannot start.";
+          status.dataset.tone = "warn";
+        }
+        if (badge) {
+          badge.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Viewer script unavailable';
+        }
+        if (rem) {
+          rem.innerHTML = '<i class="fas fa-circle-exclamation"></i> Viewer not started';
+        }
+      }, 6000);
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+  <script>
+    if (!window.THREE) {
+      throw new Error("Three.js failed to load.");
+    }
+    window.__digitalTwinBooted = true;
+
+    const ASSETS = {
+      tensor: "./assets/voxel_tensor.npy",
+      txrx: "./assets/txrx_config.json",
+      locks: "./assets/quasi_static.json"
+    };
+
+    const PALETTE = [
+      "#e63946", "#457b9d", "#2a9d8f", "#e9c46a", "#f4a261",
+      "#8338ec", "#06d6a0", "#fb5607", "#ffbe0b", "#4cc9f0",
+      "#f72585", "#7209b7", "#3a86ff", "#ef233c", "#00f5d4",
+      "#48cae4", "#023e8a", "#264653", "#a8dadc", "#1d3557",
+      "#6b4c3b", "#8b6347", "#a07850", "#6e3f1e", "#704030",
+      "#5c4033", "#4a3728", "#543020", "#3d2b1f", "#7a5c4a"
+    ];
+
+    const VIRIDIS_KEYS = [
+      [68, 1, 84], [72, 20, 103], [71, 40, 122], [62, 60, 140],
+      [49, 80, 152], [38, 100, 158], [31, 120, 160], [30, 140, 156],
+      [40, 160, 143], [62, 180, 120], [95, 197, 91], [134, 211, 57],
+      [173, 220, 44], [210, 225, 27], [240, 228, 26], [253, 231, 37]
+    ];
+
+    const RADIO_CONFIG = {
+      voxelSizeMeters: 0.05,
+      txHeightMeters: 1.8,
+      rxHeightMeters: 1.1,
+      txPowerDbm: 18,
+      noiseFloorDbm: -84,
+      referenceLossDb: 68.0,
+      losExponent: 2.05,
+      nlosExponent: 3.15,
+      maxSamples: 18
+    };
+
+    const CAPTURE_MODE = new URLSearchParams(window.location.search).has("capture");
+
+    const ui = {
+      sceneViewport: document.getElementById("sceneViewport"),
+      objectSelect: document.getElementById("objectSelect"),
+      fitSceneBtn: document.getElementById("fitSceneBtn"),
+      resetLayoutBtn: document.getElementById("resetLayoutBtn"),
+      restoreMarkersBtn: document.getElementById("restoreMarkersBtn"),
+      clearModeBtn: document.getElementById("clearModeBtn"),
+      txModeBtn: document.getElementById("txModeBtn"),
+      rxAddModeBtn: document.getElementById("rxAddModeBtn"),
+      rxEraseModeBtn: document.getElementById("rxEraseModeBtn"),
+      clearRxBtn: document.getElementById("clearRxBtn"),
+      moveButtons: Array.from(document.querySelectorAll(".move-btn")),
+      radioStage: document.getElementById("radioStage"),
+      radioMapCanvas: document.getElementById("radioMapCanvas"),
+      twinStatus: document.getElementById("twinStatus"),
+      sceneDataBadge: document.getElementById("sceneDataBadge"),
+      remBadge: document.getElementById("remBadge"),
+      sceneSelectionChip: document.getElementById("sceneSelectionChip"),
+      sceneMotionChip: document.getElementById("sceneMotionChip"),
+      metricSelected: document.getElementById("metricSelected"),
+      metricVoxelCount: document.getElementById("metricVoxelCount"),
+      metricMobility: document.getElementById("metricMobility"),
+      metricOffset: document.getElementById("metricOffset"),
+      metricTx: document.getElementById("metricTx"),
+      metricRx: document.getElementById("metricRx"),
+      metricRem: document.getElementById("metricRem")
+    };
+
+    const state = {
+      dims: { cols: 0, rows: 0, height: 0 },
+      objects: new Map(),
+      orderedOids: [],
+      lockedIds: new Set(),
+      selectedOid: null,
+      currentLabelMap: null,
+      currentHeightMap: null,
+      txCells: [],
+      rxZone: new Set(),
+      defaultTxCells: [],
+      defaultRxZone: new Set(),
+      placementMode: "none",
+      isPainting: false,
+      radioMapDb: null,
+      radioSummary: null,
+      scene: null,
+      radioFrame: 0
+    };
+
+    const radioCtx = ui.radioMapCanvas.getContext("2d", { alpha: false });
+    radioCtx.imageSmoothingEnabled = false;
+
+    function setStatus(message, tone = "info") {
+      ui.twinStatus.textContent = message;
+      ui.twinStatus.dataset.tone = tone;
+    }
+
+    function renderSceneOnce() {
+      if (!state.scene) return;
+      state.scene.renderer.render(state.scene.scene, state.scene.camera);
+    }
+
+    function formatOid(oid) {
+      return `Cluster ${String(oid).padStart(2, "0")}`;
+    }
+
+    function cellKey(row, col) {
+      return `${row},${col}`;
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function median(values) {
+      if (!values.length) return null;
+      const sorted = [...values].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+    }
+
+    function mixColor(a, b, weight) {
+      const w = clamp(weight, 0, 1);
+      return [
+        Math.round(a[0] * (1 - w) + b[0] * w),
+        Math.round(a[1] * (1 - w) + b[1] * w),
+        Math.round(a[2] * (1 - w) + b[2] * w)
+      ];
+    }
+
+    function sampleViridis(t) {
+      const value = clamp(t, 0, 1) * (VIRIDIS_KEYS.length - 1);
+      const index = Math.floor(value);
+      const frac = value - index;
+      const start = VIRIDIS_KEYS[index];
+      const end = VIRIDIS_KEYS[Math.min(index + 1, VIRIDIS_KEYS.length - 1)];
+      return [
+        Math.round(start[0] + (end[0] - start[0]) * frac),
+        Math.round(start[1] + (end[1] - start[1]) * frac),
+        Math.round(start[2] + (end[2] - start[2]) * frac)
+      ];
+    }
+
+    function smoothShadowNoise(row, col, txRow, txCol) {
+      const a = Math.sin((row + 1) * 0.079 + (col + 1) * 0.041 + txRow * 0.021);
+      const b = Math.cos((row + 1) * 0.031 - (col + 1) * 0.067 + txCol * 0.019);
+      const c = Math.sin((row + txRow + col + txCol) * 0.017);
+      return (a + b + c) / 3;
+    }
+
+    function parseNpyHeader(text) {
+      const descrMatch = text.match(/'descr':\s*'([^']+)'/);
+      const fortranMatch = text.match(/'fortran_order':\s*(True|False)/);
+      const shapeMatch = text.match(/'shape':\s*\(([^)]*)\)/);
+
+      if (!descrMatch || !fortranMatch || !shapeMatch) {
+        throw new Error("Unsupported NPY header format.");
+      }
+
+      const shape = shapeMatch[1]
+        .split(",")
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .map((part) => Number(part));
+
+      return {
+        descr: descrMatch[1],
+        fortranOrder: fortranMatch[1] === "True",
+        shape
+      };
+    }
+
+    async function loadNpy(path) {
+      const response = await fetch(path);
+      if (!response.ok) {
+        throw new Error(`Could not fetch ${path} (${response.status}).`);
+      }
+
+      const buffer = await response.arrayBuffer();
+      const view = new DataView(buffer);
+      const magic = new Uint8Array(buffer, 0, 6);
+      const expected = [0x93, 0x4e, 0x55, 0x4d, 0x50, 0x59];
+
+      if (!expected.every((value, index) => magic[index] === value)) {
+        throw new Error("File is not a valid NPY array.");
+      }
+
+      const major = view.getUint8(6);
+      let offset = 8;
+      let headerLength = 0;
+
+      if (major === 1) {
+        headerLength = view.getUint16(offset, true);
+        offset += 2;
+      } else if (major === 2 || major === 3) {
+        headerLength = view.getUint32(offset, true);
+        offset += 4;
+      } else {
+        throw new Error(`Unsupported NPY major version ${major}.`);
+      }
+
+      const headerBytes = new Uint8Array(buffer, offset, headerLength);
+      const headerText = new TextDecoder("latin1").decode(headerBytes);
+      const meta = parseNpyHeader(headerText);
+      offset += headerLength;
+
+      if (meta.fortranOrder) {
+        throw new Error("Fortran-ordered NPY arrays are not supported in this demo.");
+      }
+
+      if (meta.descr !== "<i4") {
+        throw new Error(`Expected int32 voxel tensor, received ${meta.descr}.`);
+      }
+
+      return {
+        shape: meta.shape,
+        data: new Int32Array(buffer, offset)
+      };
+    }
+
+    async function loadJson(path, fallback) {
+      try {
+        const response = await fetch(path);
+        if (!response.ok) return fallback;
+        return await response.json();
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function createObjectRecord(oid) {
+      return {
+        oid,
+        color: PALETTE[(oid - 1) % PALETTE.length],
+        voxelCount: 0,
+        footprint: [],
+        surface: [],
+        offsetX: 0,
+        offsetY: 0,
+        minX: Infinity,
+        minY: Infinity,
+        minZ: Infinity,
+        maxX: -Infinity,
+        maxY: -Infinity,
+        maxZ: -Infinity,
+        locked: false,
+        material: null,
+        mesh: null,
+        group: null
+      };
+    }
+
+    function tensorIndex(x, y, z, rows, height) {
+      return ((x * rows) + y) * height + z;
+    }
+
+    function buildObjectsFromTensor(tensorData, shape) {
+      const [cols, rows, height] = shape;
+      const objects = new Map();
+      const labelMap = new Int32Array(rows * cols);
+      const heightMap = new Uint8Array(rows * cols);
+      const counts = new Uint16Array(256);
+
+      for (let x = 0; x < cols; x += 1) {
+        for (let y = 0; y < rows; y += 1) {
+          counts.fill(0);
+          let winningOid = 0;
+          let winningCount = 0;
+          let columnHeight = 0;
+
+          for (let z = 0; z < height; z += 1) {
+            const oid = tensorData[tensorIndex(x, y, z, rows, height)];
+            if (oid <= 0) continue;
+
+            if (!objects.has(oid)) {
+              objects.set(oid, createObjectRecord(oid));
+            }
+
+            const object = objects.get(oid);
+            object.voxelCount += 1;
+            object.minX = Math.min(object.minX, x);
+            object.minY = Math.min(object.minY, y);
+            object.minZ = Math.min(object.minZ, z);
+            object.maxX = Math.max(object.maxX, x);
+            object.maxY = Math.max(object.maxY, y);
+            object.maxZ = Math.max(object.maxZ, z);
+
+            counts[oid] += 1;
+            if (counts[oid] > winningCount || (counts[oid] === winningCount && oid < winningOid)) {
+              winningOid = oid;
+              winningCount = counts[oid];
+            }
+
+            columnHeight = z + 1;
+          }
+
+          const flat = y * cols + x;
+          labelMap[flat] = winningOid;
+          heightMap[flat] = columnHeight;
+
+          if (winningOid > 0) {
+            objects.get(winningOid).footprint.push({ x, y, height: columnHeight });
+          }
+        }
+      }
+
+      const voxelAt = (x, y, z) => {
+        if (x < 0 || x >= cols || y < 0 || y >= rows || z < 0 || z >= height) {
+          return 0;
+        }
+        return tensorData[tensorIndex(x, y, z, rows, height)];
+      };
+
+      for (let x = 0; x < cols; x += 1) {
+        for (let y = 0; y < rows; y += 1) {
+          for (let z = 0; z < height; z += 1) {
+            const oid = voxelAt(x, y, z);
+            if (oid <= 0) continue;
+
+            const surface = (
+              voxelAt(x - 1, y, z) === 0 ||
+              voxelAt(x + 1, y, z) === 0 ||
+              voxelAt(x, y - 1, z) === 0 ||
+              voxelAt(x, y + 1, z) === 0 ||
+              voxelAt(x, y, z - 1) === 0 ||
+              voxelAt(x, y, z + 1) === 0
+            );
+
+            if (surface) {
+              objects.get(oid).surface.push({ x, y, z });
+            }
+          }
+        }
+      }
+
+      return { objects, labelMap, heightMap };
+    }
+
+    function populateObjectSelect() {
+      ui.objectSelect.innerHTML = "";
+      for (const oid of state.orderedOids) {
+        const option = document.createElement("option");
+        const object = state.objects.get(oid);
+        option.value = String(oid);
+        option.textContent = `${formatOid(oid)}${object.locked ? " • locked" : ""}`;
+        ui.objectSelect.appendChild(option);
+      }
+    }
+
+    function rebuildProjectedMaps() {
+      const { rows, cols } = state.dims;
+      const labelMap = new Int32Array(rows * cols);
+      const heightMap = new Uint8Array(rows * cols);
+
+      for (const oid of state.orderedOids) {
+        const object = state.objects.get(oid);
+        for (const cell of object.footprint) {
+          const row = cell.y + object.offsetY;
+          const col = cell.x + object.offsetX;
+          const index = row * cols + col;
+          labelMap[index] = oid;
+          if (cell.height > heightMap[index]) {
+            heightMap[index] = cell.height;
+          }
+        }
+      }
+
+      state.currentLabelMap = labelMap;
+      state.currentHeightMap = heightMap;
+    }
+
+    function makeScene() {
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      ui.sceneViewport.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 2000);
+      const orbit = {
+        target: new THREE.Vector3(188.5, 26, 104),
+        radius: 360,
+        theta: Math.PI * 0.78,
+        phi: 0.94,
+        minRadius: 70,
+        maxRadius: 900,
+        dragging: false,
+        moved: false,
+        pointerId: null,
+        lastX: 0,
+        lastY: 0
+      };
+
+      const ambient = new THREE.AmbientLight(0xffffff, 1.25);
+      const keyLight = new THREE.DirectionalLight(0xbfe9ff, 1.5);
+      const rimLight = new THREE.DirectionalLight(0xffffff, 0.7);
+      keyLight.position.set(120, 190, 110);
+      rimLight.position.set(-100, 150, -80);
+      scene.add(ambient, keyLight, rimLight);
+
+      const grid = new THREE.GridHelper(520, 52, 0x38bdf8, 0x1e293b);
+      grid.position.set(188.5, 0.02, 104);
+      if (Array.isArray(grid.material)) {
+        for (const material of grid.material) {
+          material.transparent = true;
+          material.opacity = 0.28;
+        }
+      } else {
+        grid.material.transparent = true;
+        grid.material.opacity = 0.28;
+      }
+      scene.add(grid);
+
+      const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(390, 220),
+        new THREE.MeshStandardMaterial({
+          color: 0x081325,
+          roughness: 0.92,
+          metalness: 0.05,
+          transparent: true,
+          opacity: 0.82
+        })
+      );
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.set(188.5, 0, 104);
+      scene.add(floor);
+
+      const selectionHelper = new THREE.Box3Helper(new THREE.Box3(), 0xffffff);
+      selectionHelper.visible = false;
+      scene.add(selectionHelper);
+
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2();
+
+      const updateCamera = () => {
+        orbit.phi = clamp(orbit.phi, 0.2, 1.45);
+        orbit.radius = clamp(orbit.radius, orbit.minRadius, orbit.maxRadius);
+        const sinPhi = Math.sin(orbit.phi);
+        camera.position.set(
+          orbit.target.x + orbit.radius * sinPhi * Math.cos(orbit.theta),
+          orbit.target.y + orbit.radius * Math.cos(orbit.phi),
+          orbit.target.z + orbit.radius * sinPhi * Math.sin(orbit.theta)
+        );
+        camera.lookAt(orbit.target);
+      };
+
+      renderer.domElement.addEventListener("pointerdown", (event) => {
+        orbit.dragging = true;
+        orbit.moved = false;
+        orbit.pointerId = event.pointerId;
+        orbit.lastX = event.clientX;
+        orbit.lastY = event.clientY;
+        renderer.domElement.setPointerCapture(event.pointerId);
+      });
+
+      renderer.domElement.addEventListener("pointermove", (event) => {
+        if (!orbit.dragging) return;
+        const dx = event.clientX - orbit.lastX;
+        const dy = event.clientY - orbit.lastY;
+        if (Math.abs(dx) + Math.abs(dy) > 2) {
+          orbit.moved = true;
+        }
+        orbit.theta -= dx * 0.006;
+        orbit.phi = clamp(orbit.phi + dy * 0.006, 0.2, 1.45);
+        orbit.lastX = event.clientX;
+        orbit.lastY = event.clientY;
+        updateCamera();
+      });
+
+      const stopDragging = (event) => {
+        if (!orbit.dragging) return;
+        orbit.dragging = false;
+        if (orbit.pointerId !== null) {
+          try {
+            renderer.domElement.releasePointerCapture(orbit.pointerId);
+          } catch (error) {}
+        }
+        orbit.pointerId = null;
+      };
+
+      renderer.domElement.addEventListener("pointerup", stopDragging);
+      renderer.domElement.addEventListener("pointercancel", stopDragging);
+      renderer.domElement.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        orbit.radius = clamp(orbit.radius * (event.deltaY > 0 ? 1.08 : 0.92), orbit.minRadius, orbit.maxRadius);
+        updateCamera();
+      }, { passive: false });
+
+      const sceneState = {
+        renderer,
+        scene,
+        camera,
+        grid,
+        floor,
+        selectionHelper,
+        raycaster,
+        pointer,
+        orbit,
+        updateCamera
+      };
+
+      const resize = () => {
+        const width = ui.sceneViewport.clientWidth;
+        const height = ui.sceneViewport.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+
+      window.addEventListener("resize", resize);
+      resize();
+      updateCamera();
+      renderSceneOnce();
+
+      if (!CAPTURE_MODE) {
+        sceneState.animate = function animate() {
+          requestAnimationFrame(sceneState.animate);
+          renderer.render(scene, camera);
+        };
+        sceneState.animate();
+      }
+
+      state.scene = sceneState;
+    }
+
+    function fitSceneCamera() {
+      const { cols, rows, height } = state.dims;
+      if (!state.scene || !cols || !rows) return;
+      const center = new THREE.Vector3(cols / 2, height * 0.38, rows / 2);
+      const distance = Math.max(cols, rows, height * 3.2) * 1.05;
+      state.scene.orbit.target.copy(center);
+      state.scene.orbit.radius = distance;
+      state.scene.orbit.theta = Math.PI * 0.78;
+      state.scene.orbit.phi = 0.94;
+      state.scene.updateCamera();
+      renderSceneOnce();
+    }
+
+    function syncSceneTheme() {
+      if (!state.scene) return;
+      const lightMode = document.documentElement.classList.contains("light-mode");
+      state.scene.renderer.setClearColor(lightMode ? 0xf3f6fb : 0x030712, 1);
+      state.scene.scene.fog = new THREE.Fog(lightMode ? 0xf3f6fb : 0x030712, 220, 780);
+      state.scene.floor.material.color.setHex(lightMode ? 0xe2e8f0 : 0x081325);
+      if (Array.isArray(state.scene.grid.material)) {
+        for (const material of state.scene.grid.material) {
+          material.opacity = lightMode ? 0.18 : 0.28;
+        }
+      } else {
+        state.scene.grid.material.opacity = lightMode ? 0.18 : 0.28;
+      }
+      renderSceneOnce();
+      renderRadioMap();
+    }
+
+    function buildSceneObjects() {
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const dummy = new THREE.Object3D();
+
+      for (const oid of state.orderedOids) {
+        const object = state.objects.get(oid);
+        const material = new THREE.MeshStandardMaterial({
+          color: object.color,
+          emissive: 0x000000,
+          roughness: 0.56,
+          metalness: 0.08,
+          transparent: true,
+          opacity: object.locked ? 0.72 : 0.92
+        });
+
+        const mesh = new THREE.InstancedMesh(geometry, material, object.surface.length);
+        mesh.frustumCulled = false;
+        mesh.userData.oid = oid;
+
+        for (let index = 0; index < object.surface.length; index += 1) {
+          const voxel = object.surface[index];
+          dummy.position.set(voxel.x + 0.5, voxel.z + 0.5, voxel.y + 0.5);
+          dummy.updateMatrix();
+          mesh.setMatrixAt(index, dummy.matrix);
+        }
+
+        const group = new THREE.Group();
+        group.add(mesh);
+        state.scene.scene.add(group);
+
+        object.material = material;
+        object.mesh = mesh;
+        object.group = group;
+      }
+
+      refreshSceneSelection();
+      renderSceneOnce();
+    }
+
+    function updateSelectionHelper() {
+      if (!state.scene || !state.selectedOid) return;
+      const object = state.objects.get(state.selectedOid);
+      if (!object) {
+        state.scene.selectionHelper.visible = false;
+        return;
+      }
+
+      const box = state.scene.selectionHelper.box;
+      box.min.set(object.minX + object.offsetX, object.minZ, object.minY + object.offsetY);
+      box.max.set(object.maxX + 1 + object.offsetX, object.maxZ + 1, object.maxY + 1 + object.offsetY);
+      state.scene.selectionHelper.visible = true;
+      state.scene.selectionHelper.updateMatrixWorld(true);
+    }
+
+    function refreshSceneSelection() {
+      for (const oid of state.orderedOids) {
+        const object = state.objects.get(oid);
+        const isSelected = oid === state.selectedOid;
+        object.material.opacity = object.locked ? 0.72 : (isSelected ? 1.0 : 0.90);
+        object.material.emissive.setStyle(isSelected ? "#0ea5e9" : "#000000");
+        object.material.emissiveIntensity = isSelected ? 0.28 : 0.0;
+      }
+
+      updateSelectionHelper();
+      renderSceneOnce();
+    }
+
+    function currentObjectFootprint(object) {
+      return object.footprint.map((cell) => ({
+        row: cell.y + object.offsetY,
+        col: cell.x + object.offsetX
+      }));
+    }
+
+    function setSelectedOid(oid, reason = "") {
+      if (!state.objects.has(oid)) return;
+      state.selectedOid = oid;
+      ui.objectSelect.value = String(oid);
+      refreshSceneSelection();
+      renderRadioMap();
+      updateMetrics();
+      if (reason) {
+        setStatus(reason, "success");
+      }
+    }
+
+    function canMoveObject(oid, nextOffsetX, nextOffsetY) {
+      const object = state.objects.get(oid);
+      const { rows, cols } = state.dims;
+
+      for (const cell of object.footprint) {
+        const row = cell.y + nextOffsetY;
+        const col = cell.x + nextOffsetX;
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+          return { ok: false, reason: "Boundary reached." };
+        }
+
+        const occupiedBy = state.currentLabelMap[row * cols + col];
+        if (occupiedBy !== 0 && occupiedBy !== oid) {
+          return { ok: false, reason: `Blocked by ${formatOid(occupiedBy)}.` };
+        }
+      }
+
+      return { ok: true };
+    }
+
+    function scheduleRadioUpdate() {
+      if (state.radioFrame) {
+        cancelAnimationFrame(state.radioFrame);
+      }
+
+      state.radioFrame = requestAnimationFrame(() => {
+        state.radioFrame = 0;
+        computeRadioMap();
+        renderRadioMap();
+        updateMetrics();
+      });
+    }
+
+    function tryMoveSelected(dx, dy) {
+      if (!state.selectedOid) return;
+      const object = state.objects.get(state.selectedOid);
+      if (object.locked) {
+        setStatus(`${formatOid(object.oid)} is static in Morpheus, so it stays fixed.`, "warn");
+        return;
+      }
+
+      const targetX = object.offsetX + dx;
+      const targetY = object.offsetY + dy;
+      const allowed = canMoveObject(object.oid, targetX, targetY);
+      if (!allowed.ok) {
+        setStatus(`${formatOid(object.oid)} could not move. ${allowed.reason}`, "warn");
+        return;
+      }
+
+      object.offsetX = targetX;
+      object.offsetY = targetY;
+      object.group.position.set(object.offsetX, 0, object.offsetY);
+      rebuildProjectedMaps();
+      refreshSceneSelection();
+      scheduleRadioUpdate();
+      setStatus(`${formatOid(object.oid)} moved to offset (${object.offsetX}, ${object.offsetY}).`, "success");
+    }
+
+    function restoreMarkers() {
+      state.txCells = state.defaultTxCells.map((cell) => ({ ...cell }));
+      state.rxZone = new Set([...state.defaultRxZone]);
+    }
+
+    function resetLayout() {
+      for (const oid of state.orderedOids) {
+        const object = state.objects.get(oid);
+        object.offsetX = 0;
+        object.offsetY = 0;
+        if (object.group) {
+          object.group.position.set(0, 0, 0);
+        }
+      }
+      rebuildProjectedMaps();
+      refreshSceneSelection();
+      scheduleRadioUpdate();
+      setStatus("Layout reset to the original Morpheus tensor positions.", "success");
+    }
+
+    function resetAll() {
+      resetLayout();
+      restoreMarkers();
+      scheduleRadioUpdate();
+    }
+
+    function setPlacementMode(mode) {
+      state.placementMode = mode;
+      ui.radioStage.dataset.mode = mode;
+      ui.txModeBtn.classList.toggle("active", mode === "tx");
+      ui.rxAddModeBtn.classList.toggle("active", mode === "rx-add");
+      ui.rxEraseModeBtn.classList.toggle("active", mode === "rx-erase");
+      if (mode === "tx") {
+        setStatus("Click the radio map to place the TX marker.", "info");
+      } else if (mode === "rx-add") {
+        setStatus("Drag on the radio map to paint RX cells.", "info");
+      } else if (mode === "rx-erase") {
+        setStatus("Drag on the radio map to erase RX cells.", "info");
+      }
+    }
+
+    function mapPointerToCell(event) {
+      const rect = ui.radioMapCanvas.getBoundingClientRect();
+      const x = clamp((event.clientX - rect.left) / rect.width, 0, 0.999999);
+      const y = clamp((event.clientY - rect.top) / rect.height, 0, 0.999999);
+      const col = Math.floor(x * state.dims.cols);
+      const row = Math.floor(y * state.dims.rows);
+      return { row, col };
+    }
+
+    function handleMapInteraction(row, col) {
+      if (!state.currentLabelMap) return;
+      const key = cellKey(row, col);
+
+      if (state.placementMode === "tx") {
+        state.txCells = [{ row, col }];
+        setPlacementMode("none");
+        scheduleRadioUpdate();
+        setStatus(`TX moved to row ${row}, col ${col}.`, "success");
+        return;
+      }
+
+      if (state.placementMode === "rx-add") {
+        state.rxZone.add(key);
+        scheduleRadioUpdate();
+        return;
+      }
+
+      if (state.placementMode === "rx-erase") {
+        state.rxZone.delete(key);
+        scheduleRadioUpdate();
+        return;
+      }
+
+      const oid = state.currentLabelMap[row * state.dims.cols + col];
+      if (oid > 0) {
+        setSelectedOid(oid, `${formatOid(oid)} selected from the REM map.`);
+      }
+    }
+
+    function traceBlockage(tx, row, col) {
+      const deltaRow = row - tx.row;
+      const deltaCol = col - tx.col;
+      const distance = Math.hypot(deltaRow, deltaCol);
+      const samples = Math.max(4, Math.min(RADIO_CONFIG.maxSamples, Math.ceil(distance)));
+      let blocked = 0;
+      let heightTotal = 0;
+
+      for (let step = 1; step < samples; step += 1) {
+        const t = step / samples;
+        const r = Math.round(tx.row + deltaRow * t);
+        const c = Math.round(tx.col + deltaCol * t);
+        const idx = r * state.dims.cols + c;
+        const h = state.currentHeightMap[idx];
+        if (h > 0) {
+          blocked += 1;
+          heightTotal += h;
+        }
+      }
+
+      return {
+        blocked,
+        samples,
+        meanHeight: blocked ? heightTotal / blocked : 0
+      };
+    }
+
+    function estimatePseudoSinr(tx, row, col) {
+      if (tx.row === row && tx.col === col) {
+        return 38;
+      }
+
+      const dxMeters = (col - tx.col) * RADIO_CONFIG.voxelSizeMeters;
+      const dyMeters = (row - tx.row) * RADIO_CONFIG.voxelSizeMeters;
+      const distMeters = Math.sqrt(
+        dxMeters * dxMeters +
+        dyMeters * dyMeters +
+        Math.pow(RADIO_CONFIG.txHeightMeters - RADIO_CONFIG.rxHeightMeters, 2)
+      );
+
+      const blockage = traceBlockage(tx, row, col);
+      const blockageRatio = blockage.samples > 0 ? blockage.blocked / blockage.samples : 0;
+      const exponent = blockage.blocked > 0
+        ? RADIO_CONFIG.nlosExponent + blockageRatio * 0.55
+        : RADIO_CONFIG.losExponent;
+
+      const pathLossDb = RADIO_CONFIG.referenceLossDb + 10 * exponent * Math.log10(Math.max(1, distMeters));
+      const heightPenaltyDb = blockage.meanHeight * RADIO_CONFIG.voxelSizeMeters * 6.5;
+      const blockagePenaltyDb = blockage.blocked * 1.1 + blockageRatio * 9.5 + heightPenaltyDb;
+      const noiseFadingDb = smoothShadowNoise(row, col, tx.row, tx.col) * 2.2;
+      const receivedPowerDbm = RADIO_CONFIG.txPowerDbm - pathLossDb - blockagePenaltyDb + noiseFadingDb;
+      return receivedPowerDbm - RADIO_CONFIG.noiseFloorDbm;
+    }
+
+    function computeRadioMap() {
+      if (!state.currentHeightMap || !state.txCells.length) return;
+
+      const { rows, cols } = state.dims;
+      const values = new Float32Array(rows * cols);
+      let minDb = Infinity;
+      let maxDb = -Infinity;
+
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const idx = row * cols + col;
+          let best = -Infinity;
+
+          for (const tx of state.txCells) {
+            best = Math.max(best, estimatePseudoSinr(tx, row, col));
+          }
+
+          if (state.currentHeightMap[idx] > 0) {
+            best -= 10.5;
+          }
+
+          values[idx] = best;
+          if (Number.isFinite(best) && state.currentHeightMap[idx] === 0) {
+            minDb = Math.min(minDb, best);
+            maxDb = Math.max(maxDb, best);
+          }
+        }
+      }
+
+      const rxValues = [];
+      for (const entry of state.rxZone) {
+        const [row, col] = entry.split(",").map(Number);
+        const value = values[row * cols + col];
+        if (Number.isFinite(value)) {
+          rxValues.push(value);
+        }
+      }
+
+      state.radioMapDb = values;
+      state.radioSummary = {
+        minDb: Number.isFinite(minDb) ? minDb : -5,
+        maxDb: Number.isFinite(maxDb) ? maxDb : 35,
+        rxMedianDb: rxValues.length ? median(rxValues) : null,
+        rxCount: rxValues.length
+      };
+    }
+
+    function renderRadioMap() {
+      if (!state.radioMapDb || !state.currentHeightMap) return;
+      const { rows, cols } = state.dims;
+      const image = radioCtx.createImageData(cols, rows);
+      const data = image.data;
+      const lightMode = document.documentElement.classList.contains("light-mode");
+      const obstacleTint = lightMode ? [15, 23, 42] : [5, 10, 24];
+      const minDb = Math.min(state.radioSummary.minDb, -2);
+      const maxDb = Math.max(state.radioSummary.maxDb, 30);
+
+      for (let idx = 0; idx < state.radioMapDb.length; idx += 1) {
+        const db = state.radioMapDb[idx];
+        const t = clamp((db - minDb) / (maxDb - minDb || 1), 0, 1);
+        let color = sampleViridis(t);
+
+        if (state.currentHeightMap[idx] > 0) {
+          color = mixColor(color, obstacleTint, 0.68);
+        }
+
+        const offset = idx * 4;
+        data[offset] = color[0];
+        data[offset + 1] = color[1];
+        data[offset + 2] = color[2];
+        data[offset + 3] = 255;
+      }
+
+      radioCtx.putImageData(image, 0, 0);
+
+      if (state.selectedOid) {
+        const object = state.objects.get(state.selectedOid);
+        radioCtx.save();
+        radioCtx.strokeStyle = lightMode ? "rgba(15,23,42,0.85)" : "rgba(255,255,255,0.88)";
+        radioCtx.lineWidth = 1;
+        for (const cell of object.footprint) {
+          radioCtx.strokeRect(cell.x + object.offsetX + 0.05, cell.y + object.offsetY + 0.05, 0.9, 0.9);
+        }
+        radioCtx.restore();
+      }
+
+      if (state.rxZone.size) {
+        radioCtx.save();
+        radioCtx.fillStyle = lightMode ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.13)";
+        radioCtx.strokeStyle = lightMode ? "rgba(15,23,42,0.75)" : "rgba(255,255,255,0.60)";
+        radioCtx.lineWidth = 1;
+        for (const entry of state.rxZone) {
+          const [row, col] = entry.split(",").map(Number);
+          radioCtx.fillRect(col + 0.08, row + 0.08, 0.84, 0.84);
+          radioCtx.strokeRect(col + 0.08, row + 0.08, 0.84, 0.84);
+        }
+        radioCtx.restore();
+      }
+
+      for (const tx of state.txCells) {
+        radioCtx.save();
+        radioCtx.fillStyle = "#ef4444";
+        radioCtx.strokeStyle = "#ffffff";
+        radioCtx.lineWidth = 0.7;
+        radioCtx.beginPath();
+        radioCtx.arc(tx.col + 0.5, tx.row + 0.5, 3.6, 0, Math.PI * 2);
+        radioCtx.fill();
+        radioCtx.stroke();
+        radioCtx.fillStyle = "#ffffff";
+        radioCtx.font = "bold 8px Inter";
+        radioCtx.fillText("TX", tx.col + 5.5, tx.row + 2.6);
+        radioCtx.restore();
+      }
+
+      const rxMedianText = state.radioSummary.rxMedianDb == null
+        ? "Paint RX zone to summarize."
+        : `RX median ${state.radioSummary.rxMedianDb.toFixed(1)} dB across ${state.radioSummary.rxCount} cells`;
+
+      ui.remBadge.innerHTML = `<i class="fas fa-wave-square"></i> ${rxMedianText}`;
+    }
+
+    function updateMetrics() {
+      if (!state.selectedOid) return;
+      const object = state.objects.get(state.selectedOid);
+      const mobility = object.locked ? "Locked" : "Movable";
+
+      ui.metricSelected.textContent = formatOid(object.oid);
+      ui.metricVoxelCount.textContent = `${object.voxelCount.toLocaleString()} occupied voxels • ${object.surface.length.toLocaleString()} visible`;
+      ui.metricMobility.textContent = mobility;
+      ui.metricOffset.textContent = `Offset Δ(${object.offsetX}, ${object.offsetY})`;
+
+      if (state.txCells.length) {
+        const tx = state.txCells[0];
+        ui.metricTx.textContent = `(${tx.row}, ${tx.col})`;
+      } else {
+        ui.metricTx.textContent = "Unset";
+      }
+
+      ui.metricRx.textContent = `${state.rxZone.size} cells`;
+      ui.metricRem.textContent = state.radioSummary && state.radioSummary.rxMedianDb != null
+        ? `Median ${state.radioSummary.rxMedianDb.toFixed(1)} dB`
+        : "Paint an RX area to summarize.";
+
+      ui.sceneSelectionChip.innerHTML = `<i class="fas fa-cube"></i> ${formatOid(object.oid)} selected`;
+      ui.sceneMotionChip.innerHTML = object.locked
+        ? `<i class="fas fa-lock"></i> static: movement disabled`
+        : `<i class="fas fa-arrows-left-right"></i> Ready for 1-voxel motion`;
+
+      ui.metricMobility.className = `metric-value`;
+      ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clusters • ${state.dims.cols} × ${state.dims.rows} × ${state.dims.height}`;
+      for (const button of ui.moveButtons) {
+        button.disabled = object.locked;
+      }
+    }
+
+    function bindUi() {
+      ui.objectSelect.addEventListener("change", () => {
+        setSelectedOid(Number(ui.objectSelect.value), `${formatOid(Number(ui.objectSelect.value))} selected from the control panel.`);
+      });
+
+      ui.fitSceneBtn.addEventListener("click", () => {
+        fitSceneCamera();
+        setStatus("3D camera recentered on the live digital twin.", "success");
+      });
+
+      ui.resetLayoutBtn.addEventListener("click", () => {
+        resetLayout();
+      });
+
+      ui.restoreMarkersBtn.addEventListener("click", () => {
+        restoreMarkers();
+        setPlacementMode("none");
+        scheduleRadioUpdate();
+        setStatus("TX/RX markers restored from the Morpheus JSON config.", "success");
+      });
+
+      ui.clearModeBtn.addEventListener("click", () => {
+        setPlacementMode("none");
+        setStatus("Pointer returned to selection mode.", "info");
+      });
+
+      ui.txModeBtn.addEventListener("click", () => {
+        setPlacementMode(state.placementMode === "tx" ? "none" : "tx");
+      });
+
+      ui.rxAddModeBtn.addEventListener("click", () => {
+        setPlacementMode(state.placementMode === "rx-add" ? "none" : "rx-add");
+      });
+
+      ui.rxEraseModeBtn.addEventListener("click", () => {
+        setPlacementMode(state.placementMode === "rx-erase" ? "none" : "rx-erase");
+      });
+
+      ui.clearRxBtn.addEventListener("click", () => {
+        state.rxZone.clear();
+        scheduleRadioUpdate();
+        setStatus("RX zone cleared.", "success");
+      });
+
+      for (const button of ui.moveButtons) {
+        button.addEventListener("click", () => {
+          tryMoveSelected(Number(button.dataset.dx), Number(button.dataset.dy));
+        });
+      }
+
+      window.addEventListener("keydown", (event) => {
+        const blockedTags = ["INPUT", "SELECT", "TEXTAREA"];
+        if (blockedTags.includes(document.activeElement?.tagName)) return;
+
+        const moves = {
+          ArrowLeft: [-1, 0],
+          ArrowRight: [1, 0],
+          ArrowUp: [0, -1],
+          ArrowDown: [0, 1]
+        };
+
+        if (moves[event.key]) {
+          event.preventDefault();
+          const [dx, dy] = moves[event.key];
+          tryMoveSelected(dx, dy);
+        }
+      });
+
+      ui.radioMapCanvas.addEventListener("pointerdown", (event) => {
+        state.isPainting = true;
+        const { row, col } = mapPointerToCell(event);
+        handleMapInteraction(row, col);
+      });
+
+      ui.radioMapCanvas.addEventListener("pointermove", (event) => {
+        if (!state.isPainting) return;
+        if (!["rx-add", "rx-erase"].includes(state.placementMode)) return;
+        const { row, col } = mapPointerToCell(event);
+        handleMapInteraction(row, col);
+      });
+
+      window.addEventListener("pointerup", () => {
+        state.isPainting = false;
+      });
+
+      ui.sceneViewport.addEventListener("click", (event) => {
+        if (!state.scene) return;
+        if (state.scene.orbit.moved) {
+          state.scene.orbit.moved = false;
+          return;
+        }
+        const rect = state.scene.renderer.domElement.getBoundingClientRect();
+        state.scene.pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        state.scene.pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        state.scene.raycaster.setFromCamera(state.scene.pointer, state.scene.camera);
+        const meshes = state.orderedOids.map((oid) => state.objects.get(oid).mesh);
+        const intersects = state.scene.raycaster.intersectObjects(meshes, false);
+        if (intersects.length) {
+          const oid = intersects[0].object.userData.oid;
+          setSelectedOid(oid, `${formatOid(oid)} selected from the 3D scene.`);
+        }
+      });
+
+      const observer = new MutationObserver(syncSceneTheme);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    }
+
+    async function initialize() {
+      if (location.protocol === "file:") {
+        setStatus("This demo uses fetch() for voxel_tensor.npy and JSON assets, so open it through a static server or GitHub Pages instead of file://.", "warn");
+      }
+
+      setStatus("Loading Morpheus voxel tensor and configs…", "info");
+
+      const [tensor, txrxConfig, lockConfig] = await Promise.all([
+        loadNpy(ASSETS.tensor),
+        loadJson(ASSETS.txrx, { tx: [{ row: 129, col: 361 }], rx_zone: [] }),
+        loadJson(ASSETS.locks, { locked_oids: [] })
+      ]);
+
+      state.dims.cols = tensor.shape[0];
+      state.dims.rows = tensor.shape[1];
+      state.dims.height = tensor.shape[2];
+
+      const built = buildObjectsFromTensor(tensor.data, tensor.shape);
+      state.objects = built.objects;
+      state.orderedOids = [...built.objects.keys()].sort((a, b) => a - b);
+      state.currentLabelMap = built.labelMap;
+      state.currentHeightMap = built.heightMap;
+
+      state.lockedIds = new Set((lockConfig.locked_oids || []).map(Number));
+      for (const oid of state.orderedOids) {
+        state.objects.get(oid).locked = state.lockedIds.has(oid);
+      }
+
+      state.defaultTxCells = (txrxConfig.tx || [])
+        .map((item) => ({ row: Number(item.row), col: Number(item.col) }))
+        .filter((item) => Number.isFinite(item.row) && Number.isFinite(item.col));
+
+      if (!state.defaultTxCells.length) {
+        state.defaultTxCells = [{ row: Math.floor(state.dims.rows * 0.6), col: Math.floor(state.dims.cols * 0.8) }];
+      }
+
+      state.defaultRxZone = new Set(
+        (txrxConfig.rx_zone || [])
+          .map((item) => cellKey(Number(item.row), Number(item.col)))
+      );
+
+      restoreMarkers();
+
+      makeScene();
+      buildSceneObjects();
+      populateObjectSelect();
+      fitSceneCamera();
+      bindUi();
+      syncSceneTheme();
+
+      const firstMovable = state.orderedOids.find((oid) => !state.objects.get(oid).locked) || state.orderedOids[0];
+      setSelectedOid(firstMovable);
+      computeRadioMap();
+      renderRadioMap();
+      updateMetrics();
+
+      const movableCount = state.orderedOids.filter((oid) => !state.objects.get(oid).locked).length;
+      const lockedCount = state.orderedOids.length - movableCount;
+
+      ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clusters • ${lockedCount} locked`;
+      setStatus(
+        `Live digital twin ready. Loaded ${state.orderedOids.length} clusters from voxel_tensor.npy, with ${movableCount} movable meshes and ${lockedCount} static meshes.`,
+        "success"
+      );
+    }
+
+    initialize().catch((error) => {
+      console.error(error);
+      ui.sceneDataBadge.innerHTML = `<i class="fas fa-triangle-exclamation"></i> Load failed`;
+      ui.remBadge.innerHTML = `<i class="fas fa-circle-exclamation"></i> No REM available`;
+      setStatus(`The digital twin could not start: ${error.message}`, "error");
+    });
+  </script>
+</body>
+</html>
