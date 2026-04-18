@@ -3,31 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Digital Wave • mmWave Digital Twin</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ["Inter", "system-ui", "sans-serif"],
-            display: ["Space Grotesk", "sans-serif"]
-          }
-        }
-      }
-    };
-  </script>
+  <title>Morpheus • Vision-Driven mmWave Digital Twin</title>
 
   <style>
-    body { font-family: "Inter", system-ui, sans-serif; }
-    .display-font { font-family: "Space Grotesk", sans-serif; }
+    @font-face {
+      font-family: "Inter";
+      src: url("./assets/fonts/Inter-Variable.ttf") format("truetype");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Space Grotesk";
+      src: url("./assets/fonts/SpaceGrotesk-Variable.ttf") format("truetype");
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-optical-sizing: auto;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    canvas, img, svg { display: block; max-width: 100%; }
+    .display-font {
+      font-family: "Space Grotesk", "Inter", "Segoe UI", sans-serif;
+      font-optical-sizing: auto;
+    }
+
+    .container { width: 100%; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .my-20 { margin-top: 5rem; margin-bottom: 5rem; }
+    .mb-16 { margin-bottom: 4rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mt-6 { margin-top: 1.5rem; }
+    .mt-10 { margin-top: 2.5rem; }
+    .mt-24 { margin-top: 6rem; }
+    .pt-8 { padding-top: 2rem; }
+    .pt-12 { padding-top: 3rem; }
+    .p-8 { padding: 2rem; }
+    .p-10 { padding: 2.5rem; }
+    .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .px-8 { padding-left: 2rem; padding-right: 2rem; }
+    .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+    .fixed { position: fixed; }
+    .top-6 { top: 1.5rem; }
+    .right-6 { right: 1.5rem; }
+    .z-50 { z-index: 50; }
+    .flex { display: flex; }
+    .grid { display: grid; }
+    .inline-flex { display: inline-flex; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-8 { gap: 2rem; }
+    .w-2 { width: 0.5rem; }
+    .h-2 { height: 0.5rem; }
+    .w-full { width: 100%; }
+    .max-w-2xl { max-width: 42rem; }
+    .max-w-4xl { max-width: 56rem; }
+    .max-w-6xl { max-width: 72rem; }
+    .max-w-lg { max-width: 32rem; }
+    .rounded-full { border-radius: 9999px; }
+    .rounded-2xl { border-radius: 1rem; }
+    .rounded-3xl { border-radius: 1.5rem; }
+    .overflow-hidden { overflow: hidden; }
+    .overflow-x-hidden { overflow-x: hidden; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .text-sm { font-size: 0.875rem; }
+    .text-base { font-size: 1rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-2xl { font-size: 1.5rem; line-height: 1.25; }
+    .text-3xl { font-size: 1.875rem; line-height: 1.2; }
+    .text-5xl { font-size: 3rem; line-height: 1; }
+    .text-6xl { font-size: 3.75rem; line-height: 1; }
+    .text-7xl { font-size: 4.5rem; line-height: 1; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .leading-relaxed { line-height: 1.75; }
+    .tracking-tight { letter-spacing: -0.02em; }
+    .tracking-tighter { letter-spacing: -0.05em; }
+    .tracking-\[0\.28em\] { letter-spacing: 0.28em; }
+    .bg-white { background: #ffffff; }
+    .text-zinc-950 { color: #09090b; }
+    .text-cyan-400 { color: #22d3ee; }
+    .aspect-video { aspect-ratio: 16 / 9; }
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .transition-all { transition: all 0.25s ease; }
+    .hover\:scale-105:hover { transform: scale(1.05); }
+    .focus\:outline-none:focus { outline: none; }
+    .focus\:ring-2:focus,
+    .focus\:ring-cyan-400:focus { box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.45); }
+    .space-y-2 > * + * { margin-top: 0.5rem; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+
+    .fas {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.1em;
+      min-width: 1.1em;
+      font-style: normal;
+      line-height: 1;
+    }
+    .fas::before { display: block; }
+    .fa-spin { animation: icon-spin 1s linear infinite; }
+    @keyframes icon-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .fa-arrow-up::before { content: "↑"; }
+    .fa-arrow-down::before { content: "↓"; }
+    .fa-arrow-left::before { content: "←"; }
+    .fa-arrow-right::before { content: "→"; }
+    .fa-arrows-left-right::before { content: "↔"; }
+    .fa-arrows-left-right-to-line::before { content: "⇄"; }
+    .fa-broadcast-tower::before { content: "⌁"; }
+    .fa-chart-line::before { content: "∿"; }
+    .fa-circle-exclamation::before { content: "!"; }
+    .fa-circle-nodes::before { content: "◎"; }
+    .fa-crosshairs::before { content: "⌖"; }
+    .fa-cube::before { content: "◻"; }
+    .fa-cubes::before { content: "◫"; }
+    .fa-eraser::before { content: "⌫"; }
+    .fa-expand::before { content: "⤢"; }
+    .fa-folder-open::before { content: "▤"; }
+    .fa-gamepad::before { content: "⌨"; }
+    .fa-location-crosshairs::before { content: "⌖"; }
+    .fa-lock::before { content: "■"; }
+    .fa-lock-open::before { content: "□"; }
+    .fa-moon::before { content: "◐"; }
+    .fa-pen::before { content: "✎"; }
+    .fa-play-circle::before { content: "▶"; }
+    .fa-pointer::before { content: "⌖"; }
+    .fa-rotate-left::before { content: "↺"; }
+    .fa-spinner::before { content: "◌"; }
+    .fa-sun::before { content: "☼"; }
+    .fa-tower-broadcast::before { content: "⌁"; }
+    .fa-tower-cell::before { content: "⌁"; }
+    .fa-trash::before { content: "✕"; }
+    .fa-triangle-exclamation::before { content: "⚠"; }
+    .fa-wave-square::before { content: "~"; }
 
     :root {
       --body-bg: #09090b;
@@ -201,43 +345,73 @@
     }
 
     .toggle-btn {
-      width: 56px;
-      height: 30px;
+      width: 72px;
+      height: 36px;
       border-radius: 9999px;
       position: relative;
       cursor: pointer;
-      border: 2px solid var(--toggle-border);
-      background-color: var(--toggle-track);
-      transition: all 0.3s ease;
+      border: 1px solid var(--toggle-border);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.12), transparent 60%),
+        var(--toggle-track);
+      box-shadow: 0 18px 40px rgba(2, 8, 23, 0.34);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 46px rgba(2, 8, 23, 0.38);
     }
 
     .toggle-btn.active {
-      background-color: var(--toggle-active-track);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.20), transparent 60%),
+        var(--toggle-active-track);
       border-color: var(--toggle-active-border);
     }
 
-    .toggle-btn .knob {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: white;
+    .toggle-track-icons {
       position: absolute;
-      top: 2px;
-      left: 2px;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.7rem;
+      color: rgba(226, 232, 240, 0.72);
+      font-size: 0.78rem;
+      pointer-events: none;
+    }
+
+    .light-mode .toggle-track-icons {
+      color: rgba(15, 23, 42, 0.54);
+    }
+
+    .toggle-btn .knob {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffffff, #e5e7eb);
+      position: absolute;
+      top: 3px;
+      left: 3px;
       transition: transform 0.3s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 18px rgba(2, 8, 23, 0.30);
       display: flex;
       align-items: center;
       justify-content: center;
       pointer-events: none;
+      border: 1px solid rgba(148, 163, 184, 0.30);
+      z-index: 1;
     }
 
     .toggle-btn.active .knob {
-      transform: translateX(26px);
+      transform: translateX(36px);
     }
 
     .toggle-btn .knob i {
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1;
     }
 
@@ -257,6 +431,12 @@
       box-shadow: var(--control-shadow);
     }
 
+    .theme-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.75rem;
+    }
+
     .twin-lead {
       display: flex;
       flex-wrap: wrap;
@@ -271,6 +451,62 @@
       flex-wrap: wrap;
       gap: 0.6rem;
       margin-top: 0.9rem;
+    }
+
+    .instruction-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.95rem;
+      margin: 0 0 1rem;
+      padding: 0.95rem 1.05rem;
+      border-radius: 1.35rem;
+      border: 1px solid rgba(103, 232, 249, 0.16);
+      background: linear-gradient(135deg, rgba(6, 12, 24, 0.78), rgba(10, 22, 39, 0.58));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .light-mode .instruction-strip {
+      background: linear-gradient(135deg, rgba(255,255,255,0.90), rgba(241,245,249,0.94));
+      border-color: rgba(14, 165, 233, 0.18);
+    }
+
+    .instruction-icon {
+      flex: 0 0 auto;
+      width: 2.7rem;
+      height: 2.7rem;
+      border-radius: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #67e8f9;
+      background: rgba(8, 145, 178, 0.16);
+      border: 1px solid rgba(103, 232, 249, 0.20);
+    }
+
+    .light-mode .instruction-icon {
+      color: #0c4a6e;
+      background: rgba(14, 165, 233, 0.10);
+      border-color: rgba(14, 165, 233, 0.16);
+    }
+
+    .instruction-copy {
+      min-width: 0;
+    }
+
+    .instruction-label {
+      display: block;
+      color: var(--placeholder-icon);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .instruction-copy p {
+      margin: 0.28rem 0 0;
+      color: var(--glass-text);
+      font-size: 0.94rem;
+      line-height: 1.55;
     }
 
     .twin-pill {
@@ -288,8 +524,9 @@
 
     .twin-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.92fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
+      align-items: start;
     }
 
     .panel-card {
@@ -310,25 +547,31 @@
       pointer-events: none;
     }
 
-    .scene-panel {
+    .scene-panel,
+    .radio-panel {
       min-height: 36rem;
     }
 
     .control-panel {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1.15fr 1.35fr 1fr 1fr;
       gap: 0.9rem;
-      min-height: 36rem;
+      grid-column: 1 / -1;
+      min-height: auto;
+      align-items: start;
     }
 
     .radio-panel {
-      grid-column: 1 / -1;
       padding-bottom: 1.2rem;
+    }
+
+    .control-panel > .metrics-grid {
+      grid-column: span 2;
     }
 
     .panel-head {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 0.9rem;
       margin-bottom: 0.85rem;
@@ -691,13 +934,278 @@
       border-color: rgba(16, 185, 129, 0.28);
     }
 
+    .section-lead {
+      max-width: 48rem;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--glass-text);
+      font-size: 1.02rem;
+      line-height: 1.8;
+    }
+
+    .research-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.6rem;
+      border: 1px solid var(--panel-line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), transparent 18%),
+        var(--panel-soft);
+      padding: 1.25rem 1.3rem;
+      box-shadow: var(--control-shadow);
+    }
+
+    .light-mode .research-card {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), transparent 18%),
+        var(--panel-soft);
+    }
+
+    .research-card h3 {
+      margin: 0;
+      color: var(--strong);
+      font-size: 1.18rem;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .research-card p {
+      margin: 0;
+      color: var(--glass-text);
+      font-size: 0.97rem;
+      line-height: 1.7;
+    }
+
+    .research-card p + p {
+      margin-top: 0.95rem;
+    }
+
+    .research-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.85rem;
+      color: var(--placeholder-icon);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .story-grid,
+    .impact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.95fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .story-stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .research-highlight {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.48rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid var(--pill-border);
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      width: fit-content;
+    }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .capability-card {
+      min-height: 12.4rem;
+    }
+
+    .capability-index,
+    .pipeline-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(103, 232, 249, 0.28);
+      background: rgba(14, 165, 233, 0.12);
+      color: #67e8f9;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+    }
+
+    .light-mode .capability-index,
+    .light-mode .pipeline-index {
+      color: #0c4a6e;
+      background: rgba(14, 165, 233, 0.08);
+      border-color: rgba(14, 165, 233, 0.20);
+    }
+
+    .capability-card strong,
+    .result-stat strong {
+      display: block;
+      color: var(--strong);
+      font-size: 1rem;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+    }
+
+    .capability-card p {
+      margin-top: 0.55rem;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .pipeline-step {
+      min-height: 10.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pipeline-step p {
+      margin-top: auto;
+    }
+
+    .demo-playbook {
+      min-width: 17rem;
+      max-width: 22rem;
+      padding: 1rem 1.1rem;
+      border-radius: 1.35rem;
+      border: 1px solid var(--pill-border);
+      background: rgba(2, 6, 23, 0.44);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .light-mode .demo-playbook {
+      background: rgba(255,255,255,0.82);
+    }
+
+    .demo-playbook p {
+      margin: 0.35rem 0 0;
+      color: var(--glass-text);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .demo-playbook ol {
+      margin: 0.7rem 0 0;
+      padding-left: 1.2rem;
+      color: var(--strong);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .demo-playbook li + li {
+      margin-top: 0.38rem;
+    }
+
+    .result-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-stat {
+      min-height: 10.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .result-stat strong {
+      font-size: 1.6rem;
+      line-height: 1.15;
+    }
+
+    .result-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .result-stat p {
+      margin-top: 0.9rem;
+    }
+
+    .video-shell {
+      padding: 1.25rem;
+      border-radius: 1.75rem;
+      border: 1px solid var(--panel-line);
+      background: var(--panel-soft);
+      box-shadow: var(--control-shadow);
+    }
+
+    .video-caption {
+      max-width: 40rem;
+      margin: 0 auto 1.4rem;
+      text-align: center;
+      color: var(--glass-text);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
     @media (max-width: 1024px) {
+      .capability-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .pipeline-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .result-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .control-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .control-panel > .metrics-grid {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .story-grid,
+      .impact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .capability-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .twin-grid {
         grid-template-columns: 1fr;
       }
 
       .scene-panel,
-      .control-panel {
+      .radio-panel {
         min-height: auto;
       }
     }
@@ -705,6 +1213,21 @@
     @media (max-width: 640px) {
       .section-title {
         font-size: 2rem;
+      }
+
+      .instruction-strip {
+        align-items: flex-start;
+      }
+
+      .capability-grid,
+      .pipeline-grid,
+      .result-stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .demo-playbook {
+        min-width: 0;
+        max-width: none;
       }
 
       .scene-viewport {
@@ -715,71 +1238,256 @@
       .button-grid {
         grid-template-columns: 1fr;
       }
+
+      .control-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .scene-actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .sm\:text-3xl { font-size: 1.875rem; line-height: 1.2; }
+      .sm\:text-4xl { font-size: 2.25rem; line-height: 1.1; }
+      .sm\:text-7xl { font-size: 4.5rem; line-height: 1; }
+      .sm\:text-lg { font-size: 1.125rem; }
+    }
+
+    @media (min-width: 768px) {
+      .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   </style>
 </head>
 <body class="overflow-x-hidden">
-  <button
-    type="button"
-    id="themeToggle"
-    class="toggle-btn fixed top-6 right-6 z-50 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-    aria-label="Toggle light mode"
-  >
-    <span class="knob">
-      <i class="fas fa-moon icon-moon"></i>
-      <i class="fas fa-sun icon-sun"></i>
-    </span>
-  </button>
-
   <main class="container mx-auto max-w-6xl px-6 py-12">
+    <div class="theme-row">
+      <button
+        type="button"
+        id="themeToggle"
+        class="toggle-btn focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        aria-label="Toggle light mode"
+      >
+        <span class="toggle-track-icons" aria-hidden="true">
+          <span>◐</span>
+          <span>☼</span>
+        </span>
+        <span class="knob">
+          <i class="fas fa-moon icon-moon"></i>
+          <i class="fas fa-sun icon-sun"></i>
+        </span>
+      </button>
+    </div>
+
     <header class="text-center mb-16 pt-8">
       <div style="background:var(--badge-bg);border:1px solid var(--badge-border);" class="inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-sm mb-6">
         <div class="w-2 h-2 rounded-full animate-pulse" style="background:var(--badge-text);"></div>
-        <span style="color:var(--badge-text);" class="font-medium">Research Preview 2026</span>
+        <span style="color:var(--badge-text);" class="font-medium">Research Website • Live Demo</span>
       </div>
 
       <h1 class="display-font text-6xl sm:text-7xl font-bold tracking-tighter hero-glow mb-4" style="color:var(--section-title);">
-        Digital<span class="text-cyan-400">Wave</span>
+        Mor<span class="text-cyan-400">pheus</span>
       </h1>
 
       <p class="text-2xl sm:text-3xl mb-8 max-w-2xl mx-auto" style="color:var(--hero-sub);">
-        Vision-Powered mmWave Digital Twin
+        Proactive mmWave Debugging via Vision-Driven Digital Twins
       </p>
 
-      <p class="max-w-lg mx-auto text-lg" style="color:var(--hero-desc);">
-        Reliable indoor millimeter-wave connectivity for cloud gaming, immersive AR/VR, and real-time communication
+      <p class="max-w-2xl mx-auto text-lg leading-relaxed" style="color:var(--hero-desc);">
+        Anticipate blockage, simulate layout changes, and recover performance before QoE degrades.
+        Morpheus combines vision, RF modeling, and human feedback to enable in-situ orchestration of dynamic indoor mmWave networks.
       </p>
 
       <div class="flex flex-wrap justify-center gap-4 mt-10">
         <a href="#" class="neon-border px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">Read the Paper</a>
         <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">View Code</a>
         <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">Dataset</a>
+        <a href="#live-demo" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid rgba(103,232,249,0.42);color:var(--glass-accent);background:rgba(34,211,238,0.08);">Try Live Demo ↓</a>
       </div>
     </header>
 
-    <section class="my-20">
+    <section id="challenge" class="my-20">
+      <h2 class="section-title">The Challenge</h2>
+      <p class="section-lead">
+        Indoor mmWave networks offer high throughput, but their performance is tightly coupled to the physical scene.
+        Morpheus is built for the regime where layout dynamics, blockage, and human activity make reliability fragile.
+      </p>
+      <div class="story-grid">
+        <article class="research-card">
+          <span class="research-eyebrow">Problem Setting</span>
+          <p>
+            Indoor mmWave networks offer high throughput but are highly sensitive to the physical environment.
+            Small changes such as object movement, human activity, or layout adjustments can disrupt propagation paths and lead to sustained performance degradation.
+          </p>
+          <p>
+            Existing approaches fail in this regime. Static planning assumes fixed layouts, while reactive mechanisms operate at short timescales and cannot recover from persistent, environment-driven disruptions.
+            In practice, improving performance often requires modifying the physical layout itself.
+          </p>
+          <p>
+            This creates a constrained search problem. While many layout configurations can improve signal quality, only a small subset are both high-performing and practically feasible under real-world constraints such as safety, usability, and workflow.
+          </p>
+          <p>
+            Addressing this requires systems that can reason in situ about scene dynamics, anticipate near-future changes, and guide feasible interventions before performance collapses.
+          </p>
+        </article>
+
+        <div class="story-stack">
+          <article class="research-card">
+            <span class="research-eyebrow">Why Reactive Fails</span>
+            <h3>Persistent blockage is a physical-layout problem</h3>
+            <p>
+              Once the environment changes, short-timescale rate adaptation alone cannot restore the lost geometry.
+              The system has to reason about counterfactual layouts, not just RF symptoms.
+            </p>
+          </article>
+
+          <article class="research-card">
+            <span class="research-eyebrow">Core Constraint</span>
+            <h3>Good layouts must also be usable</h3>
+            <p>
+              The best RF solution is not enough. Recommendations must remain feasible for people sharing the space,
+              which makes human feedback a first-class systems signal.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="what-morpheus-does" class="my-20">
+      <h2 class="section-title">What Morpheus Does</h2>
+      <div class="story-grid">
+        <article class="research-card">
+          <span class="research-eyebrow">System Summary</span>
+          <p>
+            Morpheus is a vision-driven wireless digital twin that enables proactive and intent-preserving adaptation in dynamic mmWave environments.
+          </p>
+          <p>
+            It reconstructs the physical scene from commodity cameras, models RF propagation using a digital twin, and predicts how object-level motion will impact future connectivity.
+            Instead of reacting after degradation, Morpheus surfaces likely blockage events in advance and allows users to explore alternative layouts before applying changes in the real world.
+          </p>
+          <p>
+            By combining RF-aware evaluation with human feedback, the system identifies configurations that improve performance while remaining practically feasible.
+          </p>
+        </article>
+
+        <article class="research-card research-highlight">
+          <span class="research-eyebrow">Research Contribution</span>
+          <h3>Prediction, counterfactual reasoning, and feasible intervention in one loop</h3>
+          <div class="highlight-pill"><i class="fas fa-circle-nodes"></i> Predict before QoE degrades</div>
+          <div class="highlight-pill"><i class="fas fa-cubes"></i> Evaluate layouts in an RF-aware twin</div>
+          <div class="highlight-pill"><i class="fas fa-pointer"></i> Respect human constraints during adaptation</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="capabilities" class="my-20">
+      <h2 class="section-title">Key Capabilities</h2>
+      <div class="capability-grid">
+        <article class="research-card capability-card">
+          <span class="capability-index">01</span>
+          <strong>Predicts near-future object movements that lead to blockage</strong>
+          <p>Models scene dynamics before the network enters a prolonged low-QoE state.</p>
+        </article>
+        <article class="research-card capability-card">
+          <span class="capability-index">02</span>
+          <strong>Builds RF-aware digital twins from visual data</strong>
+          <p>Connects commodity sensing to a layout-aware representation of the wireless environment.</p>
+        </article>
+        <article class="research-card capability-card">
+          <span class="capability-index">03</span>
+          <strong>Evaluates counterfactual layouts using ray-traced propagation</strong>
+          <p>Tests alternate object placements before real-world intervention is attempted.</p>
+        </article>
+        <article class="research-card capability-card">
+          <span class="capability-index">04</span>
+          <strong>Recommends intent-preserving layout adjustments</strong>
+          <p>Optimizes for wireless performance without ignoring how the space must still be used.</p>
+        </article>
+        <article class="research-card capability-card">
+          <span class="capability-index">05</span>
+          <strong>Incorporates human feedback to enforce real-world constraints</strong>
+          <p>Uses operator input to prune infeasible reconfigurations and steer the search.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="system-overview" class="my-20">
+      <h2 class="section-title">System Overview</h2>
+      <p class="section-lead">
+        Morpheus turns scene understanding into actionable wireless orchestration through a pipeline that couples reconstruction,
+        RF evaluation, prediction, and user feedback.
+      </p>
+      <div class="pipeline-grid">
+        <article class="research-card pipeline-step">
+          <span class="pipeline-index">1</span>
+          <h3>Visual Sensing</h3>
+          <p>Commodity cameras observe the dynamic indoor scene.</p>
+        </article>
+        <article class="research-card pipeline-step">
+          <span class="pipeline-index">2</span>
+          <h3>3D Reconstruction</h3>
+          <p>Scene geometry is converted into a layout-aware spatial representation.</p>
+        </article>
+        <article class="research-card pipeline-step">
+          <span class="pipeline-index">3</span>
+          <h3>RF-Aware Digital Twin</h3>
+          <p>The environment is evaluated through a propagation-aware digital twin.</p>
+        </article>
+        <article class="research-card pipeline-step">
+          <span class="pipeline-index">4</span>
+          <h3>Motion Prediction</h3>
+          <p>Likely future object motion is projected before disruption compounds.</p>
+        </article>
+        <article class="research-card pipeline-step">
+          <span class="pipeline-index">5</span>
+          <h3>Layout Recommendation</h3>
+          <p>Counterfactual reconfigurations are scored for recovery and feasibility.</p>
+        </article>
+        <article class="research-card pipeline-step">
+          <span class="pipeline-index">6</span>
+          <h3>Human Feedback</h3>
+          <p>Operator constraints preserve intent while steering the final action.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="live-demo" class="my-20">
       <div class="twin-shell neon-border">
         <div class="twin-lead">
           <div class="max-w-2xl">
-            <p class="font-medium tracking-[0.28em] text-sm mb-2" style="color:var(--placeholder-icon);">LIVE DIGITAL TWIN</p>
+            <p class="font-medium tracking-[0.28em] text-sm mb-2" style="color:var(--placeholder-icon);">LIVE DEMO</p>
             <h2 class="display-font text-3xl sm:text-4xl font-bold tracking-tight" style="color:var(--section-title);">
-              3D Voxel Motion + Browser REM 
+              Interactive Digital Twin
             </h2>
             <p class="mt-4 text-base sm:text-lg" style="color:var(--glass-text);">
-              This block loads our real <code>3D VOXELISED MAP</code>, you can select a mesh, 
-              move it one voxel at a time with the arrow keys, 
-              and recomputes a radio environment map below.
+              Explore how physical layout affects mmWave performance in real time.
+              Move objects, simulate blockage, and observe changes in signal strength through the RF-aware digital twin.
             </p>
             <div class="twin-kickers">
-              <span class="twin-pill"><i class="fas fa-cubes"></i> Real Digital Twin tensor</span>
-              <span class="twin-pill"><i class="fas fa-arrows-left-right-to-line"></i> Voxel mesh motion</span>
-              <span class="twin-pill"><i class="fas fa-tower-broadcast"></i> User Interactive</span>
+              <span class="twin-pill"><i class="fas fa-cubes"></i> Real voxel tensor scene</span>
+              <span class="twin-pill"><i class="fas fa-wave-square"></i> RF-aware SINR map</span>
+              <span class="twin-pill"><i class="fas fa-arrows-left-right-to-line"></i> Counterfactual layout edits</span>
             </div>
           </div>
 
-          <div class="space-y-2 text-right">
-            <div class="twin-pill"><i class="fas fa-circle-nodes"></i> Play with 3d Environment</div>
-            <div class="twin-pill"><i class="fas fa-folder-open"></i> Using original assets</code> assets directly</div>
+          <aside class="demo-playbook">
+            <span class="instruction-label">Try This</span>
+            <p>Use the digital twin like a counterfactual debugging console:</p>
+            <ol>
+              <li>Select a movable cluster.</li>
+              <li>Move it into the line-of-sight path.</li>
+              <li>Observe SINR degradation.</li>
+              <li>Reposition it to restore connectivity.</li>
+            </ol>
+          </aside>
+        </div>
+
+        <div class="instruction-strip">
+          <span class="instruction-icon"><i class="fas fa-gamepad"></i></span>
+          <div class="instruction-copy">
+            <span class="instruction-label">Motion Control</span>
+            <p>Select a cluster from the scene or dropdown, then move it exactly one voxel per tap with the arrow keys or the D-pad.</p>
           </div>
         </div>
 
@@ -788,7 +1496,6 @@
             <div class="panel-head">
               <div>
                 <h3>Voxel Tensor Scene</h3>
-                <p>Select a cluster from the scene or dropdown, then move it exactly one voxel per tap with the arrow keys or the D-pad.</p>
               </div>
               <span class="scene-badge" id="sceneDataBadge"><i class="fas fa-spinner fa-spin"></i> Loading tensor</span>
             </div>
@@ -806,6 +1513,27 @@
             </div>
           </section>
 
+          <section class="panel-card radio-panel">
+            <div class="panel-head">
+              <div>
+                <h3>SINR Map</h3>
+                <!-- <p>The map below is recomputed from the live voxel layout using a JavaScript path-loss model. Obstacles darken the map and increase shadow penalty.</p> -->
+                  
+              </div>
+              <span class="scene-badge" id="remBadge"><i class="fas fa-wave-square"></i> Awaiting layout</span>
+            </div>
+
+            <div class="radio-stage" id="radioStage" data-mode="none">
+              <canvas id="radioMapCanvas" width="377" height="208" aria-label="Interactive radio map"></canvas>
+            </div>
+
+            <div class="legend-row">
+              <span class="legend-caption">Weaker SINR</span>
+              <div class="legend-gradient"></div>
+              <span class="legend-caption">Stronger SINR</span>
+            </div>
+          </section>
+
           <aside class="panel-card control-panel">
             <div class="control-group">
               <span class="control-label">Mesh Selection</span>
@@ -815,29 +1543,6 @@
               <div class="key-hints">
                 <span class="key-hint"><span class="keycap">Click</span> pick from 3D scene</span>
                 <span class="key-hint"><span class="keycap">Map</span> pick from REM canvas</span>
-              </div>
-            </div>
-
-            <div class="metrics-grid">
-              <div class="metric-card">
-                <span class="metric-label">Selected Mesh</span>
-                <span class="metric-value" id="metricSelected">—</span>
-                <span class="metric-sub" id="metricVoxelCount">Voxel stats pending</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">Mobility</span>
-                <span class="metric-value" id="metricMobility">—</span>
-                <span class="metric-sub" id="metricOffset">Offset Δ(0, 0)</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">TX Position</span>
-                <span class="metric-value" id="metricTx">—</span>
-                <span class="metric-sub">Click “Place TX”, then click the map.</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">RX Zone</span>
-                <span class="metric-value" id="metricRx">—</span>
-                <span class="metric-sub" id="metricRem">RX summary loading</span>
               </div>
             </div>
 
@@ -880,92 +1585,139 @@
               </div>
             </div>
 
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-label">Selected Mesh</span>
+                <span class="metric-value" id="metricSelected">—</span>
+                <span class="metric-sub" id="metricVoxelCount">Voxel stats pending</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Mobility</span>
+                <span class="metric-value" id="metricMobility">—</span>
+                <span class="metric-sub" id="metricOffset">Offset Δ(0, 0)</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">TX Position</span>
+                <span class="metric-value" id="metricTx">—</span>
+                <span class="metric-sub">Click “Place TX”, then click the map.</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">RX Zone</span>
+                <span class="metric-value" id="metricRx">—</span>
+                <span class="metric-sub" id="metricRem">RX summary loading</span>
+              </div>
+            </div>
+
             <div class="control-group">
-              <!-- <span class="control-label">What This Is</span>
-              <p class="fine-print">
-                The voxel motion is real browser-side manipulation of your Morpheus tensor. The radiomap is an intentionally lightweight mimic: log-distance loss, deterministic shadow fading, and blockage penalties sampled from the current voxel layout.
-              </p> -->
               <div class="key-hints">
                 <span class="status-chip movable"><i class="fas fa-lock-open"></i> Movable cluster</span>
-                <!-- <span class="status-chip locked"><i class="fas fa-lock"></i> Quasi-static cluster</span> -->
-                 <span class="status-chip locked"><i class="fas fa-lock"></i> Static cluster</span>
+                <span class="status-chip locked"><i class="fas fa-lock"></i> Static cluster</span>
               </div>
             </div>
           </aside>
-
-          <section class="panel-card radio-panel">
-            <div class="panel-head">
-              <div>
-                <h3>SINR Map</h3>
-                <!-- <p>The map below is recomputed from the live voxel layout using a JavaScript path-loss model. Obstacles darken the map and increase shadow penalty.</p> -->
-                  
-              </div>
-              <span class="scene-badge" id="remBadge"><i class="fas fa-wave-square"></i> Awaiting layout</span>
-            </div>
-
-            <div class="radio-stage" id="radioStage" data-mode="none">
-              <canvas id="radioMapCanvas" width="377" height="208" aria-label="Interactive radio map"></canvas>
-            </div>
-
-            <div class="legend-row">
-              <span class="legend-caption">Weaker pseudo-SINR</span>
-              <div class="legend-gradient"></div>
-              <span class="legend-caption">Stronger pseudo-SINR</span>
-            </div>
-          </section>
         </div>
 
         <div id="twinStatus" class="status-line" data-tone="info">
-          Initializing static browser demo…
+          Initializing Morpheus live demo…
         </div>
       </div>
     </section>
 
-    <section class="my-20">
-      <h2 class="section-title">The Challenge</h2>
-      <div class="glass max-w-4xl mx-auto p-10 rounded-3xl text-lg leading-relaxed" style="color:var(--glass-text);">
-        <p>
-          Reliable wireless connectivity is essential for cloud gaming, immersive AR/VR, and real-time video communication.
-          Yet at millimeter-wave frequencies, even minor environmental changes can cause sudden QoE degradation.
-        </p>
-        <p class="mt-6">
-          <span style="color:var(--glass-accent);" class="font-semibold">Digital Wave</span> creates a vision-driven wireless digital twin using commodity cameras,
-          enabling real-time diagnosis and mitigation without new hardware.
-        </p>
-      </div>
-    </section>
-
-    <section class="my-20">
-      <h2 class="section-title">Watch It In Action</h2>
-      <div class="w-full max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden flex items-center justify-center" style="border:1px solid var(--video-border);background:var(--video-bg);">
-        <div class="text-center">
-          <i class="fas fa-play-circle text-7xl mb-4" style="color:var(--placeholder-icon);"></i>
-          <p style="color:var(--video-text);">Demo Video</p>
+    <section id="video" class="my-20">
+      <h2 class="section-title">Watch Morpheus in Action</h2>
+      <p class="video-caption">
+        A companion video can walk through the full loop of scene understanding, RF-aware evaluation,
+        counterfactual layout testing, and proactive recovery in a dynamic indoor environment.
+      </p>
+      <div class="video-shell max-w-4xl mx-auto">
+        <div class="w-full aspect-video rounded-3xl overflow-hidden flex items-center justify-center" style="border:1px solid var(--video-border);background:var(--video-bg);">
+          <div class="text-center">
+            <i class="fas fa-play-circle text-7xl mb-4" style="color:var(--placeholder-icon);"></i>
+            <p style="color:var(--video-text);font-size:1.02rem;font-weight:600;">Paper Video</p>
+            <p class="mt-4" style="color:var(--caption-text);max-width:24rem;">
+              System walkthrough, blockage prediction, and recovery-oriented layout adaptation.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="my-20">
+    <section id="results" class="my-20">
       <h2 class="section-title">Results</h2>
+      <p class="section-lead">
+        Morpheus enables proactive and practical network adaptation under dynamic environments,
+        improving recovery while reducing infeasible interventions.
+      </p>
+
+      <div class="result-stat-grid">
+        <article class="research-card result-stat">
+          <span>Throughput</span>
+          <strong>Up to 2–3× improvement under blockage</strong>
+          <p>Counterfactual layout evaluation recovers high-rate links that would otherwise remain degraded.</p>
+        </article>
+        <article class="research-card result-stat">
+          <span>Recovery Speed</span>
+          <strong>Order-of-magnitude faster recovery</strong>
+          <p>Proactive guidance reduces the delay of waiting for purely reactive schemes to adapt.</p>
+        </article>
+        <article class="research-card result-stat">
+          <span>Feasibility</span>
+          <strong>60% fewer infeasible recommendations</strong>
+          <p>Human feedback filters out layout changes that are impractical in shared indoor spaces.</p>
+        </article>
+        <article class="research-card result-stat">
+          <span>Optimization</span>
+          <strong>Faster convergence to intent-preserving layouts</strong>
+          <p>Morpheus narrows the search to configurations that help RF performance without breaking workspace intent.</p>
+        </article>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="glass p-8 rounded-3xl">
           <div class="result-placeholder mb-6">
             <i class="fas fa-broadcast-tower text-5xl" style="color:var(--placeholder-icon);"></i>
           </div>
-          <p class="text-center" style="color:var(--caption-text);">Real-time signal coverage with dynamic obstacle prediction</p>
+          <p class="text-center" style="color:var(--caption-text);">Counterfactual RF evaluation under dynamic blockage and object motion</p>
         </div>
         <div class="glass p-8 rounded-3xl">
           <div class="result-placeholder mb-6">
             <i class="fas fa-chart-line text-5xl" style="color:var(--placeholder-icon2);"></i>
           </div>
-          <p class="text-center" style="color:var(--caption-text);">Significant SNR improvement over static planning</p>
+          <p class="text-center" style="color:var(--caption-text);">Faster recovery to feasible high-performance layouts compared to reactive baselines</p>
         </div>
       </div>
     </section>
 
+    <section id="why-it-matters" class="my-20">
+      <h2 class="section-title">Why This Matters</h2>
+      <div class="impact-grid">
+        <article class="research-card">
+          <span class="research-eyebrow">Real-World Relevance</span>
+          <p>
+            Emerging applications such as AR/VR, cloud gaming, and collaborative robotics require stable high-throughput wireless connectivity.
+            However, mmWave performance is tightly coupled with the physical environment, making reliability a persistent challenge in real-world deployments.
+          </p>
+          <p>
+            Morpheus shifts network management from reactive trial-and-error to proactive, structured adaptation.
+            By reasoning jointly over scene dynamics, RF behavior, and human constraints, it enables practical and scalable debugging of next-generation wireless systems.
+          </p>
+        </article>
+
+        <article class="research-card">
+          <span class="research-eyebrow">Takeaway</span>
+          <h3>From wireless diagnosis to in-situ orchestration</h3>
+          <p>
+            Morpheus positions the digital twin as more than a visualization tool. It becomes a systems interface for anticipating failures,
+            exploring feasible interventions, and closing the loop between physical-space dynamics and network recovery.
+          </p>
+        </article>
+      </div>
+    </section>
+
     <footer class="mt-24 pt-12 text-center text-sm" style="border-top:1px solid var(--footer-border);color:var(--footer-text);">
-      <p>Digital Wave — Vision-Driven Indoor mmWave Digital Twin</p>
-      <p class="mt-1">Research Project • 2026</p>
+      <p>Morpheus: Bridging vision, RF modeling, and human insight for real-world mmWave orchestration.</p>
+      <p class="mt-1">&copy Research Project • 2026</p>
+      <p class="mt-1">Made with ❤️ on Earth 🌎 </p>
     </footer>
   </main>
 
@@ -1030,7 +1782,7 @@
         var badge = document.getElementById("sceneDataBadge");
         var rem = document.getElementById("remBadge");
         if (status) {
-          status.textContent = "The interactive twin did not boot. If a CDN is blocked or you are offline, the Three.js viewer cannot start.";
+          status.textContent = "The interactive twin did not boot. Check that assets/vendor/three.min.js exists and serve the page from GitHub Pages or another static host.";
           status.dataset.tone = "warn";
         }
         if (badge) {
@@ -1043,7 +1795,7 @@
     });
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="./assets/vendor/three.min.js"></script>
 
   <script>
     if (!window.THREE) {
@@ -2216,3 +2968,4 @@
   </script>
 </body>
 </html>
+<!-- AKash Paul, cse -->
