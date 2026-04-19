@@ -1826,39 +1826,24 @@
 
   <script>
     window.__digitalTwinBooted = false;
+    window.__digitalTwinBootRequested = false;
     window.addEventListener("DOMContentLoaded", function() {
-      window.setTimeout(function() {
-        if (window.__digitalTwinBooted) return;
-        var status = document.getElementById("twinStatus");
-        var badge = document.getElementById("sceneDataBadge");
-        var rem = document.getElementById("remBadge");
-        if (status) {
-          status.textContent = "The interactive twin did not boot. Check that assets/vendor/three.min.js exists and serve the page from GitHub Pages or another static host.";
-          status.dataset.tone = "warn";
-        }
-        if (badge) {
-          badge.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Viewer script unavailable';
-        }
-        if (rem) {
-          rem.innerHTML = '<i class="fas fa-circle-exclamation"></i> Viewer not started';
-        }
-      }, 6000);
+      var status = document.getElementById("twinStatus");
+      if (status) {
+        status.textContent = "The interactive twin will load as you approach the live demo section, so the page opens faster.";
+        status.dataset.tone = "info";
+      }
     });
   </script>
 
-  <script src="./assets/vendor/three.min.js"></script>
-
   <script>
-    if (!window.THREE) {
-      throw new Error("Three.js failed to load.");
-    }
-    window.__digitalTwinBooted = true;
-
     const ASSETS = {
       tensor: "./assets/voxel_tensor.npy",
       txrx: "./assets/txrx_config.json",
       locks: "./assets/quasi_static.json"
     };
+
+    const THREE_SCRIPT_SRC = "./assets/vendor/three.min.js";
 
     const PALETTE = [
       "#e63946", "#457b9d", "#2a9d8f", "#e9c46a", "#f4a261",
@@ -1943,9 +1928,45 @@
     const radioCtx = ui.radioMapCanvas.getContext("2d", { alpha: false });
     radioCtx.imageSmoothingEnabled = false;
 
+    let digitalTwinBootPromise = null;
+
     function setStatus(message, tone = "info") {
       ui.twinStatus.textContent = message;
       ui.twinStatus.dataset.tone = tone;
+    }
+
+    function ensureThreeLoaded() {
+      if (window.THREE) {
+        return Promise.resolve(window.THREE);
+      }
+
+      if (window.__digitalTwinThreePromise) {
+        return window.__digitalTwinThreePromise;
+      }
+
+      window.__digitalTwinThreePromise = new Promise((resolve, reject) => {
+        const existing = document.querySelector(`script[src="${THREE_SCRIPT_SRC}"]`);
+        if (existing) {
+          existing.addEventListener("load", () => resolve(window.THREE), { once: true });
+          existing.addEventListener("error", () => reject(new Error("Three.js failed to load.")), { once: true });
+          return;
+        }
+
+        const script = document.createElement("script");
+        script.src = THREE_SCRIPT_SRC;
+        script.async = true;
+        script.onload = () => {
+          if (!window.THREE) {
+            reject(new Error("Three.js failed to initialize."));
+            return;
+          }
+          resolve(window.THREE);
+        };
+        script.onerror = () => reject(new Error("Three.js failed to load."));
+        document.body.appendChild(script);
+      });
+
+      return window.__digitalTwinThreePromise;
     }
 
     function renderSceneOnce() {
@@ -3148,12 +3169,88 @@
       );
     }
 
-    initialize().catch((error) => {
+    function handleBootError(error) {
       console.error(error);
       ui.sceneDataBadge.innerHTML = `<i class="fas fa-triangle-exclamation"></i> Load failed`;
       ui.remBadge.innerHTML = `<i class="fas fa-circle-exclamation"></i> No REM available`;
       setStatus(`The digital twin could not start: ${error.message}`, "error");
-    });
+    }
+
+    async function bootDigitalTwin() {
+      if (window.__digitalTwinBooted) {
+        return;
+      }
+
+      if (digitalTwinBootPromise) {
+        return digitalTwinBootPromise;
+      }
+
+      window.__digitalTwinBootRequested = true;
+      setStatus("Loading Morpheus live demo assets…", "info");
+      window.clearTimeout(window.__digitalTwinBootTimer);
+      window.__digitalTwinBootTimer = window.setTimeout(() => {
+        if (!window.__digitalTwinBootRequested || window.__digitalTwinBooted) return;
+        ui.sceneDataBadge.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Viewer script unavailable';
+        ui.remBadge.innerHTML = '<i class="fas fa-circle-exclamation"></i> Viewer not started';
+        setStatus("The interactive twin is taking longer than expected to boot. Check that assets/vendor/three.min.js exists and serve the page from GitHub Pages or another static host.", "warn");
+      }, 15000);
+
+      digitalTwinBootPromise = ensureThreeLoaded()
+        .then(() => initialize())
+        .then(() => {
+          window.clearTimeout(window.__digitalTwinBootTimer);
+          window.__digitalTwinBooted = true;
+        })
+        .catch((error) => {
+          window.clearTimeout(window.__digitalTwinBootTimer);
+          handleBootError(error);
+          throw error;
+        });
+
+      return digitalTwinBootPromise;
+    }
+
+    function setupLazyDigitalTwinBoot() {
+      const liveDemo = document.getElementById("live-demo");
+      if (!liveDemo) {
+        bootDigitalTwin().catch(() => {});
+        return;
+      }
+
+      const startBoot = () => {
+        bootDigitalTwin().catch(() => {});
+      };
+
+      if (window.location.hash === "#live-demo") {
+        startBoot();
+        return;
+      }
+
+      if (!("IntersectionObserver" in window)) {
+        startBoot();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          startBoot();
+        }
+      }, {
+        rootMargin: "320px 0px"
+      });
+
+      observer.observe(liveDemo);
+
+      window.addEventListener("hashchange", () => {
+        if (window.location.hash === "#live-demo") {
+          observer.disconnect();
+          startBoot();
+        }
+      });
+    }
+
+    setupLazyDigitalTwinBoot();
   </script>
 </body>
 </html>
