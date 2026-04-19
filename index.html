@@ -524,9 +524,9 @@
 
     .twin-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
       gap: 1rem;
-      align-items: start;
+      align-items: stretch;
     }
 
     .panel-card {
@@ -554,7 +554,7 @@
 
     .control-panel {
       display: grid;
-      grid-template-columns: 1.15fr 1.35fr 1fr 1fr;
+      grid-template-columns: 1fr 1.1fr;
       gap: 0.9rem;
       grid-column: 1 / -1;
       min-height: auto;
@@ -563,10 +563,8 @@
 
     .radio-panel {
       padding-bottom: 1.2rem;
-    }
-
-    .control-panel > .metrics-grid {
-      grid-column: span 2;
+      display: flex;
+      flex-direction: column;
     }
 
     .panel-head {
@@ -600,16 +598,32 @@
       gap: 0.35rem;
       padding: 0.45rem 0.65rem;
       border-radius: 9999px;
-      background: rgba(15, 23, 42, 0.70);
-      color: #bfdbfe;
+      background: rgba(255, 255, 255, 0.96);
+      color: #0f172a;
       font-size: 0.76rem;
-      border: 1px solid rgba(96, 165, 250, 0.26);
+      border: 1px solid rgba(148, 163, 184, 0.34);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.12);
       white-space: nowrap;
+    }
+
+    .radio-panel .panel-head {
+      justify-content: center;
+      position: relative;
+      min-height: 2.35rem;
+    }
+
+    .radio-panel .panel-head > div {
+      position: absolute;
+      left: 0;
+    }
+
+    .radio-panel .scene-badge {
+      margin: 0 auto;
     }
 
     .scene-viewport {
       position: relative;
-      min-height: 28rem;
+      min-height: 29.6rem;
       border-radius: 1.25rem;
       overflow: hidden;
       border: 1px solid var(--panel-line);
@@ -617,45 +631,22 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
-    .scene-overlay {
-      position: absolute;
-      left: 0.85rem;
-      right: 0.85rem;
-      bottom: 0.85rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      align-items: center;
-      justify-content: space-between;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    .overlay-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.55rem 0.75rem;
-      border-radius: 1rem;
-      background: rgba(2, 6, 23, 0.74);
-      border: 1px solid rgba(148,163,184,0.20);
-      color: #e2e8f0;
-      font-size: 0.82rem;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .light-mode .overlay-chip {
-      background: rgba(255,255,255,0.84);
-      color: #0f172a;
-    }
-
     .scene-actions {
       display: flex;
-      gap: 0.65rem;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 0.55rem;
       margin-top: 0.9rem;
       position: relative;
       z-index: 1;
+    }
+
+    .scene-select {
+      margin-left: auto;
+      flex: 0 0 9.9rem;
+      width: 9.9rem;
+      min-width: 9.9rem;
+      max-width: 9.9rem;
     }
 
     .control-group {
@@ -686,8 +677,8 @@
     .ghost-button {
       border-radius: 0.95rem;
       border: 1px solid var(--panel-line);
-      padding: 0.8rem 0.95rem;
-      font-size: 0.92rem;
+      padding: 0.72rem 0.82rem;
+      font-size: 0.88rem;
       font-weight: 600;
       transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
     }
@@ -747,6 +738,36 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.65rem;
+    }
+
+    .button-grid.compact-grid {
+      gap: 0.5rem;
+    }
+
+    .button-grid.compact-grid .mode-button,
+    .button-grid.compact-grid .ghost-button {
+      padding: 0.62rem 0.72rem;
+      font-size: 0.82rem;
+      border-radius: 0.82rem;
+    }
+
+    .move-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .move-grid .control-button {
+      padding: 0.62rem 0.58rem;
+      font-size: 0.8rem;
+      border-radius: 0.82rem;
+    }
+
+    .keyboard-note {
+      color: #f87171;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      font-weight: 600;
     }
 
     .metrics-grid {
@@ -840,8 +861,10 @@
       border: 1px solid var(--map-outline);
       overflow: hidden;
       background: var(--map-bg);
-      aspect-ratio: 377 / 208;
+      aspect-ratio: 208 / 377;
       position: relative;
+      width: min(100%, 14.9rem);
+      margin: 0 auto;
     }
 
     .radio-stage canvas {
@@ -858,15 +881,27 @@
 
     .legend-row {
       display: flex;
-      align-items: center;
-      gap: 0.85rem;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.42rem;
       margin-top: 0.95rem;
-      flex-wrap: wrap;
+      width: min(100%, 14.9rem);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .legend-labels {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
     }
 
     .legend-gradient {
-      flex: 1 1 14rem;
-      min-width: 14rem;
+      flex: 0 0 auto;
+      min-width: 0;
+      width: 100%;
       height: 0.85rem;
       border-radius: 9999px;
       border: 1px solid var(--panel-line);
@@ -879,7 +914,7 @@
     }
 
     .status-line {
-      margin-top: 1rem;
+      margin: 0 0 1rem;
       border-radius: 1rem;
       border: 1px solid var(--panel-line);
       padding: 0.9rem 1rem;
@@ -941,6 +976,10 @@
       color: var(--glass-text);
       font-size: 1.02rem;
       line-height: 1.8;
+    }
+
+    .section-lead.system-lead {
+      max-width: 58rem;
     }
 
     .research-card {
@@ -1086,6 +1125,46 @@
       margin-top: auto;
     }
 
+    .framework-shell {
+      max-width: 74rem;
+      margin: 0 auto;
+      padding: 1rem;
+      border-radius: 1.75rem;
+      border: 1px solid var(--panel-line);
+      background: var(--panel-soft);
+      box-shadow: var(--control-shadow);
+    }
+
+    .framework-frame {
+      overflow: hidden;
+      border-radius: 1.25rem;
+      border: 1px solid var(--panel-line);
+      background: var(--video-bg);
+    }
+
+    .framework-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      background: #ffffff;
+    }
+
+    .framework-caption {
+      max-width: 48rem;
+      margin: 1rem auto 0;
+      text-align: center;
+      color: var(--glass-text);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .framework-caption a {
+      color: var(--glass-accent);
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
     .demo-playbook {
       min-width: 17rem;
       max-width: 22rem;
@@ -1184,10 +1263,6 @@
       .control-panel {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-
-      .control-panel > .metrics-grid {
-        grid-column: 1 / -1;
-      }
     }
 
     @media (max-width: 900px) {
@@ -1225,9 +1300,24 @@
         grid-template-columns: 1fr;
       }
 
+      .framework-shell {
+        padding: 0.75rem;
+      }
+
       .demo-playbook {
         min-width: 0;
         max-width: none;
+      }
+
+      .scene-select {
+        margin-left: 0;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+      }
+
+      .scene-actions {
+        flex-wrap: wrap;
       }
 
       .scene-viewport {
@@ -1301,9 +1391,10 @@
 
       <div class="flex flex-wrap justify-center gap-4 mt-10">
         <a href="#" class="neon-border px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">Read the Paper</a>
-        <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">View Code</a>
-        <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">Dataset</a>
+        <!-- <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">View Code</a> -->
+        <!-- <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">Dataset</a> -->
         <a href="#live-demo" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid rgba(103,232,249,0.42);color:var(--glass-accent);background:rgba(34,211,238,0.08);">Try Live Demo ↓</a>
+        <a href="#video" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid rgba(103,232,249,0.42);color:var(--glass-accent);background:rgba(34,211,238,0.08);">Watch Video ↓</a>
       </div>
     </header>
 
@@ -1414,10 +1505,24 @@
 
     <section id="system-overview" class="my-20">
       <h2 class="section-title">System Overview</h2>
-      <p class="section-lead">
-        Morpheus turns scene understanding into actionable wireless orchestration through a pipeline that couples reconstruction,
-        RF evaluation, prediction, and user feedback.
+      <p class="section-lead system-lead">
+        Morpheus turns scene understanding into actionable wireless orchestration through a pipeline that couples visual sensing, 3D reconstruction,
+        RF evaluation using the digital twin, motion prediction, layout recommendation, and user feedback. The framework figure from the paper is shown below.
       </p>
+      <div class="framework-shell">
+        <div class="framework-frame">
+          <img
+            src="./assets/framework.jpg"
+            alt="Morpheus framework overview"
+            loading="lazy"
+          >
+        </div>
+        <p class="framework-caption">
+          <!-- Framework overview from the Morpheus paper. -->
+          <a href="./assets/framework.jpg" target="_blank" rel="noopener noreferrer">Open the figure in full resolution</a>.
+        </p>
+      </div>
+      <!--
       <div class="pipeline-grid">
         <article class="research-card pipeline-step">
           <span class="pipeline-index">1</span>
@@ -1450,6 +1555,7 @@
           <p>Operator constraints preserve intent while steering the final action.</p>
         </article>
       </div>
+      -->
     </section>
 
     <section id="live-demo" class="my-20">
@@ -1487,8 +1593,13 @@
           <span class="instruction-icon"><i class="fas fa-gamepad"></i></span>
           <div class="instruction-copy">
             <span class="instruction-label">Motion Control</span>
-            <p>Select a cluster from the scene or dropdown, then move it exactly one voxel per tap with the arrow keys or the D-pad.</p>
+            <p>Select a cluster from the scene or dropdown, then move it arrow keys or the control buttons.</p>
+             <div class="keyboard-note"> This interaction and simulation works best on Desktop/PC. </div>
           </div>
+        </div>
+
+        <div id="twinStatus" class="status-line" data-tone="info">
+          Initializing Morpheus live demo…
         </div>
 
         <div class="twin-grid">
@@ -1500,16 +1611,14 @@
               <span class="scene-badge" id="sceneDataBadge"><i class="fas fa-spinner fa-spin"></i> Loading tensor</span>
             </div>
 
-            <div id="sceneViewport" class="scene-viewport">
-              <div class="scene-overlay">
-                <span class="overlay-chip" id="sceneSelectionChip"><i class="fas fa-crosshairs"></i> Waiting for scene</span>
-                <span class="overlay-chip" id="sceneMotionChip"><i class="fas fa-gamepad"></i> Arrow keys move by 1 voxel</span>
-              </div>
-            </div>
+            <div id="sceneViewport" class="scene-viewport"></div>
 
             <div class="scene-actions">
               <button class="control-button" id="fitSceneBtn" type="button"><i class="fas fa-expand"></i> Recenter View</button>
               <button class="ghost-button" id="resetLayoutBtn" type="button"><i class="fas fa-rotate-left"></i> Reset Layout</button>
+              <select id="objectSelect" class="control-select scene-select" aria-label="Mesh Selection">
+                <option>Loading objects…</option>
+              </select>
             </div>
           </section>
 
@@ -1524,101 +1633,44 @@
             </div>
 
             <div class="radio-stage" id="radioStage" data-mode="none">
-              <canvas id="radioMapCanvas" width="377" height="208" aria-label="Interactive radio map"></canvas>
+              <canvas id="radioMapCanvas" width="208" height="377" aria-label="Interactive radio map"></canvas>
             </div>
 
             <div class="legend-row">
-              <span class="legend-caption">Weaker SINR</span>
+              <div class="legend-labels">
+                <span class="legend-caption">Weaker SINR</span>
+                <span class="legend-caption">Stronger SINR</span>
+              </div>
               <div class="legend-gradient"></div>
-              <span class="legend-caption">Stronger SINR</span>
             </div>
           </section>
 
           <aside class="panel-card control-panel">
             <div class="control-group">
-              <span class="control-label">Mesh Selection</span>
-              <select id="objectSelect" class="control-select">
-                <option>Loading objects…</option>
-              </select>
+              <span class="control-label">Move Mesh</span>
+              <div class="move-grid">
+                <button type="button" class="control-button move-btn" data-dx="0" data-dy="-1">Up</button>
+                <button type="button" class="control-button move-btn" data-dx="-1" data-dy="0">Left</button>
+                <button type="button" class="control-button move-btn" data-dx="1" data-dy="0">Right</button>
+                <button type="button" class="control-button move-btn" data-dx="0" data-dy="1">Down</button>
+              </div>
+              <div class="keyboard-note">Use keyboard arrow keys for best control.</div>
+            </div>
+
+            <div class="control-group">
+              <span class="control-label">Radio Map Tools</span>
+              <div class="button-grid compact-grid">
+                <button class="mode-button" id="txModeBtn" type="button"><i class="fas fa-tower-cell"></i> Place TX</button>
+                <button class="mode-button" id="rxAddModeBtn" type="button"><i class="fas fa-pen"></i> Draw RX Zone</button>
+                <button class="ghost-button" id="clearRxBtn" type="button"><i class="fas fa-trash"></i> Clear RX</button>
+                <button class="ghost-button" id="restoreMarkersBtn" type="button"><i class="fas fa-location-crosshairs"></i> Restore TX/RX</button>
+              </div>
               <div class="key-hints">
                 <span class="key-hint"><span class="keycap">Click</span> pick from 3D scene</span>
                 <span class="key-hint"><span class="keycap">Map</span> pick from REM canvas</span>
               </div>
             </div>
-
-            <div class="control-group">
-              <span class="control-label">Move Mesh</span>
-              <div class="dpad">
-                <span class="blank"></span>
-                <button type="button" class="control-button move-btn" data-dx="0" data-dy="-1"><i class="fas fa-arrow-up"></i></button>
-                <span class="blank"></span>
-                <button type="button" class="control-button move-btn" data-dx="-1" data-dy="0"><i class="fas fa-arrow-left"></i></button>
-                <span class="blank"></span>
-                <button type="button" class="control-button move-btn" data-dx="1" data-dy="0"><i class="fas fa-arrow-right"></i></button>
-                <span class="blank"></span>
-                <button type="button" class="control-button move-btn" data-dx="0" data-dy="1"><i class="fas fa-arrow-down"></i></button>
-                <span class="blank"></span>
-              </div>
-              <div class="key-hints">
-                <span class="key-hint"><span class="keycap">←</span> left</span>
-                <span class="key-hint"><span class="keycap">→</span> right</span>
-                <span class="key-hint"><span class="keycap">↑</span> up</span>
-                <span class="key-hint"><span class="keycap">↓</span> down</span>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <span class="control-label">Radio Map Tools</span>
-              <div class="button-grid">
-                <button class="mode-button" id="txModeBtn" type="button"><i class="fas fa-tower-cell"></i> Place TX</button>
-                <button class="mode-button" id="rxAddModeBtn" type="button"><i class="fas fa-pen"></i> Paint RX</button>
-                <button class="mode-button" id="rxEraseModeBtn" type="button"><i class="fas fa-eraser"></i> Erase RX</button>
-                <button class="ghost-button" id="clearRxBtn" type="button"><i class="fas fa-trash"></i> Clear RX</button>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <span class="control-label">Reset Demo State</span>
-              <div class="button-grid">
-                <button class="ghost-button" id="restoreMarkersBtn" type="button"><i class="fas fa-location-crosshairs"></i> Restore TX/RX</button>
-                <button class="ghost-button" id="clearModeBtn" type="button"><i class="fas fa-pointer"></i> Neutral Cursor</button>
-              </div>
-            </div>
-
-            <div class="metrics-grid">
-              <div class="metric-card">
-                <span class="metric-label">Selected Mesh</span>
-                <span class="metric-value" id="metricSelected">—</span>
-                <span class="metric-sub" id="metricVoxelCount">Voxel stats pending</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">Mobility</span>
-                <span class="metric-value" id="metricMobility">—</span>
-                <span class="metric-sub" id="metricOffset">Offset Δ(0, 0)</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">TX Position</span>
-                <span class="metric-value" id="metricTx">—</span>
-                <span class="metric-sub">Click “Place TX”, then click the map.</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-label">RX Zone</span>
-                <span class="metric-value" id="metricRx">—</span>
-                <span class="metric-sub" id="metricRem">RX summary loading</span>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <div class="key-hints">
-                <span class="status-chip movable"><i class="fas fa-lock-open"></i> Movable cluster</span>
-                <span class="status-chip locked"><i class="fas fa-lock"></i> Static cluster</span>
-              </div>
-            </div>
           </aside>
-        </div>
-
-        <div id="twinStatus" class="status-line" data-tone="info">
-          Initializing Morpheus live demo…
         </div>
       </div>
     </section>
@@ -1852,6 +1904,7 @@
       moveButtons: Array.from(document.querySelectorAll(".move-btn")),
       radioStage: document.getElementById("radioStage"),
       radioMapCanvas: document.getElementById("radioMapCanvas"),
+      radioSummaryChip: document.getElementById("radioSummaryChip"),
       twinStatus: document.getElementById("twinStatus"),
       sceneDataBadge: document.getElementById("sceneDataBadge"),
       remBadge: document.getElementById("remBadge"),
@@ -1880,6 +1933,7 @@
       defaultRxZone: new Set(),
       placementMode: "none",
       isPainting: false,
+      rxDrawPath: [],
       radioMapDb: null,
       radioSummary: null,
       scene: null,
@@ -1909,6 +1963,94 @@
 
     function clamp(value, min, max) {
       return Math.min(max, Math.max(min, value));
+    }
+
+    function setTextIfPresent(node, value) {
+      if (node) {
+        node.textContent = value;
+      }
+    }
+
+    function setHtmlIfPresent(node, value) {
+      if (node) {
+        node.innerHTML = value;
+      }
+    }
+
+    function mapCellToDisplay(row, col) {
+      return {
+        x: state.dims.rows - 1 - row,
+        y: col
+      };
+    }
+
+    function mapPointerToDisplayPoint(event) {
+      const rect = ui.radioMapCanvas.getBoundingClientRect();
+      const x = clamp((event.clientX - rect.left) / rect.width, 0, 0.999999);
+      const y = clamp((event.clientY - rect.top) / rect.height, 0, 0.999999);
+      return {
+        x: x * state.dims.rows,
+        y: y * state.dims.cols
+      };
+    }
+
+    function pointInPolygon(point, polygon) {
+      let inside = false;
+      for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        const xi = polygon[i].x;
+        const yi = polygon[i].y;
+        const xj = polygon[j].x;
+        const yj = polygon[j].y;
+        const intersect = ((yi > point.y) !== (yj > point.y)) &&
+          (point.x < ((xj - xi) * (point.y - yi)) / ((yj - yi) || 1e-6) + xi);
+        if (intersect) inside = !inside;
+      }
+      return inside;
+    }
+
+    function commitRxDrawPath() {
+      if (state.rxDrawPath.length < 3) {
+        state.rxDrawPath = [];
+        renderRadioMap();
+        return;
+      }
+
+      let minX = Infinity;
+      let maxX = -Infinity;
+      let minY = Infinity;
+      let maxY = -Infinity;
+
+      for (const point of state.rxDrawPath) {
+        minX = Math.min(minX, point.x);
+        maxX = Math.max(maxX, point.x);
+        minY = Math.min(minY, point.y);
+        maxY = Math.max(maxY, point.y);
+      }
+
+      const nextZone = new Set();
+      const startX = clamp(Math.floor(minX), 0, state.dims.rows - 1);
+      const endX = clamp(Math.ceil(maxX), 0, state.dims.rows - 1);
+      const startY = clamp(Math.floor(minY), 0, state.dims.cols - 1);
+      const endY = clamp(Math.ceil(maxY), 0, state.dims.cols - 1);
+
+      for (let displayX = startX; displayX <= endX; displayX += 1) {
+        for (let displayY = startY; displayY <= endY; displayY += 1) {
+          if (!pointInPolygon({ x: displayX + 0.5, y: displayY + 0.5 }, state.rxDrawPath)) {
+            continue;
+          }
+          const row = clamp(state.dims.rows - 1 - displayX, 0, state.dims.rows - 1);
+          const col = clamp(displayY, 0, state.dims.cols - 1);
+          nextZone.add(cellKey(row, col));
+        }
+      }
+
+      state.rxZone = nextZone;
+      state.rxDrawPath = [];
+      scheduleRadioUpdate();
+      setStatus(
+        nextZone.size ? `RX zone updated across ${nextZone.size} cells.` : "RX zone was too small to capture any cells.",
+        nextZone.size ? "success" : "warn"
+      );
     }
 
     function median(values) {
@@ -2402,6 +2544,7 @@
       const box = state.scene.selectionHelper.box;
       box.min.set(object.minX + object.offsetX, object.minZ, object.minY + object.offsetY);
       box.max.set(object.maxX + 1 + object.offsetX, object.maxZ + 1, object.maxY + 1 + object.offsetY);
+      state.scene.selectionHelper.material.color.setStyle(object.locked ? "#fb7185" : "#4ade80");
       state.scene.selectionHelper.visible = true;
       state.scene.selectionHelper.updateMatrixWorld(true);
     }
@@ -2411,8 +2554,10 @@
         const object = state.objects.get(oid);
         const isSelected = oid === state.selectedOid;
         object.material.opacity = object.locked ? 0.72 : (isSelected ? 1.0 : 0.90);
-        object.material.emissive.setStyle(isSelected ? "#0ea5e9" : "#000000");
-        object.material.emissiveIntensity = isSelected ? 0.28 : 0.0;
+        object.material.emissive.setStyle(
+          isSelected ? (object.locked ? "#b91c1c" : "#15803d") : "#000000"
+        );
+        object.material.emissiveIntensity = isSelected ? 0.34 : 0.0;
       }
 
       updateSelectionHelper();
@@ -2527,13 +2672,17 @@
       ui.radioStage.dataset.mode = mode;
       ui.txModeBtn.classList.toggle("active", mode === "tx");
       ui.rxAddModeBtn.classList.toggle("active", mode === "rx-add");
-      ui.rxEraseModeBtn.classList.toggle("active", mode === "rx-erase");
+      if (ui.rxEraseModeBtn) {
+        ui.rxEraseModeBtn.classList.toggle("active", mode === "rx-erase");
+      }
       if (mode === "tx") {
-        setStatus("Click the radio map to place the TX marker.", "info");
+        setStatus("TX placement is active. Click the SINR map to update the TX position; click the button again to stop.", "info");
       } else if (mode === "rx-add") {
-        setStatus("Drag on the radio map to paint RX cells.", "info");
+        setStatus("Draw an RX zone on the SINR map to compute the median dB over that patch.", "info");
       } else if (mode === "rx-erase") {
         setStatus("Drag on the radio map to erase RX cells.", "info");
+      } else {
+        setStatus("Choose a mesh, move it in 1-voxel steps, or edit TX/RX directly on the SINR map.", "info");
       }
     }
 
@@ -2541,8 +2690,10 @@
       const rect = ui.radioMapCanvas.getBoundingClientRect();
       const x = clamp((event.clientX - rect.left) / rect.width, 0, 0.999999);
       const y = clamp((event.clientY - rect.top) / rect.height, 0, 0.999999);
-      const col = Math.floor(x * state.dims.cols);
-      const row = Math.floor(y * state.dims.rows);
+      const displayX = Math.floor(x * state.dims.rows);
+      const displayY = Math.floor(y * state.dims.cols);
+      const row = clamp(state.dims.rows - 1 - displayX, 0, state.dims.rows - 1);
+      const col = clamp(displayY, 0, state.dims.cols - 1);
       return { row, col };
     }
 
@@ -2552,15 +2703,8 @@
 
       if (state.placementMode === "tx") {
         state.txCells = [{ row, col }];
-        setPlacementMode("none");
         scheduleRadioUpdate();
         setStatus(`TX moved to row ${row}, col ${col}.`, "success");
-        return;
-      }
-
-      if (state.placementMode === "rx-add") {
-        state.rxZone.add(key);
-        scheduleRadioUpdate();
         return;
       }
 
@@ -2680,27 +2824,33 @@
     function renderRadioMap() {
       if (!state.radioMapDb || !state.currentHeightMap) return;
       const { rows, cols } = state.dims;
-      const image = radioCtx.createImageData(cols, rows);
+      const displayWidth = rows;
+      const displayHeight = cols;
+      const image = radioCtx.createImageData(displayWidth, displayHeight);
       const data = image.data;
       const lightMode = document.documentElement.classList.contains("light-mode");
       const obstacleTint = lightMode ? [15, 23, 42] : [5, 10, 24];
       const minDb = Math.min(state.radioSummary.minDb, -2);
       const maxDb = Math.max(state.radioSummary.maxDb, 30);
 
-      for (let idx = 0; idx < state.radioMapDb.length; idx += 1) {
-        const db = state.radioMapDb[idx];
-        const t = clamp((db - minDb) / (maxDb - minDb || 1), 0, 1);
-        let color = sampleViridis(t);
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const idx = row * cols + col;
+          const display = mapCellToDisplay(row, col);
+          const offset = (display.y * displayWidth + display.x) * 4;
+          const db = state.radioMapDb[idx];
+          const t = clamp((db - minDb) / (maxDb - minDb || 1), 0, 1);
+          let color = sampleViridis(t);
 
-        if (state.currentHeightMap[idx] > 0) {
-          color = mixColor(color, obstacleTint, 0.68);
+          if (state.currentHeightMap[idx] > 0) {
+            color = mixColor(color, obstacleTint, 0.68);
+          }
+
+          data[offset] = color[0];
+          data[offset + 1] = color[1];
+          data[offset + 2] = color[2];
+          data[offset + 3] = 255;
         }
-
-        const offset = idx * 4;
-        data[offset] = color[0];
-        data[offset + 1] = color[1];
-        data[offset + 2] = color[2];
-        data[offset + 3] = 255;
       }
 
       radioCtx.putImageData(image, 0, 0);
@@ -2711,42 +2861,59 @@
         radioCtx.strokeStyle = lightMode ? "rgba(15,23,42,0.85)" : "rgba(255,255,255,0.88)";
         radioCtx.lineWidth = 1;
         for (const cell of object.footprint) {
-          radioCtx.strokeRect(cell.x + object.offsetX + 0.05, cell.y + object.offsetY + 0.05, 0.9, 0.9);
+          const display = mapCellToDisplay(cell.y + object.offsetY, cell.x + object.offsetX);
+          radioCtx.strokeRect(display.x + 0.05, display.y + 0.05, 0.9, 0.9);
         }
         radioCtx.restore();
       }
 
       if (state.rxZone.size) {
         radioCtx.save();
-        radioCtx.fillStyle = lightMode ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.13)";
-        radioCtx.strokeStyle = lightMode ? "rgba(15,23,42,0.75)" : "rgba(255,255,255,0.60)";
+        radioCtx.fillStyle = lightMode ? "rgba(255,255,255,0.42)" : "rgba(255,255,255,0.34)";
+        radioCtx.strokeStyle = lightMode ? "rgba(255,255,255,0.96)" : "rgba(255,255,255,0.90)";
         radioCtx.lineWidth = 1;
         for (const entry of state.rxZone) {
           const [row, col] = entry.split(",").map(Number);
-          radioCtx.fillRect(col + 0.08, row + 0.08, 0.84, 0.84);
-          radioCtx.strokeRect(col + 0.08, row + 0.08, 0.84, 0.84);
+          const display = mapCellToDisplay(row, col);
+          radioCtx.fillRect(display.x + 0.08, display.y + 0.08, 0.84, 0.84);
+          radioCtx.strokeRect(display.x + 0.08, display.y + 0.08, 0.84, 0.84);
         }
         radioCtx.restore();
       }
 
+      if (state.rxDrawPath.length > 1) {
+        radioCtx.save();
+        radioCtx.strokeStyle = lightMode ? "rgba(15,23,42,0.92)" : "rgba(255,255,255,0.95)";
+        radioCtx.lineWidth = 1.4;
+        radioCtx.beginPath();
+        radioCtx.moveTo(state.rxDrawPath[0].x, state.rxDrawPath[0].y);
+        for (let index = 1; index < state.rxDrawPath.length; index += 1) {
+          radioCtx.lineTo(state.rxDrawPath[index].x, state.rxDrawPath[index].y);
+        }
+        radioCtx.stroke();
+        radioCtx.restore();
+      }
+
       for (const tx of state.txCells) {
+        const display = mapCellToDisplay(tx.row, tx.col);
         radioCtx.save();
         radioCtx.fillStyle = "#ef4444";
         radioCtx.strokeStyle = "#ffffff";
         radioCtx.lineWidth = 0.7;
         radioCtx.beginPath();
-        radioCtx.arc(tx.col + 0.5, tx.row + 0.5, 3.6, 0, Math.PI * 2);
+        radioCtx.arc(display.x + 0.5, display.y + 0.5, 3.6, 0, Math.PI * 2);
         radioCtx.fill();
         radioCtx.stroke();
         radioCtx.fillStyle = "#ffffff";
         radioCtx.font = "bold 8px Inter";
-        radioCtx.fillText("TX", tx.col + 5.5, tx.row + 2.6);
+        radioCtx.fillText("TX", display.x + 5.5, display.y + 2.6);
         radioCtx.restore();
       }
 
       const rxMedianText = state.radioSummary.rxMedianDb == null
-        ? "Paint RX zone to summarize."
-        : `RX median ${state.radioSummary.rxMedianDb.toFixed(1)} dB across ${state.radioSummary.rxCount} cells`;
+        ? "Draw RX zone to summarize."
+        : `RX median ${state.radioSummary.rxMedianDb.toFixed(1)} dB `;
+        // : `RX median ${state.radioSummary.rxMedianDb.toFixed(1)} dB across ${state.radioSummary.rxCount} cells`;
 
       ui.remBadge.innerHTML = `<i class="fas fa-wave-square"></i> ${rxMedianText}`;
     }
@@ -2756,29 +2923,34 @@
       const object = state.objects.get(state.selectedOid);
       const mobility = object.locked ? "Locked" : "Movable";
 
-      ui.metricSelected.textContent = formatOid(object.oid);
-      ui.metricVoxelCount.textContent = `${object.voxelCount.toLocaleString()} occupied voxels • ${object.surface.length.toLocaleString()} visible`;
-      ui.metricMobility.textContent = mobility;
-      ui.metricOffset.textContent = `Offset Δ(${object.offsetX}, ${object.offsetY})`;
+      setTextIfPresent(ui.metricSelected, formatOid(object.oid));
+      setTextIfPresent(ui.metricVoxelCount, `${object.voxelCount.toLocaleString()} occupied voxels • ${object.surface.length.toLocaleString()} visible`);
+      setTextIfPresent(ui.metricMobility, mobility);
+      setTextIfPresent(ui.metricOffset, `Offset Δ(${object.offsetX}, ${object.offsetY})`);
 
       if (state.txCells.length) {
         const tx = state.txCells[0];
-        ui.metricTx.textContent = `(${tx.row}, ${tx.col})`;
+        setTextIfPresent(ui.metricTx, `(${tx.row}, ${tx.col})`);
       } else {
-        ui.metricTx.textContent = "Unset";
+        setTextIfPresent(ui.metricTx, "Unset");
       }
 
-      ui.metricRx.textContent = `${state.rxZone.size} cells`;
-      ui.metricRem.textContent = state.radioSummary && state.radioSummary.rxMedianDb != null
+      setTextIfPresent(ui.metricRx, `${state.rxZone.size} cells`);
+      setTextIfPresent(ui.metricRem, state.radioSummary && state.radioSummary.rxMedianDb != null
         ? `Median ${state.radioSummary.rxMedianDb.toFixed(1)} dB`
-        : "Paint an RX area to summarize.";
+        : "Draw an RX area to summarize.");
 
-      ui.sceneSelectionChip.innerHTML = `<i class="fas fa-cube"></i> ${formatOid(object.oid)} selected`;
-      ui.sceneMotionChip.innerHTML = object.locked
-        ? `<i class="fas fa-lock"></i> static: movement disabled`
-        : `<i class="fas fa-arrows-left-right"></i> Ready for 1-voxel motion`;
+      setHtmlIfPresent(ui.sceneSelectionChip, `<i class="fas fa-cube"></i> ${formatOid(object.oid)} selected`);
+      setHtmlIfPresent(
+        ui.sceneMotionChip,
+        object.locked
+          ? `<i class="fas fa-lock"></i> static: movement disabled`
+          : `<i class="fas fa-arrows-left-right"></i> Ready for 1-voxel motion`
+      );
 
-      ui.metricMobility.className = `metric-value`;
+      if (ui.metricMobility) {
+        ui.metricMobility.className = "metric-value";
+      }
       ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clusters • ${state.dims.cols} × ${state.dims.rows} × ${state.dims.height}`;
       for (const button of ui.moveButtons) {
         button.disabled = object.locked;
@@ -2787,7 +2959,7 @@
 
     function bindUi() {
       ui.objectSelect.addEventListener("change", () => {
-        setSelectedOid(Number(ui.objectSelect.value), `${formatOid(Number(ui.objectSelect.value))} selected from the control panel.`);
+        setSelectedOid(Number(ui.objectSelect.value), `${formatOid(Number(ui.objectSelect.value))} selected from the mesh picker.`);
       });
 
       ui.fitSceneBtn.addEventListener("click", () => {
@@ -2799,17 +2971,22 @@
         resetLayout();
       });
 
-      ui.restoreMarkersBtn.addEventListener("click", () => {
-        restoreMarkers();
-        setPlacementMode("none");
-        scheduleRadioUpdate();
-        setStatus("TX/RX markers restored from the Morpheus JSON config.", "success");
-      });
+      if (ui.restoreMarkersBtn) {
+        ui.restoreMarkersBtn.addEventListener("click", () => {
+          restoreMarkers();
+          state.rxDrawPath = [];
+          setPlacementMode("none");
+          scheduleRadioUpdate();
+          setStatus("TX/RX markers restored from the Morpheus JSON config.", "success");
+        });
+      }
 
-      ui.clearModeBtn.addEventListener("click", () => {
-        setPlacementMode("none");
-        setStatus("Pointer returned to selection mode.", "info");
-      });
+      if (ui.clearModeBtn) {
+        ui.clearModeBtn.addEventListener("click", () => {
+          setPlacementMode("none");
+          setStatus("Pointer returned to selection mode.", "info");
+        });
+      }
 
       ui.txModeBtn.addEventListener("click", () => {
         setPlacementMode(state.placementMode === "tx" ? "none" : "tx");
@@ -2819,12 +2996,15 @@
         setPlacementMode(state.placementMode === "rx-add" ? "none" : "rx-add");
       });
 
-      ui.rxEraseModeBtn.addEventListener("click", () => {
-        setPlacementMode(state.placementMode === "rx-erase" ? "none" : "rx-erase");
-      });
+      if (ui.rxEraseModeBtn) {
+        ui.rxEraseModeBtn.addEventListener("click", () => {
+          setPlacementMode(state.placementMode === "rx-erase" ? "none" : "rx-erase");
+        });
+      }
 
       ui.clearRxBtn.addEventListener("click", () => {
         state.rxZone.clear();
+        state.rxDrawPath = [];
         scheduleRadioUpdate();
         setStatus("RX zone cleared.", "success");
       });
@@ -2854,6 +3034,12 @@
       });
 
       ui.radioMapCanvas.addEventListener("pointerdown", (event) => {
+        if (state.placementMode === "rx-add") {
+          state.isPainting = true;
+          state.rxDrawPath = [mapPointerToDisplayPoint(event)];
+          renderRadioMap();
+          return;
+        }
         state.isPainting = true;
         const { row, col } = mapPointerToCell(event);
         handleMapInteraction(row, col);
@@ -2861,12 +3047,16 @@
 
       ui.radioMapCanvas.addEventListener("pointermove", (event) => {
         if (!state.isPainting) return;
-        if (!["rx-add", "rx-erase"].includes(state.placementMode)) return;
-        const { row, col } = mapPointerToCell(event);
-        handleMapInteraction(row, col);
+        if (state.placementMode === "rx-add") {
+          state.rxDrawPath.push(mapPointerToDisplayPoint(event));
+          renderRadioMap();
+        }
       });
 
       window.addEventListener("pointerup", () => {
+        if (state.isPainting && state.placementMode === "rx-add") {
+          commitRxDrawPath();
+        }
         state.isPainting = false;
       });
 
