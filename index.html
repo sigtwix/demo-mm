@@ -633,6 +633,14 @@
       z-index: 1;
     }
 
+    .scene-picker {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      min-width: 0;
+    }
+
     .scene-controls {
       display: flex;
       flex-direction: column;
@@ -643,11 +651,17 @@
     }
 
     .scene-select {
-      margin-left: auto;
-      flex: 0 0 11rem;
-      width: 11rem;
-      min-width: 11rem;
-      max-width: 11rem;
+      flex: 0 0 12.2rem;
+      width: 12.2rem;
+      min-width: 12.2rem;
+      max-width: 12.2rem;
+    }
+
+    .lock-hint {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     .control-group {
@@ -1314,10 +1328,20 @@
       }
 
       .scene-select {
-        margin-left: 0;
         width: 100%;
         min-width: 0;
         max-width: none;
+      }
+
+      .scene-picker {
+        margin-left: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .lock-hint {
+        white-space: normal;
       }
 
       .scene-actions {
@@ -1579,7 +1603,7 @@
             </p>
             <div class="twin-kickers">
               <span class="twin-pill"><i class="fas fa-cubes"></i> Real voxel tensor scene</span>
-              <span class="twin-pill"><i class="fas fa-wave-square"></i> RF-aware SINR map</span>
+              <span class="twin-pill"><i class="fas fa-wave-square"></i> RF-aware REM</span>
               <span class="twin-pill"><i class="fas fa-arrows-left-right-to-line"></i> Counterfactual layout edits</span>
             </div>
           </div>
@@ -1588,9 +1612,9 @@
             <span class="instruction-label">Try This</span>
             <p>Use the digital twin like a counterfactual debugging console:</p>
             <ol>
-              <li>Select a movable cluster.</li>
+              <li>Select a movable clutter.</li>
               <li>Move it into the line-of-sight path.</li>
-              <li>Observe SINR degradation.</li>
+              <li>Observe SNR degradation.</li>
               <li>Reposition it to restore connectivity.</li>
             </ol>
           </aside>
@@ -1600,7 +1624,7 @@
           <span class="instruction-icon"><i class="fas fa-gamepad"></i></span>
           <div class="instruction-copy">
             <span class="instruction-label">Motion Control</span>
-            <p>Select a cluster from the scene or dropdown, move it with the arrow keys or buttons, and right-click the dropdown to lock or unlock that cluster. Locked clusters are immovable and unlocked clusters are movable.</p>
+            <p>Select a clutter from the scene or dropdown, move it with the arrow keys or buttons, and right-click the dropdown to lock or unlock it. Locked clutters stay fixed and unlocked clutters can move.</p>
              <div class="keyboard-note"> This interaction and simulation works best on Desktop/PC. </div>
           </div>
         </div>
@@ -1623,9 +1647,12 @@
             <div class="scene-actions">
               <button class="control-button" id="fitSceneBtn" type="button"><i class="fas fa-expand"></i> Recenter View</button>
               <button class="ghost-button" id="resetLayoutBtn" type="button"><i class="fas fa-rotate-left"></i> Reset Layout</button>
-              <select id="objectSelect" class="control-select scene-select" aria-label="Mesh Selection" title="Right-click to lock or unlock the selected cluster">
-                <option>Loading objects…</option>
-              </select>
+              <div class="scene-picker">
+                <span class="lock-hint" id="lockHint">Right-click to lock</span>
+                <select id="objectSelect" class="control-select scene-select" aria-label="Mesh Selection" title="Right-click to lock or unlock the selected clutter">
+                  <option>Loading objects…</option>
+                </select>
+              </div>
             </div>
 
             <div class="scene-controls">
@@ -1636,7 +1663,7 @@
                   <button type="button" class="control-button move-btn" data-dx="1" data-dy="0">Right</button>
                   <button type="button" class="control-button move-btn" data-dx="0" data-dy="1">Down</button>
                 </div>
-                <div class="keyboard-note">For movement of the mesh clusters use keyboard arrow keys for best control.</div>
+                <div class="keyboard-note">For movement of the mesh clutters use keyboard arrow keys for best control.</div>
               </div>
             </div>
           </section>
@@ -1644,7 +1671,7 @@
           <section class="panel-card radio-panel">
             <div class="panel-head">
               <div>
-                <h3>SINR Map</h3>
+                <h3>REM</h3>
                 <!-- <p>The map below is recomputed from the live voxel layout using a JavaScript path-loss model. Obstacles darken the map and increase shadow penalty.</p> -->
                   
               </div>
@@ -1657,8 +1684,8 @@
 
             <div class="legend-row">
               <div class="legend-labels">
-                <span class="legend-caption">Weak SINR</span>
-                <span class="legend-caption">Strong SINR</span>
+                <span class="legend-caption">Weak SNR</span>
+                <span class="legend-caption">Strong SNR</span>
               </div>
               <div class="legend-gradient"></div>
             </div>
@@ -1878,6 +1905,7 @@
     const ui = {
       sceneViewport: document.getElementById("sceneViewport"),
       objectSelect: document.getElementById("objectSelect"),
+      lockHint: document.getElementById("lockHint"),
       fitSceneBtn: document.getElementById("fitSceneBtn"),
       resetLayoutBtn: document.getElementById("resetLayoutBtn"),
       restoreMarkersBtn: document.getElementById("restoreMarkersBtn"),
@@ -1975,7 +2003,7 @@
     }
 
     function formatOid(oid) {
-      return `Cluster ${String(oid).padStart(2, "0")}`;
+      return `Clutter ${String(oid).padStart(2, "0")}`;
     }
 
     function cellKey(row, col) {
@@ -2304,14 +2332,18 @@
         const option = document.createElement("option");
         const object = state.objects.get(oid);
         option.value = String(oid);
-        option.textContent = `${formatOid(oid)}${object.locked ? " • locked" : ""}`;
+        option.textContent = `${formatOid(oid)} • ${object.locked ? "locked" : "unlocked"}`;
         ui.objectSelect.appendChild(option);
       }
     }
 
+    function setSceneDataBadgeProgress(percent, label = "loading") {
+      ui.sceneDataBadge.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${percent}% • ${label}`;
+    }
+
     function refreshSceneDataBadge() {
       const lockedCount = state.orderedOids.filter((oid) => state.objects.get(oid).locked).length;
-      ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clusters • ${lockedCount} locked`;
+      ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clutters • ${lockedCount} locked`;
     }
 
     function rebuildProjectedMaps() {
@@ -2353,6 +2385,7 @@
         maxRadius: 900,
         dragging: false,
         moved: false,
+        mode: "rotate",
         pointerId: null,
         lastX: 0,
         lastY: 0
@@ -2394,6 +2427,11 @@
 
       const selectionHelper = new THREE.Box3Helper(new THREE.Box3(), 0xffffff);
       selectionHelper.visible = false;
+      selectionHelper.material.transparent = true;
+      selectionHelper.material.opacity = 0.9;
+      selectionHelper.material.depthTest = false;
+      selectionHelper.material.linewidth = 1;
+      selectionHelper.renderOrder = 18;
       scene.add(selectionHelper);
 
       const raycaster = new THREE.Raycaster();
@@ -2414,6 +2452,7 @@
       renderer.domElement.addEventListener("pointerdown", (event) => {
         orbit.dragging = true;
         orbit.moved = false;
+        orbit.mode = event.button === 2 ? "pan" : "rotate";
         orbit.pointerId = event.pointerId;
         orbit.lastX = event.clientX;
         orbit.lastY = event.clientY;
@@ -2427,8 +2466,24 @@
         if (Math.abs(dx) + Math.abs(dy) > 2) {
           orbit.moved = true;
         }
-        orbit.theta -= dx * 0.006;
-        orbit.phi = clamp(orbit.phi + dy * 0.006, 0.2, 1.45);
+        if (orbit.mode === "pan") {
+          const panScale = Math.max(0.16, orbit.radius * 0.0022);
+          const forward = new THREE.Vector3();
+          camera.getWorldDirection(forward);
+          const right = new THREE.Vector3().crossVectors(forward, camera.up).normalize();
+          right.y = 0;
+          if (right.lengthSq() < 1e-6) {
+            right.set(1, 0, 0);
+          } else {
+            right.normalize();
+          }
+          const forwardFlat = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), right).normalize();
+          orbit.target.addScaledVector(right, -dx * panScale);
+          orbit.target.addScaledVector(forwardFlat, dy * panScale);
+        } else {
+          orbit.theta -= dx * 0.006;
+          orbit.phi = clamp(orbit.phi + dy * 0.006, 0.2, 1.45);
+        }
         orbit.lastX = event.clientX;
         orbit.lastY = event.clientY;
         updateCamera();
@@ -2437,6 +2492,7 @@
       const stopDragging = (event) => {
         if (!orbit.dragging) return;
         orbit.dragging = false;
+        orbit.mode = "rotate";
         if (orbit.pointerId !== null) {
           try {
             renderer.domElement.releasePointerCapture(orbit.pointerId);
@@ -2445,6 +2501,9 @@
         orbit.pointerId = null;
       };
 
+      renderer.domElement.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+      });
       renderer.domElement.addEventListener("pointerup", stopDragging);
       renderer.domElement.addEventListener("pointercancel", stopDragging);
       renderer.domElement.addEventListener("wheel", (event) => {
@@ -2579,11 +2638,11 @@
       for (const oid of state.orderedOids) {
         const object = state.objects.get(oid);
         const isSelected = oid === state.selectedOid;
-        object.material.opacity = object.locked ? 0.72 : (isSelected ? 1.0 : 0.90);
+        object.material.opacity = isSelected ? (object.locked ? 0.88 : 1.0) : (object.locked ? 0.72 : 0.90);
         object.material.emissive.setStyle(
           isSelected ? (object.locked ? "#b91c1c" : "#15803d") : "#000000"
         );
-        object.material.emissiveIntensity = isSelected ? 0.34 : 0.0;
+        object.material.emissiveIntensity = isSelected ? 0.46 : 0.0;
       }
 
       updateSelectionHelper();
@@ -2724,13 +2783,13 @@
         ui.rxEraseModeBtn.classList.toggle("active", mode === "rx-erase");
       }
       if (mode === "tx") {
-        setStatus("TX placement is active. Click the SINR map to update the TX position; click the button again to stop.", "info");
+        setStatus("TX placement is active. Click the REM to update the TX position; click the button again to stop.", "info");
       } else if (mode === "rx-add") {
-        setStatus("Draw an RX zone on the SINR map to compute the median dB over that patch.", "info");
+        setStatus("Draw an RX zone on the REM to compute the median dB over that patch.", "info");
       } else if (mode === "rx-erase") {
         setStatus("Drag on the radio map to erase RX cells.", "info");
       } else {
-        setStatus("Choose a mesh, move it in 1-voxel steps, or edit TX/RX directly on the SINR map.", "info");
+        setStatus("Choose a mesh, move it in 1-voxel steps, or edit TX/RX directly on the REM.", "info");
       }
     }
 
@@ -3030,6 +3089,12 @@
           ? `<i class="fas fa-lock"></i> static: movement disabled`
           : `<i class="fas fa-arrows-left-right"></i> Ready for 1-voxel motion`
       );
+      setTextIfPresent(ui.lockHint, object.locked ? "Right-click to unlock" : "Right-click to lock");
+      if (ui.objectSelect) {
+        ui.objectSelect.title = object.locked
+          ? "Right-click to unlock the selected clutter"
+          : "Right-click to lock the selected clutter";
+      }
 
       if (ui.metricMobility) {
         ui.metricMobility.className = "metric-value";
@@ -3180,7 +3245,8 @@
         setStatus("This demo uses fetch() for voxel_tensor.npy and JSON assets, so open it through a static server or GitHub Pages instead of file://.", "warn");
       }
 
-      setStatus("Loading Morpheus voxel tensor and configs…", "info");
+      setStatus("Loading Morpheus live demo: 0% - starting…", "info");
+      setSceneDataBadgeProgress(0, "starting");
 
       const [tensor, txrxConfig, lockConfig] = await Promise.all([
         loadNpy(ASSETS.tensor),
@@ -3188,11 +3254,16 @@
         loadJson(ASSETS.locks, { locked_oids: [] })
       ]);
 
+      setStatus("Loading Morpheus live demo: 35% - tensor and configs loaded…", "info");
+      setSceneDataBadgeProgress(35, "tensor loaded");
+
       state.dims.cols = tensor.shape[0];
       state.dims.rows = tensor.shape[1];
       state.dims.height = tensor.shape[2];
 
       const built = buildObjectsFromTensor(tensor.data, tensor.shape);
+      setStatus("Loading Morpheus live demo: 60% - building clutter geometry…", "info");
+      setSceneDataBadgeProgress(60, "building clutters");
       state.objects = built.objects;
       state.orderedOids = [...built.objects.keys()].sort((a, b) => a - b);
       state.currentLabelMap = built.labelMap;
@@ -3218,6 +3289,8 @@
 
       restoreMarkers();
 
+      setStatus("Loading Morpheus live demo: 80% - preparing 3D scene…", "info");
+      setSceneDataBadgeProgress(80, "preparing scene");
       makeScene();
       buildSceneObjects();
       populateObjectSelect();
@@ -3227,6 +3300,8 @@
 
       const firstMovable = state.orderedOids.find((oid) => !state.objects.get(oid).locked) || state.orderedOids[0];
       setSelectedOid(firstMovable);
+      setStatus("Loading Morpheus live demo: 90% - computing SNR map…", "info");
+      setSceneDataBadgeProgress(90, "computing REM");
       computeRadioMap();
       renderRadioMap();
       updateMetrics();
@@ -3236,7 +3311,7 @@
 
       refreshSceneDataBadge();
       setStatus(
-        `Live digital twin ready. Loaded ${state.orderedOids.length} clusters from voxel_tensor.npy, with ${movableCount} movable meshes and ${lockedCount} static meshes.`,
+        `Live digital twin ready. Loaded ${state.orderedOids.length} clutters from voxel_tensor.npy, with ${movableCount} movable meshes and ${lockedCount} static meshes.`,
         "success"
       );
     }
@@ -3258,7 +3333,8 @@
       }
 
       window.__digitalTwinBootRequested = true;
-      setStatus("Loading Morpheus live demo assets…", "info");
+      setStatus("Loading Morpheus live demo: 10% - fetching viewer assets…", "info");
+      setSceneDataBadgeProgress(10, "fetching assets");
       window.clearTimeout(window.__digitalTwinBootTimer);
       window.__digitalTwinBootTimer = window.setTimeout(() => {
         if (!window.__digitalTwinBootRequested || window.__digitalTwinBooted) return;
