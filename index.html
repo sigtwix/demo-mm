@@ -524,7 +524,7 @@
 
     .twin-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
+      grid-template-columns: minmax(0, 1.31fr) minmax(0, 0.69fr);
       gap: 1rem;
       align-items: stretch;
     }
@@ -552,19 +552,11 @@
       min-height: 36rem;
     }
 
-    .control-panel {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 0.9rem;
-      grid-column: 1 / -1;
-      min-height: auto;
-      align-items: start;
-    }
-
     .radio-panel {
       padding-bottom: 1.2rem;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
 
     .panel-head {
@@ -607,18 +599,18 @@
     }
 
     .radio-panel .panel-head {
-      justify-content: center;
-      position: relative;
+      justify-content: space-between;
+      position: static;
+      width: min(100%, 17.4rem);
       min-height: 2.35rem;
     }
 
     .radio-panel .panel-head > div {
-      position: absolute;
-      left: 0;
+      position: static;
     }
 
     .radio-panel .scene-badge {
-      margin: 0 auto;
+      margin: 0;
     }
 
     .scene-viewport {
@@ -641,12 +633,21 @@
       z-index: 1;
     }
 
+    .scene-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 0.95rem;
+      position: relative;
+      z-index: 1;
+    }
+
     .scene-select {
       margin-left: auto;
-      flex: 0 0 9.9rem;
-      width: 9.9rem;
-      min-width: 9.9rem;
-      max-width: 9.9rem;
+      flex: 0 0 11rem;
+      width: 11rem;
+      min-width: 11rem;
+      max-width: 11rem;
     }
 
     .control-group {
@@ -746,21 +747,43 @@
 
     .button-grid.compact-grid .mode-button,
     .button-grid.compact-grid .ghost-button {
-      padding: 0.62rem 0.72rem;
-      font-size: 0.82rem;
+      padding: 0.54rem 0.66rem;
+      font-size: 0.78rem;
       border-radius: 0.82rem;
+    }
+
+    .button-grid.compact-grid.radio-tools-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: min(100%, 17.4rem);
+      margin-top: auto;
+    }
+
+    .button-grid.compact-grid.radio-tools-grid .ghost-button {
+      grid-column: 1 / -1;
     }
 
     .move-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 0.5rem;
+      width: 100%;
     }
 
     .move-grid .control-button {
       padding: 0.62rem 0.58rem;
       font-size: 0.8rem;
       border-radius: 0.82rem;
+    }
+
+    .scene-move-box {
+      border-radius: 1rem;
+      border: 1px solid var(--panel-line);
+      background: rgba(2, 6, 23, 0.24);
+      padding: 0.8rem 0.82rem 0.72rem;
+    }
+
+    .light-mode .scene-move-box {
+      background: rgba(255,255,255,0.72);
     }
 
     .keyboard-note {
@@ -829,33 +852,6 @@
       visibility: hidden;
     }
 
-    .key-hints {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-    }
-
-    .key-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    .keycap {
-      min-width: 1.95rem;
-      padding: 0.25rem 0.45rem;
-      border-radius: 0.55rem;
-      border: 1px solid var(--panel-line);
-      background: rgba(255,255,255,0.06);
-      color: var(--strong);
-      text-align: center;
-      font-size: 0.78rem;
-      font-weight: 700;
-      box-shadow: inset 0 -2px 0 rgba(255,255,255,0.04);
-    }
-
     .radio-stage {
       border-radius: 1.2rem;
       border: 1px solid var(--map-outline);
@@ -863,7 +859,7 @@
       background: var(--map-bg);
       aspect-ratio: 208 / 377;
       position: relative;
-      width: min(100%, 14.9rem);
+      width: min(100%, 17.4rem);
       margin: 0 auto;
     }
 
@@ -885,7 +881,7 @@
       align-items: stretch;
       gap: 0.42rem;
       margin-top: 0.95rem;
-      width: min(100%, 14.9rem);
+      width: min(100%, 17.4rem);
       margin-left: auto;
       margin-right: auto;
     }
@@ -911,6 +907,13 @@
     .legend-caption {
       color: var(--muted);
       font-size: 0.82rem;
+    }
+
+    .radio-tools {
+      width: min(100%, 17.4rem);
+      margin-top: 1rem;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .status-line {
@@ -1260,9 +1263,6 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .control-panel {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
     }
 
     @media (max-width: 900px) {
@@ -1282,6 +1282,10 @@
       .scene-panel,
       .radio-panel {
         min-height: auto;
+      }
+
+      .radio-panel {
+        align-items: stretch;
       }
     }
 
@@ -1329,12 +1333,15 @@
         grid-template-columns: 1fr;
       }
 
-      .control-panel {
-        grid-template-columns: 1fr;
-      }
-
       .scene-actions {
         flex-direction: column;
+      }
+
+      .radio-stage,
+      .legend-row,
+      .radio-tools,
+      .button-grid.compact-grid.radio-tools-grid {
+        width: 100%;
       }
     }
 
@@ -1593,7 +1600,7 @@
           <span class="instruction-icon"><i class="fas fa-gamepad"></i></span>
           <div class="instruction-copy">
             <span class="instruction-label">Motion Control</span>
-            <p>Select a cluster from the scene or dropdown, then move it arrow keys or the control buttons.</p>
+            <p>Select a cluster from the scene or dropdown, move it with the arrow keys or buttons, and right-click the dropdown to lock or unlock that cluster. Locked clusters are immovable and unlocked clusters are movable.</p>
              <div class="keyboard-note"> This interaction and simulation works best on Desktop/PC. </div>
           </div>
         </div>
@@ -1616,9 +1623,21 @@
             <div class="scene-actions">
               <button class="control-button" id="fitSceneBtn" type="button"><i class="fas fa-expand"></i> Recenter View</button>
               <button class="ghost-button" id="resetLayoutBtn" type="button"><i class="fas fa-rotate-left"></i> Reset Layout</button>
-              <select id="objectSelect" class="control-select scene-select" aria-label="Mesh Selection">
+              <select id="objectSelect" class="control-select scene-select" aria-label="Mesh Selection" title="Right-click to lock or unlock the selected cluster">
                 <option>Loading objects…</option>
               </select>
+            </div>
+
+            <div class="scene-controls">
+              <div class="scene-move-box">
+                <div class="move-grid">
+                  <button type="button" class="control-button move-btn" data-dx="0" data-dy="-1">Up</button>
+                  <button type="button" class="control-button move-btn" data-dx="-1" data-dy="0">Left</button>
+                  <button type="button" class="control-button move-btn" data-dx="1" data-dy="0">Right</button>
+                  <button type="button" class="control-button move-btn" data-dx="0" data-dy="1">Down</button>
+                </div>
+                <div class="keyboard-note">For movement of the mesh clusters use keyboard arrow keys for best control.</div>
+              </div>
             </div>
           </section>
 
@@ -1638,39 +1657,20 @@
 
             <div class="legend-row">
               <div class="legend-labels">
-                <span class="legend-caption">Weaker SINR</span>
-                <span class="legend-caption">Stronger SINR</span>
+                <span class="legend-caption">Weak SINR</span>
+                <span class="legend-caption">Strong SINR</span>
               </div>
               <div class="legend-gradient"></div>
             </div>
-          </section>
 
-          <aside class="panel-card control-panel">
-            <div class="control-group">
-              <span class="control-label">Move Mesh</span>
-              <div class="move-grid">
-                <button type="button" class="control-button move-btn" data-dx="0" data-dy="-1">Up</button>
-                <button type="button" class="control-button move-btn" data-dx="-1" data-dy="0">Left</button>
-                <button type="button" class="control-button move-btn" data-dx="1" data-dy="0">Right</button>
-                <button type="button" class="control-button move-btn" data-dx="0" data-dy="1">Down</button>
-              </div>
-              <div class="keyboard-note">Use keyboard arrow keys for best control.</div>
-            </div>
-
-            <div class="control-group">
-              <span class="control-label">Radio Map Tools</span>
-              <div class="button-grid compact-grid">
+            <div class="radio-tools">
+              <div class="button-grid compact-grid radio-tools-grid">
                 <button class="mode-button" id="txModeBtn" type="button"><i class="fas fa-tower-cell"></i> Place TX</button>
                 <button class="mode-button" id="rxAddModeBtn" type="button"><i class="fas fa-pen"></i> Draw RX Zone</button>
-                <button class="ghost-button" id="clearRxBtn" type="button"><i class="fas fa-trash"></i> Clear RX</button>
                 <button class="ghost-button" id="restoreMarkersBtn" type="button"><i class="fas fa-location-crosshairs"></i> Restore TX/RX</button>
               </div>
-              <div class="key-hints">
-                <span class="key-hint"><span class="keycap">Click</span> pick from 3D scene</span>
-                <span class="key-hint"><span class="keycap">Map</span> pick from REM canvas</span>
-              </div>
             </div>
-          </aside>
+          </section>
         </div>
       </div>
     </section>
@@ -2309,6 +2309,11 @@
       }
     }
 
+    function refreshSceneDataBadge() {
+      const lockedCount = state.orderedOids.filter((oid) => state.objects.get(oid).locked).length;
+      ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clusters • ${lockedCount} locked`;
+    }
+
     function rebuildProjectedMaps() {
       const { rows, cols } = state.dims;
       const labelMap = new Int32Array(rows * cols);
@@ -2604,6 +2609,28 @@
       }
     }
 
+    function toggleObjectLock(oid, source = "dropdown") {
+      if (!state.objects.has(oid)) return;
+      const object = state.objects.get(oid);
+      object.locked = !object.locked;
+
+      if (object.locked) {
+        state.lockedIds.add(oid);
+      } else {
+        state.lockedIds.delete(oid);
+      }
+
+      populateObjectSelect();
+      ui.objectSelect.value = String(oid);
+      refreshSceneSelection();
+      updateMetrics();
+      refreshSceneDataBadge();
+
+      const action = object.locked ? "locked in place" : "unlocked and movable";
+      const from = source === "dropdown" ? "dropdown" : source;
+      setStatus(`${formatOid(oid)} is now ${action}. Right-click again from the ${from} to switch it back.`, "success");
+    }
+
     function canMoveObject(oid, nextOffsetX, nextOffsetY) {
       const object = state.objects.get(oid);
       const { rows, cols } = state.dims;
@@ -2890,14 +2917,49 @@
 
       if (state.rxZone.size) {
         radioCtx.save();
-        radioCtx.fillStyle = lightMode ? "rgba(255,255,255,0.42)" : "rgba(255,255,255,0.34)";
         radioCtx.strokeStyle = lightMode ? "rgba(255,255,255,0.96)" : "rgba(255,255,255,0.90)";
-        radioCtx.lineWidth = 1;
+        radioCtx.lineWidth = 1.6;
+        radioCtx.beginPath();
+        let rxLabelX = 0;
+        let rxLabelY = 0;
+        let rxLabelCount = 0;
         for (const entry of state.rxZone) {
           const [row, col] = entry.split(",").map(Number);
           const display = mapCellToDisplay(row, col);
-          radioCtx.fillRect(display.x + 0.08, display.y + 0.08, 0.84, 0.84);
-          radioCtx.strokeRect(display.x + 0.08, display.y + 0.08, 0.84, 0.84);
+          const x0 = display.x + 0.08;
+          const y0 = display.y + 0.08;
+          const x1 = display.x + 0.92;
+          const y1 = display.y + 0.92;
+          rxLabelX += display.x + 0.5;
+          rxLabelY += display.y + 0.5;
+          rxLabelCount += 1;
+          if (!state.rxZone.has(cellKey(row - 1, col))) {
+            radioCtx.moveTo(x0, y0);
+            radioCtx.lineTo(x1, y0);
+          }
+          if (!state.rxZone.has(cellKey(row + 1, col))) {
+            radioCtx.moveTo(x0, y1);
+            radioCtx.lineTo(x1, y1);
+          }
+          if (!state.rxZone.has(cellKey(row, col - 1))) {
+            radioCtx.moveTo(x0, y0);
+            radioCtx.lineTo(x0, y1);
+          }
+          if (!state.rxZone.has(cellKey(row, col + 1))) {
+            radioCtx.moveTo(x1, y0);
+            radioCtx.lineTo(x1, y1);
+          }
+        }
+        radioCtx.stroke();
+        if (rxLabelCount > 0) {
+          const centerX = rxLabelX / rxLabelCount;
+          const centerY = rxLabelY / rxLabelCount;
+          radioCtx.font = "bold 8px Inter";
+          radioCtx.lineWidth = 1.5;
+          radioCtx.strokeStyle = "rgba(15,23,42,0.82)";
+          radioCtx.fillStyle = "#ffffff";
+          radioCtx.strokeText("RX", centerX - 5.2, centerY + 2.8);
+          radioCtx.fillText("RX", centerX - 5.2, centerY + 2.8);
         }
         radioCtx.restore();
       }
@@ -2972,7 +3034,7 @@
       if (ui.metricMobility) {
         ui.metricMobility.className = "metric-value";
       }
-      ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clusters • ${state.dims.cols} × ${state.dims.rows} × ${state.dims.height}`;
+      refreshSceneDataBadge();
       for (const button of ui.moveButtons) {
         button.disabled = object.locked;
       }
@@ -2981,6 +3043,14 @@
     function bindUi() {
       ui.objectSelect.addEventListener("change", () => {
         setSelectedOid(Number(ui.objectSelect.value), `${formatOid(Number(ui.objectSelect.value))} selected from the mesh picker.`);
+      });
+
+      ui.objectSelect.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+        const oid = Number(ui.objectSelect.value);
+        if (Number.isFinite(oid)) {
+          toggleObjectLock(oid, "dropdown");
+        }
       });
 
       ui.fitSceneBtn.addEventListener("click", () => {
@@ -3023,12 +3093,14 @@
         });
       }
 
-      ui.clearRxBtn.addEventListener("click", () => {
-        state.rxZone.clear();
-        state.rxDrawPath = [];
-        scheduleRadioUpdate();
-        setStatus("RX zone cleared.", "success");
-      });
+      if (ui.clearRxBtn) {
+        ui.clearRxBtn.addEventListener("click", () => {
+          state.rxZone.clear();
+          state.rxDrawPath = [];
+          scheduleRadioUpdate();
+          setStatus("RX zone cleared.", "success");
+        });
+      }
 
       for (const button of ui.moveButtons) {
         button.addEventListener("click", () => {
@@ -3162,7 +3234,7 @@
       const movableCount = state.orderedOids.filter((oid) => !state.objects.get(oid).locked).length;
       const lockedCount = state.orderedOids.length - movableCount;
 
-      ui.sceneDataBadge.innerHTML = `<i class="fas fa-cubes"></i> ${state.orderedOids.length} clusters • ${lockedCount} locked`;
+      refreshSceneDataBadge();
       setStatus(
         `Live digital twin ready. Loaded ${state.orderedOids.length} clusters from voxel_tensor.npy, with ${movableCount} movable meshes and ${lockedCount} static meshes.`,
         "success"
