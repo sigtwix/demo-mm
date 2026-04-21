@@ -434,7 +434,7 @@
     .theme-row {
       display: flex;
       justify-content: flex-end;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.15rem;
     }
 
     .twin-lead {
@@ -443,7 +443,7 @@
       gap: 0.75rem;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.55rem;
     }
 
     .twin-kickers {
@@ -507,6 +507,88 @@
       color: var(--glass-text);
       font-size: 0.94rem;
       line-height: 1.55;
+    }
+
+    .instruction-accordion {
+      margin: 0 0 1rem;
+      border-radius: 1.35rem;
+      border: 1px solid rgba(103, 232, 249, 0.16);
+      background: linear-gradient(135deg, rgba(6, 12, 24, 0.78), rgba(10, 22, 39, 0.58));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    .light-mode .instruction-accordion {
+      background: linear-gradient(135deg, rgba(255,255,255,0.90), rgba(241,245,249,0.94));
+      border-color: rgba(14, 165, 233, 0.18);
+    }
+
+    .instruction-accordion summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      color: var(--strong);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .instruction-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .instruction-summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      min-width: 0;
+    }
+
+    .instruction-summary .instruction-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .instruction-toggle {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .instruction-accordion[open] .instruction-toggle::before {
+      content: "Hide";
+    }
+
+    .instruction-accordion:not([open]) .instruction-toggle::before {
+      content: "Open";
+    }
+
+    .instruction-steps {
+      padding: 0 1.1rem 1.05rem 4.2rem;
+      margin: 0;
+      color: var(--glass-text);
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .instruction-note {
+      margin: 0 1.1rem 0.7rem 4.2rem;
+    }
+
+    .instruction-intro {
+      margin: 0 1.1rem 0.8rem 4.2rem;
+      color: var(--glass-text);
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .instruction-steps li + li {
+      margin-top: 0.55rem;
     }
 
     .twin-pill {
@@ -615,12 +697,66 @@
 
     .scene-viewport {
       position: relative;
+      height: 31.6rem;
       min-height: 31.6rem;
       border-radius: 1.25rem;
       overflow: hidden;
       border: 1px solid var(--panel-line);
       background: var(--scene-grad);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .scene-viewport canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .viewport-toggle {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      z-index: 3;
+      padding: 0.55rem 0.72rem;
+      border-radius: 0.85rem;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: rgba(15, 23, 42, 0.78);
+      color: #f8fafc;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(2, 8, 23, 0.22);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .viewport-toggle:hover {
+      transform: translateY(-1px);
+      border-color: rgba(103, 232, 249, 0.56);
+    }
+
+    .light-mode .viewport-toggle {
+      background: rgba(255,255,255,0.92);
+      color: #0f172a;
+    }
+
+    .viewport-expanded {
+      overflow: hidden;
+    }
+
+    .scene-panel.is-enlarged {
+      position: fixed;
+      inset: 1.25rem;
+      z-index: 80;
+      width: auto;
+      max-width: none;
+      min-height: 0;
+      padding: 1.1rem;
+      box-shadow: 0 28px 80px rgba(2, 8, 23, 0.42);
+    }
+
+    .scene-panel.is-enlarged .scene-viewport {
+      height: calc(100vh - 13rem);
+      min-height: calc(100vh - 13rem);
     }
 
     .scene-actions {
@@ -1401,24 +1537,24 @@
       </button>
     </div>
 
-    <header class="text-center mb-16 pt-8">
-      <div style="background:var(--badge-bg);border:1px solid var(--badge-border);" class="inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-sm mb-6">
+    <header class="text-center mb-16">
+      <!-- <div style="background:var(--badge-bg);border:1px solid var(--badge-border);" class="inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-sm mb-6">
         <div class="w-2 h-2 rounded-full animate-pulse" style="background:var(--badge-text);"></div>
         <span style="color:var(--badge-text);" class="font-medium">Research Website • Live Demo</span>
-      </div>
+      </div> -->
 
       <h1 class="display-font text-6xl sm:text-7xl font-bold tracking-tighter hero-glow mb-4" style="color:var(--section-title);">
         Mor<span class="text-cyan-400">pheus</span>
       </h1>
 
       <p class="text-2xl sm:text-3xl mb-8 max-w-2xl mx-auto" style="color:var(--hero-sub);">
-        Proactive mmWave Debugging via Vision-Driven Digital Twins
+        Interactive RF Digital Twins for In-Situ Orchestration in Dynamic mmWave Environment
       </p>
 
-      <p class="max-w-2xl mx-auto text-lg leading-relaxed" style="color:var(--hero-desc);">
+      <!-- <p class="max-w-2xl mx-auto text-lg leading-relaxed" style="color:var(--hero-desc);">
         Anticipate blockage, simulate layout changes, and recover performance before QoE degrades.
-        Morpheus combines vision, RF modeling, and human feedback to enable in-situ orchestration of dynamic indoor mmWave networks.
-      </p>
+        Morpheus combines vision, RF modeling, and human feedback to enable in-situ orchestration of dynamic indoor mmWave Environment.
+      </p> -->
 
       <div class="flex flex-wrap justify-center gap-4 mt-10">
         <a href="#" class="neon-border px-8 py-4 bg-white text-zinc-950 font-semibold rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">Read the Paper</a>
@@ -1429,6 +1565,7 @@
       </div>
     </header>
 
+    <!--
     <section id="challenge" class="my-20">
       <h2 class="section-title">The Challenge</h2>
       <p class="section-lead">
@@ -1475,7 +1612,9 @@
         </div>
       </div>
     </section>
+    -->
 
+    <!--
     <section id="what-morpheus-does" class="my-20">
       <h2 class="section-title">What Morpheus Does</h2>
       <div class="story-grid">
@@ -1502,7 +1641,9 @@
         </article>
       </div>
     </section>
+    -->
 
+    <!--
     <section id="capabilities" class="my-20">
       <h2 class="section-title">Key Capabilities</h2>
       <div class="capability-grid">
@@ -1533,13 +1674,14 @@
         </article>
       </div>
     </section>
+    -->
 
     <section id="system-overview" class="my-20">
       <h2 class="section-title">System Overview</h2>
-      <p class="section-lead system-lead">
+      <!-- <p class="section-lead system-lead">
         Morpheus turns scene understanding into actionable wireless orchestration through a pipeline that couples visual sensing, 3D reconstruction,
         RF evaluation using the digital twin, motion prediction, layout recommendation, and user feedback. The framework figure from the paper is shown below.
-      </p>
+      </p> -->
       <div class="framework-shell">
         <div class="framework-frame">
           <img
@@ -1592,57 +1734,63 @@
     <section id="live-demo" class="my-20">
       <div class="twin-shell neon-border">
         <div class="twin-lead">
-          <div class="max-w-2xl">
+          <div>
             <p class="font-medium tracking-[0.28em] text-sm mb-2" style="color:var(--placeholder-icon);">LIVE DEMO</p>
             <h2 class="display-font text-3xl sm:text-4xl font-bold tracking-tight" style="color:var(--section-title);">
               Interactive Digital Twin
             </h2>
-            <p class="mt-4 text-base sm:text-lg" style="color:var(--glass-text);">
-              Explore how physical layout affects mmWave performance in real time.
-              Move objects, simulate blockage, and observe changes in signal strength through the RF-aware digital twin.
-            </p>
-            <div class="twin-kickers">
+            <!-- <div class="twin-kickers">
               <span class="twin-pill"><i class="fas fa-cubes"></i> Real voxel tensor scene</span>
               <span class="twin-pill"><i class="fas fa-wave-square"></i> RF-aware REM</span>
               <span class="twin-pill"><i class="fas fa-arrows-left-right-to-line"></i> Counterfactual layout edits</span>
-            </div>
+            </div> -->
           </div>
 
-          <aside class="demo-playbook">
-            <span class="instruction-label">Try This</span>
-            <p>Use the digital twin like a counterfactual debugging console:</p>
-            <ol>
-              <li>Select a movable clutter.</li>
-              <li>Move it into the line-of-sight path.</li>
-              <li>Observe SNR degradation.</li>
-              <li>Reposition it to restore connectivity.</li>
-            </ol>
-          </aside>
         </div>
 
-        <div class="instruction-strip">
-          <span class="instruction-icon"><i class="fas fa-gamepad"></i></span>
-          <div class="instruction-copy">
-            <span class="instruction-label">Motion Control</span>
-            <p>Select a clutter from the scene or dropdown, move it with the arrow keys or buttons, and right-click the dropdown to lock or unlock it. Locked clutters stay fixed and unlocked clutters can move.</p>
-             <div class="keyboard-note"> This interaction and simulation works best on Desktop/PC. </div>
-          </div>
-        </div>
+        <details class="instruction-accordion">
+          <summary>
+            <span class="instruction-summary">
+              <span class="instruction-icon"><i class="fas fa-gamepad"></i></span>
+              <span>Instructions to use</span>
+            </span>
+            <span class="instruction-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="keyboard-note instruction-note">For best interaction use Desktop view.</div>
+          <p class="instruction-intro">
+            Explore how physical layout affects mmWave performance in real time. Move objects, simulate blockage, and observe changes in signal strength through the RF-aware digital twin.
+          </p>
+          <ol class="instruction-steps">
+            <li>Wait for the live demo to finish loading. The top clutter badge shows the loading progress and then returns to the normal clutter summary.</li>
+            <li>Navigate the 3D digital twin as needed: left-drag to rotate, right-drag to pan the scene plane, scroll to zoom, and use <strong><code>Recenter View</code></strong> if you want to reset the camera.</li>
+            <li>Select a clutter either by clicking it in the 3D scene or by choosing it from the dropdown.</li>
+            <li>Right-click the clutter dropdown to toggle the selected clutter between <strong><code>locked</code></strong> and <strong><code>unlocked</code></strong>. Locked clutters stay fixed; unlocked clutters can be moved.</li>
+            <li>Move the selected unlocked clutter by using the keyboard arrow keys or the <strong><code>Up</code></strong>, <strong><code>Left</code></strong>, <strong><code>Right</code></strong>, and <strong><code>Down</code></strong> buttons. This interaction works best on Desktop/PC.</li>
+            <li>Use <strong><code>Reset Layout</code></strong> to restore all clutter positions to their original voxel layout.</li>
+            <li>Use the Signal Map tools to test wireless changes: click <strong><code>Place TX</code></strong>, then click on the Signal Map to place or move the transmitter. Click <strong><code>Place TX</code></strong> again to stop TX placement mode.</li>
+            <li>Click <strong><code>Draw RX Zone</code></strong> and draw a patch on the Signal Map to define the RX area. The outline is shown on the map and the RX median value updates in the top-right Signal Map badge.</li>
+            <li>Use <strong><code>Restore TX/RX</code></strong> to return the transmitter and RX zone to their default recorded positions.</li>
+            <li>The displayed RX median is a browser-side approximation computed from the demo’s simplified propagation model over the selected RX zone. It is intended to provide an intuitive, Sionna-like indication of relative loss and recovery trends, but it is not full ray tracing and should be read as an explanatory proxy rather than an exact physical simulation.</li>
+            <li>For a quick experiment, move a clutter into the line-of-sight path, observe the SNR change on the REM, and then reposition it to compare recovery.</li>
+          </ol>
+        </details>
 
         <div id="twinStatus" class="status-line" data-tone="info">
           Initializing Morpheus live demo…
         </div>
 
         <div class="twin-grid">
-          <section class="panel-card scene-panel">
+          <section class="panel-card scene-panel" id="scenePanel">
             <div class="panel-head">
               <div>
-                <h3>Voxel Tensor Scene</h3>
+                <h3> Digital Twin</h3>
               </div>
-              <span class="scene-badge" id="sceneDataBadge"><i class="fas fa-spinner fa-spin"></i> Loading tensor</span>
+              <span class="scene-badge" id="sceneDataBadge"><i class="fas fa-spinner fa-spin"></i> 0% • starting</span>
             </div>
 
-            <div id="sceneViewport" class="scene-viewport"></div>
+            <div id="sceneViewport" class="scene-viewport">
+              <button class="viewport-toggle" id="sceneExpandBtn" type="button">Enlarge</button>
+            </div>
 
             <div class="scene-actions">
               <button class="control-button" id="fitSceneBtn" type="button"><i class="fas fa-expand"></i> Recenter View</button>
@@ -1671,7 +1819,7 @@
           <section class="panel-card radio-panel">
             <div class="panel-head">
               <div>
-                <h3>REM</h3>
+                <h3>Signal Map</h3>
                 <!-- <p>The map below is recomputed from the live voxel layout using a JavaScript path-loss model. Obstacles darken the map and increase shadow penalty.</p> -->
                   
               </div>
@@ -1704,9 +1852,9 @@
 
     <section id="video" class="my-20">
       <h2 class="section-title">Watch Morpheus in Action</h2>
-      <p class="video-caption">
+      <!-- <p class="video-caption">
         Teaser Video
-      </p>
+      </p> -->
       <div class="video-shell max-w-4xl mx-auto">
         <div class="w-full aspect-video rounded-3xl overflow-hidden flex items-center justify-center" style="border:1px solid var(--video-border);background:var(--video-bg);">
           <div class="text-center">
@@ -1720,6 +1868,7 @@
       </div>
     </section>
 
+    <!--
     <section id="results" class="my-20">
       <h2 class="section-title">Results</h2>
       <p class="section-lead">
@@ -1755,17 +1904,17 @@
           <div class="result-placeholder mb-6">
             <i class="fas fa-broadcast-tower text-5xl" style="color:var(--placeholder-icon);"></i>
           </div>
-          <!-- <p class="text-center" style="color:var(--caption-text);">Counterfactual RF evaluation under dynamic blockage and object motion</p> -->
         </div>
         <div class="glass p-8 rounded-3xl">
           <div class="result-placeholder mb-6">
             <i class="fas fa-chart-line text-5xl" style="color:var(--placeholder-icon2);"></i>
           </div>
-          <!-- <p class="text-center" style="color:var(--caption-text);">Faster recovery to feasible high-performance layouts compared to reactive baselines</p> -->
         </div>
       </div>
     </section>
+    -->
 
+    <!--
     <section id="why-it-matters" class="my-20">
       <h2 class="section-title">Why This Matters</h2>
       <div class="impact-grid">
@@ -1791,10 +1940,11 @@
         </article>
       </div>
     </section>
+    -->
 
     <footer class="mt-24 pt-12 text-center text-sm" style="border-top:1px solid var(--footer-border);color:var(--footer-text);">
-      <p>Morpheus: Bridging vision, RF modeling, and human insight for real-world mmWave orchestration.</p>
-      <p class="mt-1">&copy Research Project • 2026</p>
+      <p>Morpheus: Interactive RF Digital Twins for In-Situ Orchestration in Dynamic mmWave Environment.</p>
+      <p class="mt-1">&copy Morpheus • 2026</p>
       <p class="mt-1">Made with ❤️ on Earth 🌎 </p>
     </footer>
   </main>
@@ -1903,7 +2053,9 @@
     const CAPTURE_MODE = new URLSearchParams(window.location.search).has("capture");
 
     const ui = {
+      scenePanel: document.getElementById("scenePanel"),
       sceneViewport: document.getElementById("sceneViewport"),
+      sceneExpandBtn: document.getElementById("sceneExpandBtn"),
       objectSelect: document.getElementById("objectSelect"),
       lockHint: document.getElementById("lockHint"),
       fitSceneBtn: document.getElementById("fitSceneBtn"),
@@ -1950,7 +2102,8 @@
       radioMapDb: null,
       radioSummary: null,
       scene: null,
-      radioFrame: 0
+      radioFrame: 0,
+      sceneExpanded: false
     };
 
     const radioCtx = ui.radioMapCanvas.getContext("2d", { alpha: false });
@@ -1961,6 +2114,23 @@
     function setStatus(message, tone = "info") {
       ui.twinStatus.textContent = message;
       ui.twinStatus.dataset.tone = tone;
+    }
+
+    function syncSceneExpandUi() {
+      if (!ui.scenePanel || !ui.sceneExpandBtn) return;
+      ui.scenePanel.classList.toggle("is-enlarged", state.sceneExpanded);
+      document.body.classList.toggle("viewport-expanded", state.sceneExpanded);
+      ui.sceneExpandBtn.textContent = state.sceneExpanded ? "Minimize" : "Enlarge";
+      ui.sceneExpandBtn.setAttribute(
+        "aria-label",
+        state.sceneExpanded ? "Minimize digital twin view" : "Enlarge digital twin view"
+      );
+      requestAnimationFrame(() => {
+        if (state.scene && typeof state.scene.resize === "function") {
+          state.scene.resize();
+          renderSceneOnce();
+        }
+      });
     }
 
     function ensureThreeLoaded() {
@@ -2512,6 +2682,14 @@
         updateCamera();
       }, { passive: false });
 
+      const resize = () => {
+        const width = ui.sceneViewport.clientWidth;
+        const height = ui.sceneViewport.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+
       const sceneState = {
         renderer,
         scene,
@@ -2522,15 +2700,8 @@
         raycaster,
         pointer,
         orbit,
-        updateCamera
-      };
-
-      const resize = () => {
-        const width = ui.sceneViewport.clientWidth;
-        const height = ui.sceneViewport.clientHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
+        updateCamera,
+        resize
       };
 
       window.addEventListener("resize", resize);
@@ -2783,9 +2954,9 @@
         ui.rxEraseModeBtn.classList.toggle("active", mode === "rx-erase");
       }
       if (mode === "tx") {
-        setStatus("TX placement is active. Click the REM to update the TX position; click the button again to stop.", "info");
+        setStatus("TX placement is active. Click the Signal Mapto update the TX position; click the button again to stop.", "info");
       } else if (mode === "rx-add") {
-        setStatus("Draw an RX zone on the REM to compute the median dB over that patch.", "info");
+        setStatus("Draw an RX zone on the Signal Mapto compute the median dB over that patch.", "info");
       } else if (mode === "rx-erase") {
         setStatus("Drag on the radio map to erase RX cells.", "info");
       } else {
@@ -2823,7 +2994,7 @@
 
       const oid = state.currentLabelMap[row * state.dims.cols + col];
       if (oid > 0) {
-        setSelectedOid(oid, `${formatOid(oid)} selected from the REM map.`);
+        setSelectedOid(oid, `${formatOid(oid)} selected from the Signal Mapmap.`);
       }
     }
 
@@ -3127,6 +3298,13 @@
         resetLayout();
       });
 
+      if (ui.sceneExpandBtn) {
+        ui.sceneExpandBtn.addEventListener("click", () => {
+          state.sceneExpanded = !state.sceneExpanded;
+          syncSceneExpandUi();
+        });
+      }
+
       if (ui.restoreMarkersBtn) {
         ui.restoreMarkersBtn.addEventListener("click", () => {
           restoreMarkers();
@@ -3319,7 +3497,7 @@
     function handleBootError(error) {
       console.error(error);
       ui.sceneDataBadge.innerHTML = `<i class="fas fa-triangle-exclamation"></i> Load failed`;
-      ui.remBadge.innerHTML = `<i class="fas fa-circle-exclamation"></i> No REM available`;
+      ui.remBadge.innerHTML = `<i class="fas fa-circle-exclamation"></i> No Signal Mapavailable`;
       setStatus(`The digital twin could not start: ${error.message}`, "error");
     }
 
