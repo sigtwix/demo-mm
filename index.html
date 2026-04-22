@@ -1548,7 +1548,7 @@
       </h1>
 
       <p class="text-2xl sm:text-3xl mb-8 max-w-2xl mx-auto" style="color:var(--hero-sub);">
-        Interactive RF Digital Twins for In-Situ Orchestration in Dynamic mmWave Environment
+        Interactive RF Digital Twins for In-Situ Layout Orchestration in Dynamic mmWave Environments
       </p>
 
       <!-- <p class="max-w-2xl mx-auto text-lg leading-relaxed" style="color:var(--hero-desc);">
@@ -1564,118 +1564,6 @@
         <a href="#video" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid rgba(103,232,249,0.42);color:var(--glass-accent);background:rgba(34,211,238,0.08);">Watch Video ↓</a>
       </div>
     </header>
-
-    <!--
-    <section id="challenge" class="my-20">
-      <h2 class="section-title">The Challenge</h2>
-      <p class="section-lead">
-        Indoor mmWave networks offer high throughput, but their performance is tightly coupled to the physical scene.
-        Morpheus is built for the regime where layout dynamics, blockage, and human activity make reliability fragile.
-      </p>
-      <div class="story-grid">
-        <article class="research-card">
-          <span class="research-eyebrow">Problem Setting</span>
-          <p>
-            Indoor mmWave networks offer high throughput but are highly sensitive to the physical environment.
-            Small changes such as object movement, human activity, or layout adjustments can disrupt propagation paths and lead to sustained performance degradation.
-          </p>
-          <p>
-            Existing approaches fail in this regime. Static planning assumes fixed layouts, while reactive mechanisms operate at short timescales and cannot recover from persistent, environment-driven disruptions.
-            In practice, improving performance often requires modifying the physical layout itself.
-          </p>
-          <p>
-            This creates a constrained search problem. While many layout configurations can improve signal quality, only a small subset are both high-performing and practically feasible under real-world constraints such as safety, usability, and workflow.
-          </p>
-          <p>
-            Addressing this requires systems that can reason in situ about scene dynamics, anticipate near-future changes, and guide feasible interventions before performance collapses.
-          </p>
-        </article>
-
-        <div class="story-stack">
-          <article class="research-card">
-            <span class="research-eyebrow">Why Reactive Fails</span>
-            <h3>Persistent blockage is a physical-layout problem</h3>
-            <p>
-              Once the environment changes, short-timescale rate adaptation alone cannot restore the lost geometry.
-              The system has to reason about counterfactual layouts, not just RF symptoms.
-            </p>
-          </article>
-
-          <article class="research-card">
-            <span class="research-eyebrow">Core Constraint</span>
-            <h3>Good layouts must also be usable</h3>
-            <p>
-              The best RF solution is not enough. Recommendations must remain feasible for people sharing the space,
-              which makes human feedback a first-class systems signal.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-    -->
-
-    <!--
-    <section id="what-morpheus-does" class="my-20">
-      <h2 class="section-title">What Morpheus Does</h2>
-      <div class="story-grid">
-        <article class="research-card">
-          <span class="research-eyebrow">System Summary</span>
-          <p>
-            Morpheus is a vision-driven wireless digital twin that enables proactive and intent-preserving adaptation in dynamic mmWave environments.
-          </p>
-          <p>
-            It reconstructs the physical scene from commodity cameras, models RF propagation using a digital twin, and predicts how object-level motion will impact future connectivity.
-            Instead of reacting after degradation, Morpheus surfaces likely blockage events in advance and allows users to explore alternative layouts before applying changes in the real world.
-          </p>
-          <p>
-            By combining RF-aware evaluation with human feedback, the system identifies configurations that improve performance while remaining practically feasible.
-          </p>
-        </article>
-
-        <article class="research-card research-highlight">
-          <span class="research-eyebrow">Research Contribution</span>
-          <h3>Prediction, counterfactual reasoning, and feasible intervention in one loop</h3>
-          <div class="highlight-pill"><i class="fas fa-circle-nodes"></i> Predict before QoE degrades</div>
-          <div class="highlight-pill"><i class="fas fa-cubes"></i> Evaluate layouts in an RF-aware twin</div>
-          <div class="highlight-pill"><i class="fas fa-pointer"></i> Respect human constraints during adaptation</div>
-        </article>
-      </div>
-    </section>
-    -->
-
-    <!--
-    <section id="capabilities" class="my-20">
-      <h2 class="section-title">Key Capabilities</h2>
-      <div class="capability-grid">
-        <article class="research-card capability-card">
-          <span class="capability-index">01</span>
-          <strong>Predicts near-future object movements that lead to blockage</strong>
-          <p>Models scene dynamics before the network enters a prolonged low-QoE state.</p>
-        </article>
-        <article class="research-card capability-card">
-          <span class="capability-index">02</span>
-          <strong>Builds RF-aware digital twins from visual data</strong>
-          <p>Connects commodity sensing to a layout-aware representation of the wireless environment.</p>
-        </article>
-        <article class="research-card capability-card">
-          <span class="capability-index">03</span>
-          <strong>Evaluates counterfactual layouts using ray-traced propagation</strong>
-          <p>Tests alternate object placements before real-world intervention is attempted.</p>
-        </article>
-        <article class="research-card capability-card">
-          <span class="capability-index">04</span>
-          <strong>Recommends intent-preserving layout adjustments</strong>
-          <p>Optimizes for wireless performance without ignoring how the space must still be used.</p>
-        </article>
-        <article class="research-card capability-card">
-          <span class="capability-index">05</span>
-          <strong>Incorporates human feedback to enforce real-world constraints</strong>
-          <p>Uses operator input to prune infeasible reconfigurations and steer the search.</p>
-        </article>
-      </div>
-    </section>
-    -->
-
     <section id="system-overview" class="my-20">
       <h2 class="section-title">System Overview</h2>
       <!-- <p class="section-lead system-lead">
@@ -1695,40 +1583,6 @@
           <a href="./assets/framework.jpg" target="_blank" rel="noopener noreferrer">Open the figure in full resolution</a>.
         </p>
       </div>
-      <!--
-      <div class="pipeline-grid">
-        <article class="research-card pipeline-step">
-          <span class="pipeline-index">1</span>
-          <h3>Visual Sensing</h3>
-          <p>Commodity cameras observe the dynamic indoor scene.</p>
-        </article>
-        <article class="research-card pipeline-step">
-          <span class="pipeline-index">2</span>
-          <h3>3D Reconstruction</h3>
-          <p>Scene geometry is converted into a layout-aware spatial representation.</p>
-        </article>
-        <article class="research-card pipeline-step">
-          <span class="pipeline-index">3</span>
-          <h3>RF-Aware Digital Twin</h3>
-          <p>The environment is evaluated through a propagation-aware digital twin.</p>
-        </article>
-        <article class="research-card pipeline-step">
-          <span class="pipeline-index">4</span>
-          <h3>Motion Prediction</h3>
-          <p>Likely future object motion is projected before disruption compounds.</p>
-        </article>
-        <article class="research-card pipeline-step">
-          <span class="pipeline-index">5</span>
-          <h3>Layout Recommendation</h3>
-          <p>Counterfactual reconfigurations are scored for recovery and feasibility.</p>
-        </article>
-        <article class="research-card pipeline-step">
-          <span class="pipeline-index">6</span>
-          <h3>Human Feedback</h3>
-          <p>Operator constraints preserve intent while steering the final action.</p>
-        </article>
-      </div>
-      -->
     </section>
 
     <section id="live-demo" class="my-20">
@@ -1771,7 +1625,7 @@
             <li>Click <strong><code>Draw RX Zone</code></strong> and draw a patch on the Signal Map to define the RX area. The outline is shown on the map and the RX median value updates in the top-right Signal Map badge.</li>
             <li>Use <strong><code>Restore TX/RX</code></strong> to return the transmitter and RX zone to their default recorded positions.</li>
             <li>The displayed RX median is a browser-side approximation computed from the demo’s simplified propagation model over the selected RX zone. It is intended to provide an intuitive, Sionna-like indication of relative loss and recovery trends, but it is not full ray tracing and should be read as an explanatory proxy rather than an exact physical simulation.</li>
-            <li>For a quick experiment, move a clutter into the line-of-sight path, observe the SNR change on the REM, and then reposition it to compare recovery.</li>
+            <li>For a quick experiment, move a clutter into the line-of-sight path, observe the SNR change on the Signal Map, and then reposition it to compare recovery.</li>
           </ol>
         </details>
 
@@ -1806,10 +1660,10 @@
             <div class="scene-controls">
               <div class="scene-move-box">
                 <div class="move-grid">
-                  <button type="button" class="control-button move-btn" data-dx="0" data-dy="-1">Up</button>
-                  <button type="button" class="control-button move-btn" data-dx="-1" data-dy="0">Left</button>
-                  <button type="button" class="control-button move-btn" data-dx="1" data-dy="0">Right</button>
-                  <button type="button" class="control-button move-btn" data-dx="0" data-dy="1">Down</button>
+                  <button type="button" class="control-button move-btn" data-dx="-1" data-dy="0">Up</button>
+                  <button type="button" class="control-button move-btn" data-dx="0" data-dy="1">Left</button>
+                  <button type="button" class="control-button move-btn" data-dx="0" data-dy="-1">Right</button>
+                  <button type="button" class="control-button move-btn" data-dx="1" data-dy="0">Down</button>
                 </div>
                 <div class="keyboard-note">For movement of the mesh clutters use keyboard arrow keys for best control.</div>
               </div>
@@ -1867,85 +1721,10 @@
         </div>
       </div>
     </section>
-
-    <!--
-    <section id="results" class="my-20">
-      <h2 class="section-title">Results</h2>
-      <p class="section-lead">
-        Morpheus enables proactive and practical network adaptation under dynamic environments,
-        improving recovery while reducing infeasible interventions.
-      </p>
-
-      <div class="result-stat-grid">
-        <article class="research-card result-stat">
-          <span>Throughput</span>
-          <strong>Up to 2–3× improvement under blockage</strong>
-          <p>Counterfactual layout evaluation recovers high-rate links that would otherwise remain degraded.</p>
-        </article>
-        <article class="research-card result-stat">
-          <span>Recovery Speed</span>
-          <strong>Order-of-magnitude faster recovery</strong>
-          <p>Proactive guidance reduces the delay of waiting for purely reactive schemes to adapt.</p>
-        </article>
-        <article class="research-card result-stat">
-          <span>Feasibility</span>
-          <strong>60% fewer infeasible recommendations</strong>
-          <p>Human feedback filters out layout changes that are impractical in shared indoor spaces.</p>
-        </article>
-        <article class="research-card result-stat">
-          <span>Optimization</span>
-          <strong>Faster convergence to intent-preserving layouts</strong>
-          <p>Morpheus narrows the search to configurations that help RF performance without breaking workspace intent.</p>
-        </article>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="glass p-8 rounded-3xl">
-          <div class="result-placeholder mb-6">
-            <i class="fas fa-broadcast-tower text-5xl" style="color:var(--placeholder-icon);"></i>
-          </div>
-        </div>
-        <div class="glass p-8 rounded-3xl">
-          <div class="result-placeholder mb-6">
-            <i class="fas fa-chart-line text-5xl" style="color:var(--placeholder-icon2);"></i>
-          </div>
-        </div>
-      </div>
-    </section>
-    -->
-
-    <!--
-    <section id="why-it-matters" class="my-20">
-      <h2 class="section-title">Why This Matters</h2>
-      <div class="impact-grid">
-        <article class="research-card">
-          <span class="research-eyebrow">Real-World Relevance</span>
-          <p>
-            Emerging applications such as AR/VR, cloud gaming, and collaborative robotics require stable high-throughput wireless connectivity.
-            However, mmWave performance is tightly coupled with the physical environment, making reliability a persistent challenge in real-world deployments.
-          </p>
-          <p>
-            Morpheus shifts network management from reactive trial-and-error to proactive, structured adaptation.
-            By reasoning jointly over scene dynamics, RF behavior, and human constraints, it enables practical and scalable debugging of next-generation wireless systems.
-          </p>
-        </article>
-
-        <article class="research-card">
-          <span class="research-eyebrow">Takeaway</span>
-          <h3>From wireless diagnosis to in-situ orchestration</h3>
-          <p>
-            Morpheus positions the digital twin as more than a visualization tool. It becomes a systems interface for anticipating failures,
-            exploring feasible interventions, and closing the loop between physical-space dynamics and network recovery.
-          </p>
-        </article>
-      </div>
-    </section>
-    -->
-
     <footer class="mt-24 pt-12 text-center text-sm" style="border-top:1px solid var(--footer-border);color:var(--footer-text);">
-      <p>Morpheus: Interactive RF Digital Twins for In-Situ Orchestration in Dynamic mmWave Environment.</p>
+      <p>Morpheus:  Interactive RF Digital Twins for In-Situ Layout Orchestration in Dynamic mmWave Environments</p>
       <p class="mt-1">&copy Morpheus • 2026</p>
-      <p class="mt-1">Made with ❤️ on Earth 🌎 </p>
+      <!-- <p class="mt-1">Made with ❤️ on Earth 🌎 </p> -->
     </footer>
   </main>
 
@@ -2051,6 +1830,9 @@
     };
 
     const CAPTURE_MODE = new URLSearchParams(window.location.search).has("capture");
+    const DEFAULT_SCENE_THETA = Math.PI * 1.99;
+    const INITIAL_SCENE_THETA = DEFAULT_SCENE_THETA;
+    const DEFAULT_SCENE_PHI = 0.85;
 
     const ui = {
       scenePanel: document.getElementById("scenePanel"),
@@ -2549,8 +2331,8 @@
       const orbit = {
         target: new THREE.Vector3(188.5, 26, 104),
         radius: 360,
-        theta: Math.PI * 0.78,
-        phi: 0.94,
+        theta: INITIAL_SCENE_THETA,
+        phi: DEFAULT_SCENE_PHI,
         minRadius: 70,
         maxRadius: 900,
         dragging: false,
@@ -2720,15 +2502,15 @@
       state.scene = sceneState;
     }
 
-    function fitSceneCamera() {
+    function fitSceneCamera(theta = DEFAULT_SCENE_THETA) {
       const { cols, rows, height } = state.dims;
       if (!state.scene || !cols || !rows) return;
       const center = new THREE.Vector3(cols / 2, height * 0.38, rows / 2);
       const distance = Math.max(cols, rows, height * 3.2) * 1.05;
       state.scene.orbit.target.copy(center);
       state.scene.orbit.radius = distance;
-      state.scene.orbit.theta = Math.PI * 0.78;
-      state.scene.orbit.phi = 0.94;
+      state.scene.orbit.theta = theta;
+      state.scene.orbit.phi = DEFAULT_SCENE_PHI;
       state.scene.updateCamera();
       renderSceneOnce();
     }
@@ -3354,12 +3136,12 @@
       window.addEventListener("keydown", (event) => {
         const blockedTags = ["INPUT", "SELECT", "TEXTAREA"];
         if (blockedTags.includes(document.activeElement?.tagName)) return;
-
+        // swap the key bindings
         const moves = {
-          ArrowLeft: [-1, 0],
-          ArrowRight: [1, 0],
-          ArrowUp: [0, -1],
-          ArrowDown: [0, 1]
+          ArrowLeft: [0, 1],
+          ArrowRight: [0, -1],
+          ArrowUp: [-1, 0],
+          ArrowDown: [1, 0]
         };
 
         if (moves[event.key]) {
@@ -3472,7 +3254,7 @@
       makeScene();
       buildSceneObjects();
       populateObjectSelect();
-      fitSceneCamera();
+      fitSceneCamera(INITIAL_SCENE_THETA);
       bindUi();
       syncSceneTheme();
 
