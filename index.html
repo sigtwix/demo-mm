@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Morpheus • Vision-Driven mmWave Digital Twin</title>
+  <title>Morpheus</title>
+  <link rel="icon" type="image/png" href="./assets/hotspot.png" />
 
   <style>
     @font-face {
@@ -1561,18 +1562,18 @@
         <!-- <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">View Code</a> -->
         <!-- <a href="#" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid var(--btn-outline-border);color:var(--body-text);">Dataset</a> -->
         <a href="#live-demo" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid rgba(103,232,249,0.42);color:var(--glass-accent);background:rgba(34,211,238,0.08);">Try Live Demo ↓</a>
-        <a href="#video" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid rgba(103,232,249,0.42);color:var(--glass-accent);background:rgba(34,211,238,0.08);">Watch Video ↓</a>
+        <!-- <a href="#video" class="px-8 py-4 font-semibold rounded-2xl flex items-center gap-3 transition-all hover:scale-105" style="border:1px solid rgba(103,232,249,0.42);color:var(--glass-accent);background:rgba(34,211,238,0.08);">Watch Video ↓</a> -->
       </div>
     </header>
+
+
+    <!--
     <section id="system-overview" class="my-20">
       <h2 class="section-title">System Overview</h2>
-      <!-- <p class="section-lead system-lead">
+      //<p class="section-lead system-lead">
         Morpheus turns scene understanding into actionable wireless orchestration through a pipeline that couples visual sensing, 3D reconstruction,
         RF evaluation using the digital twin, motion prediction, layout recommendation, and user feedback. The framework figure from the paper is shown below.
-      </p> -->
-
-      
-      <!--- comment the framework image
+      </p> 
       <div class="framework-shell">
         <div class="framework-frame">
           <img
@@ -1582,13 +1583,12 @@
           >
         </div>
         <p class="framework-caption">
-          <!-- Framework overview from the Morpheus paper. ----
+          // Framework overview from the Morpheus paper. 
           <a href="./assets/framework.jpg" target="_blank" rel="noopener noreferrer">Open the figure in full resolution</a>.
         </p>
       </div>
-    </section>  
-    -->
-      
+    </section>
+  -->
     <section id="live-demo" class="my-20">
       <div class="twin-shell neon-border">
         <div class="twin-lead">
@@ -1708,11 +1708,12 @@
       </div>
     </section>
 
+    <!--
     <section id="video" class="my-20">
       <h2 class="section-title">Watch Morpheus in Action</h2>
-      <!-- <p class="video-caption">
+      <p class="video-caption">
         Teaser Video
-      </p> -->
+      </p>
       <div class="video-shell max-w-4xl mx-auto">
         <div class="w-full aspect-video rounded-3xl overflow-hidden flex items-center justify-center" style="border:1px solid var(--video-border);background:var(--video-bg);">
           <div class="text-center">
@@ -1725,6 +1726,7 @@
         </div>
       </div>
     </section>
+    -->
     <footer class="mt-24 pt-12 text-center text-sm" style="border-top:1px solid var(--footer-border);color:var(--footer-text);">
       <p>Morpheus:  Interactive RF Digital Twins for In-Situ Layout Orchestration in Dynamic mmWave Environments</p>
       <p class="mt-1">&copy Morpheus • 2026</p>
@@ -3363,6 +3365,15 @@
     }
 
     setupLazyDigitalTwinBoot();
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0XK0R6NZFB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0XK0R6NZFB');
   </script>
 </body>
 </html>
